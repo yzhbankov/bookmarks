@@ -1,5 +1,5 @@
 # bookmarks
-## URI
+## URL
 * http://yzhbankov-bucket.s3-website.eu-north-1.amazonaws.com
 
 ## High-level requirements
@@ -26,3 +26,21 @@
 * The application should have a good user experience, with user feedback and suggestions taken into account for future updates.
 * The application should be hosted on a stable and secure server with regular backups and monitoring.
 * The application should be compliant with relevant data protection and privacy regulations.
+
+## High-level design
+https://miro.com/app/board/uXjVPogokTU=/
+
+## Technologies stack
+### Cloud
+* AWS EC2
+* AWS S3
+* AWS Application load balancer
+
+### Server
+* NestJs
+* MongoDb
+* Mongoose
+
+### Client
+* React
+* React-query
