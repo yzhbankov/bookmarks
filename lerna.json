@@ -1,0 +1,9 @@
+{
+  "npmClient": "yarn",
+  "packages": [
+    "apps/server",
+    "apps/client",
+    "shared/env"
+  ],
+  "version": "1.0.0-alpha.0"
+}
