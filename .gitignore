@@ -1,6 +1,14 @@
 .idea/
 node_modules/
 .env
-/temp
-
-
+temp/
+/coverage/*
+#build/
+.nyc_output
+coverage
+lerna-debug.log
+#**/build
+/apps/build/*
+/shared/build/*
+.DS_Store
+assets/
