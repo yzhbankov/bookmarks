@@ -1,7 +1,7 @@
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { BookmarksModule } from './bookmarks/bookmarks.module';
 import configuration from '../config/configuration';
 
 @Module({
@@ -9,8 +9,8 @@ import configuration from '../config/configuration';
     ignoreEnvFile: true,
     isGlobal: true,
     load: [configuration],
-  })],
-  controllers: [AppController],
-  providers: [AppService],
+  }), BookmarksModule],
+  controllers: [],
+  providers: [AppService]
 })
 export class AppModule {}
