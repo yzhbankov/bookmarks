@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
 import { TagsModule } from './tags/tags.module';
 import { SpacesModule } from './spaces/spaces.module';
+import { AuthModule } from './auth/auth.module';
 import configuration from '../config/configuration';
 
 @Module({
@@ -30,6 +31,7 @@ import configuration from '../config/configuration';
     BookmarksModule,
     TagsModule,
     SpacesModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [AppService],

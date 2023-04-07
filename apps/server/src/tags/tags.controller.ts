@@ -1,9 +1,10 @@
-import { Controller, Post, Delete, Get, Body, Param } from '@nestjs/common';
+import { Controller, Post, Delete, Get, Body, Param, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TagsService } from './tags.service';
 import { CreateTagDto } from './dto';
 import { TagEntity } from './entity/tag.entity';
 import { Tag } from './interfaces/tag.interface';
+import { GoogleOauthGuard } from '../auth/guards/google-oauth.guard';
 
 @ApiBearerAuth()
 @ApiTags('tags')
@@ -23,6 +24,7 @@ export class TagsController {
     description: 'Created tag',
     type: TagEntity,
   })
+  @UseGuards(GoogleOauthGuard)
   async saveTag(@Body() createTagDto: CreateTagDto): Promise<Tag> {
     return this.appService.create(createTagDto);
   }
@@ -35,6 +37,7 @@ export class TagsController {
     status: 204,
     description: 'Delete tag',
   })
+  @UseGuards(GoogleOauthGuard)
   async deleteTag(@Param() params): Promise<any> {
     await this.appService.delete(params.id);
     return {};
@@ -46,6 +49,7 @@ export class TagsController {
     description: 'The found tags',
     type: [TagEntity],
   })
+  @UseGuards(GoogleOauthGuard)
   async readTags(): Promise<Tag[]> {
     return this.appService.findAll();
   }
