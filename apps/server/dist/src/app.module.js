@@ -24,7 +24,19 @@ AppModule = __decorate([
                 load: [configuration_1.default],
             }),
             bookmarks_module_1.BookmarksModule,
-            mongoose_1.MongooseModule.forRoot('mongodb://bookmarks:bookmarks@127.0.0.1:27017/bookmarks'),
+            mongoose_1.MongooseModule.forRootAsync({
+                useFactory: async (configService) => {
+                    const dbUser = configService.get('database.user');
+                    const dbPassword = configService.get('database.password');
+                    const dbHost = configService.get('database.host');
+                    const dbPort = configService.get('database.port');
+                    const dbSchema = configService.get('database.schema');
+                    return {
+                        uri: `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbSchema}`,
+                    };
+                },
+                inject: [config_1.ConfigService],
+            }),
         ],
         controllers: [],
         providers: [app_service_1.AppService],

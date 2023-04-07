@@ -1,6 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class Bookmark {
+export class BookmarkEntity {
+  @ApiProperty({ example: '642ff272f68f2b39a4a6f7df', description: 'Bookmark unique identifier' })
+  _id: string;
+
   @ApiProperty({ example: 'https://example.com', description: 'Bookmark url' })
   url: string;
 

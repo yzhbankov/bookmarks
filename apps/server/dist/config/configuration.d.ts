@@ -3,7 +3,10 @@ declare const _default: () => {
         port: number;
     };
     database: {
+        user: string;
+        password: string;
         host: string;
+        schema: string;
         port: number;
     };
 };

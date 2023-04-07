@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable, Inject, Logger } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { Bookmark } from './interfaces/bookmark.interface';
 import { CreateBookmarkDto } from './dto';
 

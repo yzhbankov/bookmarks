@@ -7,6 +7,8 @@ import {
 } from '@nestjs/swagger';
 import { BookmarksService } from './bookmarks.service';
 import { CreateBookmarkDto } from './dto';
+import { Bookmark } from './interfaces/bookmark.interface';
+import { BookmarkEntity } from './entity/bookmark.entity';
 
 @ApiBearerAuth()
 @ApiTags('bookmarks')
@@ -18,13 +20,14 @@ export class BookmarksController {
   @ApiOperation({ summary: 'Create event' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({ status: 422, description: 'Validation error.' })
-  async saveBookmark(@Body() createEventDto: CreateBookmarkDto): Promise<any> {
+  @ApiResponse({ status: 200, description: 'Created bookmark', type: BookmarkEntity })
+  async saveBookmark(@Body() createEventDto: CreateBookmarkDto): Promise<Bookmark> {
     return this.appService.create(createEventDto);
   }
 
   @Get()
-  @ApiResponse({ status: 200, description: 'The found events', type: [Event] })
-  async readBookmark(): Promise<any[]> {
+  @ApiResponse({ status: 200, description: 'The found bookmarks', type: [BookmarkEntity] })
+  async readBookmark(): Promise<Bookmark[]> {
     return this.appService.findAll();
   }
 }

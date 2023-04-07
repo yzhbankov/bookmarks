@@ -6,6 +6,6 @@ export interface Bookmark extends Document {
   description: string;
   tag: string;
   owner: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

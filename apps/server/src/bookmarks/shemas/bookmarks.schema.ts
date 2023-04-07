@@ -6,6 +6,12 @@ export const BookmarksSchema = new mongoose.Schema({
   description: String,
   tag: String,
   owner: String,
-  created_at: String,
-  updated_at: String,
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
