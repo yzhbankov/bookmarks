@@ -1,12 +1,7 @@
-import { Controller, Post, Get, Body } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { Controller, Post, Put, Delete, Get, Body, Param, } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags, } from '@nestjs/swagger';
 import { BookmarksService } from './bookmarks.service';
-import { CreateBookmarkDto } from './dto';
+import { CreateBookmarkDto, UpdateBookmarkDto } from './dto';
 import { Bookmark } from './interfaces/bookmark.interface';
 import { BookmarkEntity } from './entity/bookmark.entity';
 
@@ -20,7 +15,7 @@ export class BookmarksController {
   constructor(private readonly appService: BookmarksService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create event' })
+  @ApiOperation({ summary: 'Create bookmark' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({ status: 422, description: 'Validation error.' })
   @ApiResponse({
@@ -29,9 +24,35 @@ export class BookmarksController {
     type: BookmarkEntity,
   })
   async saveBookmark(
-    @Body() createEventDto: CreateBookmarkDto,
+    @Body() createBookmarkDto: CreateBookmarkDto,
   ): Promise<Bookmark> {
-    return this.appService.create(createEventDto);
+    return this.appService.create(createBookmarkDto);
+  }
+
+  @Put(':id')
+  @ApiOperation({ summary: 'Edit bookmark' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @ApiResponse({ status: 422, description: 'Validation error.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Created bookmark',
+    type: BookmarkEntity,
+  })
+  async editBookmark(@Param() params, @Body() editBookmarkDto: UpdateBookmarkDto): Promise<Bookmark> {
+    return this.appService.update(params.id, editBookmarkDto);
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete bookmark' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @ApiResponse({ status: 422, description: 'Validation error.' })
+  @ApiResponse({
+    status: 204,
+    description: 'Delete bookmark',
+  })
+  async deleteBookmark(@Param() params): Promise<any> {
+    await this.appService.delete(params.id);
+    return {};
   }
 
   @Get()
@@ -40,7 +61,7 @@ export class BookmarksController {
     description: 'The found bookmarks',
     type: [BookmarkEntity],
   })
-  async readBookmark(): Promise<Bookmark[]> {
+  async readBookmarks(): Promise<Bookmark[]> {
     return this.appService.findAll();
   }
 }

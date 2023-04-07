@@ -12,6 +12,8 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const app_service_1 = require("./app.service");
 const bookmarks_module_1 = require("./bookmarks/bookmarks.module");
+const tags_module_1 = require("./tags/tags.module");
+const spaces_module_1 = require("./spaces/spaces.module");
 const configuration_1 = require("../config/configuration");
 let AppModule = class AppModule {
 };
@@ -23,7 +25,6 @@ AppModule = __decorate([
                 isGlobal: true,
                 load: [configuration_1.default],
             }),
-            bookmarks_module_1.BookmarksModule,
             mongoose_1.MongooseModule.forRootAsync({
                 useFactory: async (configService) => {
                     const dbUser = configService.get('database.user');
@@ -37,6 +38,9 @@ AppModule = __decorate([
                 },
                 inject: [config_1.ConfigService],
             }),
+            bookmarks_module_1.BookmarksModule,
+            tags_module_1.TagsModule,
+            spaces_module_1.SpacesModule,
         ],
         controllers: [],
         providers: [app_service_1.AppService],

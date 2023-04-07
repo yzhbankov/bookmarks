@@ -3,6 +3,8 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppService } from './app.service';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
+import { TagsModule } from './tags/tags.module';
+import { SpacesModule } from './spaces/spaces.module';
 import configuration from '../config/configuration';
 
 @Module({
@@ -12,7 +14,6 @@ import configuration from '../config/configuration';
       isGlobal: true,
       load: [configuration],
     }),
-    BookmarksModule,
     MongooseModule.forRootAsync({
       useFactory: async (configService: ConfigService) => {
         const dbUser = configService.get<string>('database.user');
@@ -26,6 +27,9 @@ import configuration from '../config/configuration';
       },
       inject: [ConfigService],
     }),
+    BookmarksModule,
+    TagsModule,
+    SpacesModule,
   ],
   controllers: [],
   providers: [AppService],

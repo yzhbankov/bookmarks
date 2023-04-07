@@ -1,24 +1,16 @@
 import { IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateBookmarkDto {
+export class CreateSpaceDto {
   @ApiProperty()
   @IsString()
-  url: string;
-
-  @ApiProperty()
-  @IsString()
-  space: string;
-
-  @ApiProperty()
-  @IsString()
-  description: string;
-
-  @ApiProperty()
-  @IsString()
-  tag: string;
+  name: string;
 
   @ApiProperty()
   @IsString()
   owner: string;
+
+  @ApiProperty()
+  @IsString()
+  description: string;
 }

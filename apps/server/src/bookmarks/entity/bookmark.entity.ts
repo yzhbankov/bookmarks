@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class BookmarkEntity {
-  @ApiProperty({ example: '642ff272f68f2b39a4a6f7df', description: 'Bookmark unique identifier' })
+  @ApiProperty({
+    example: '642ff272f68f2b39a4a6f7df',
+    description: 'Bookmark unique identifier',
+  })
   _id: string;
 
   @ApiProperty({ example: 'https://example.com', description: 'Bookmark url' })
   url: string;
-
-  @ApiProperty({ example: 'Name', description: 'Bookmark name' })
-  name: string;
 
   @ApiProperty({
     example: 'Bookmark description',
@@ -18,6 +18,9 @@ export class BookmarkEntity {
 
   @ApiProperty({ example: 'Bookmark tag', description: 'Bookmark tag' })
   tag: string;
+
+  @ApiProperty({ example: 'Space', description: 'Space identifier' })
+  space: string;
 
   @ApiProperty({ example: 'Bookmark owner', description: 'Bookmark owner' })
   owner: string;
