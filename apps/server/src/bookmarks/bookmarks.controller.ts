@@ -1,9 +1,10 @@
-import { Controller, Post, Put, Delete, Get, Body, Param, } from '@nestjs/common';
+import { Controller, Post, Put, Delete, Get, Body, Param, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags, } from '@nestjs/swagger';
 import { BookmarksService } from './bookmarks.service';
 import { CreateBookmarkDto, UpdateBookmarkDto } from './dto';
 import { Bookmark } from './interfaces/bookmark.interface';
 import { BookmarkEntity } from './entity/bookmark.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('bookmarks')
@@ -23,6 +24,7 @@ export class BookmarksController {
     description: 'Created bookmark',
     type: BookmarkEntity,
   })
+  @UseGuards(JwtAuthGuard)
   async saveBookmark(
     @Body() createBookmarkDto: CreateBookmarkDto,
   ): Promise<Bookmark> {
@@ -38,6 +40,7 @@ export class BookmarksController {
     description: 'Created bookmark',
     type: BookmarkEntity,
   })
+  @UseGuards(JwtAuthGuard)
   async editBookmark(@Param() params, @Body() editBookmarkDto: UpdateBookmarkDto): Promise<Bookmark> {
     return this.appService.update(params.id, editBookmarkDto);
   }
@@ -50,6 +53,7 @@ export class BookmarksController {
     status: 204,
     description: 'Delete bookmark',
   })
+  @UseGuards(JwtAuthGuard)
   async deleteBookmark(@Param() params): Promise<any> {
     await this.appService.delete(params.id);
     return {};
@@ -61,6 +65,7 @@ export class BookmarksController {
     description: 'The found bookmarks',
     type: [BookmarkEntity],
   })
+  @UseGuards(JwtAuthGuard)
   async readBookmarks(): Promise<Bookmark[]> {
     return this.appService.findAll();
   }

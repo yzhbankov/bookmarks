@@ -5,6 +5,7 @@ import { CreateTagDto } from './dto';
 import { TagEntity } from './entity/tag.entity';
 import { Tag } from './interfaces/tag.interface';
 import { GoogleOauthGuard } from '../auth/guards/google-oauth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('tags')
@@ -24,7 +25,7 @@ export class TagsController {
     description: 'Created tag',
     type: TagEntity,
   })
-  @UseGuards(GoogleOauthGuard)
+  @UseGuards(JwtAuthGuard)
   async saveTag(@Body() createTagDto: CreateTagDto): Promise<Tag> {
     return this.appService.create(createTagDto);
   }
@@ -37,7 +38,7 @@ export class TagsController {
     status: 204,
     description: 'Delete tag',
   })
-  @UseGuards(GoogleOauthGuard)
+  @UseGuards(JwtAuthGuard)
   async deleteTag(@Param() params): Promise<any> {
     await this.appService.delete(params.id);
     return {};
@@ -49,7 +50,7 @@ export class TagsController {
     description: 'The found tags',
     type: [TagEntity],
   })
-  @UseGuards(GoogleOauthGuard)
+  @UseGuards(JwtAuthGuard)
   async readTags(): Promise<Tag[]> {
     return this.appService.findAll();
   }

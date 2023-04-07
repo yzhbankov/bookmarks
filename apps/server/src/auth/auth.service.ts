@@ -13,7 +13,7 @@ export class AuthService {
   ) {}
 
   generateJwt(payload) {
-    return this.jwtService.sign(payload, { secret: 'secertrsdfdfs' });
+    return this.jwtService.sign(payload);
   }
 
   async signIn(user) {

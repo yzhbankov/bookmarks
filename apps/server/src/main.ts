@@ -1,4 +1,5 @@
 import '@bookmarks/env';
+import * as cookieParser from 'cookie-parser';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -22,7 +23,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
-
+  app.use(cookieParser());
   await app.listen(configService.get('server.port'));
 }
 bootstrap();

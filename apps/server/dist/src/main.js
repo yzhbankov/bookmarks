@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 require("@bookmarks/env");
+const cookieParser = require("cookie-parser");
 const core_1 = require("@nestjs/core");
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
@@ -22,6 +23,7 @@ async function bootstrap() {
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api/docs', app, document);
+    app.use(cookieParser());
     await app.listen(configService.get('server.port'));
 }
 bootstrap();

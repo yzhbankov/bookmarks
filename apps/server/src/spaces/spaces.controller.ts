@@ -1,9 +1,10 @@
-import { Controller, Post, Delete, Get, Body, Param } from '@nestjs/common';
+import { Controller, Post, Delete, Get, Body, Param, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SpacesService } from './spaces.service';
 import { CreateSpaceDto } from './dto';
 import { SpaceEntity } from './entity/space.entity';
 import { Space } from './interfaces/space.interface';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('spaces')
@@ -23,6 +24,7 @@ export class SpacesController {
     description: 'Created space',
     type: SpaceEntity,
   })
+  @UseGuards(JwtAuthGuard)
   async saveSpace(@Body() createSpaceDto: CreateSpaceDto): Promise<Space> {
     return this.appService.create(createSpaceDto);
   }
@@ -35,6 +37,7 @@ export class SpacesController {
     status: 204,
     description: 'Delete space',
   })
+  @UseGuards(JwtAuthGuard)
   async deleteSpace(@Param() params): Promise<any> {
     await this.appService.delete(params.id);
     return {};
@@ -46,6 +49,7 @@ export class SpacesController {
     description: 'The found spaces',
     type: [SpaceEntity],
   })
+  @UseGuards(JwtAuthGuard)
   async readSpaces(): Promise<Space[]> {
     return this.appService.findAll();
   }
