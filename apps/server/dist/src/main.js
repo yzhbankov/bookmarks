@@ -11,6 +11,9 @@ async function bootstrap() {
     const configService = app.get(config_1.ConfigService);
     app.setGlobalPrefix('api');
     app.useGlobalPipes(new common_1.ValidationPipe());
+    app.enableVersioning({
+        type: common_1.VersioningType.URI,
+    });
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Bookmarks')
         .setDescription('The bookmarks API')
