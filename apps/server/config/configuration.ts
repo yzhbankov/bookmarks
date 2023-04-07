@@ -5,7 +5,7 @@ export default () => ({
   google: {
     clientID: process.env.BOOKMARKS_GOOGLE_CLIENT_ID,
     clientSecret: process.env.BOOKMARKS_GOOGLE_CLIENT_SECRET,
-    callbackUrl: process.env.BOOKMARKS_GOOGLE_CALLBACK_URL,
+    callbackURL: process.env.BOOKMARKS_GOOGLE_CALLBACK_URL,
   },
   jwt: {
     secret: process.env.BOOKMARKS_JWT_SECRET,

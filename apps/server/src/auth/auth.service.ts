@@ -1,8 +1,8 @@
 import { Model } from 'mongoose';
-import { User } from './interfaces/user.interface';
-import { RegisterUserDto } from './dto';
 import { BadRequestException, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { RegisterUserDto } from './dto';
+import { User } from './interfaces/user.interface';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +13,7 @@ export class AuthService {
   ) {}
 
   generateJwt(payload) {
-    return this.jwtService.sign(payload);
+    return this.jwtService.sign(payload, { secret: 'secertrsdfdfs' });
   }
 
   async signIn(user) {

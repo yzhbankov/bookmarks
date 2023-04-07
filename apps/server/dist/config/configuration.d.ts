@@ -5,7 +5,7 @@ declare const _default: () => {
     google: {
         clientID: string;
         clientSecret: string;
-        callbackUrl: string;
+        callbackURL: string;
     };
     jwt: {
         secret: string;

@@ -29,7 +29,6 @@ export class AuthController {
       sameSite: true,
       secure: false,
     });
-
-    return res.status(HttpStatus.OK);
+    res.status(HttpStatus.OK).send();
   }
 }
