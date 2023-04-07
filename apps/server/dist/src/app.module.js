@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const config_1 = require("@nestjs/config");
 const common_1 = require("@nestjs/common");
+const mongoose_1 = require("@nestjs/mongoose");
 const app_service_1 = require("./app.service");
 const bookmarks_module_1 = require("./bookmarks/bookmarks.module");
 const configuration_1 = require("../config/configuration");
@@ -16,13 +17,17 @@ let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [config_1.ConfigModule.forRoot({
+        imports: [
+            config_1.ConfigModule.forRoot({
                 ignoreEnvFile: true,
                 isGlobal: true,
                 load: [configuration_1.default],
-            }), bookmarks_module_1.BookmarksModule],
+            }),
+            bookmarks_module_1.BookmarksModule,
+            mongoose_1.MongooseModule.forRoot('mongodb://bookmarks:bookmarks@127.0.0.1:27017/bookmarks'),
+        ],
         controllers: [],
-        providers: [app_service_1.AppService]
+        providers: [app_service_1.AppService],
     })
 ], AppModule);
 exports.AppModule = AppModule;

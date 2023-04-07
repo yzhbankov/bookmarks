@@ -1,11 +1,11 @@
 import { Document } from 'mongoose';
 
 export interface Bookmark extends Document {
-  url: String;
-  name: String;
-  description: String;
-  tag: String;
-  owner: String;
-  created_at: String;
-  updated_at: String;
+  url: string;
+  name: string;
+  description: string;
+  tag: string;
+  owner: string;
+  created_at: string;
+  updated_at: string;
 }

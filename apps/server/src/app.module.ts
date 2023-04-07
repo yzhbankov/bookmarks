@@ -7,15 +7,17 @@ import configuration from '../config/configuration';
 
 @Module({
   imports: [
-      ConfigModule.forRoot({
-        ignoreEnvFile: true,
-        isGlobal: true,
-        load: [configuration],
-      }),
+    ConfigModule.forRoot({
+      ignoreEnvFile: true,
+      isGlobal: true,
+      load: [configuration],
+    }),
     BookmarksModule,
-    MongooseModule.forRoot('mongodb://bookmarks:bookmarks@127.0.0.1:27017/bookmarks')
+    MongooseModule.forRoot(
+      'mongodb://bookmarks:bookmarks@127.0.0.1:27017/bookmarks',
+    ),
   ],
   controllers: [],
-  providers: [AppService]
+  providers: [AppService],
 })
 export class AppModule {}
