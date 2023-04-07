@@ -1,27 +1,21 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { Injectable, Inject, Logger } from '@nestjs/common';
+import { Bookmark } from './interfaces/bookmark.interface';
+import { CreateBookmarkDto } from './dto';
 
 @Injectable()
-export class BookmarksService {
-    private readonly logger = new Logger(BookmarksService.name);
+export class CatsService {
+    constructor(
+        @Inject('BOOKMARK_MODEL')
+        private bookmarkModel: Model<Bookmark>,
+    ) {}
 
-    async save(bookmark: any): Promise<any> {
-        this.logger.log('Save bookmark ', bookmark);
-        return {
-            data: {
-                title: bookmark.title,
-                description: bookmark.description,
-                createdDate: new Date(),
-                updatedDate: new Date(),
-                timeFrom: new Date(),
-                timeTo: new Date(),
-                dateFrom: new Date(),
-                dateTo: new Date(),
-                userId: 1
-            },
-        }
+    async create(createBookmarkDto: CreateBookmarkDto): Promise<Bookmark> {
+        const createdBookmark = new this.bookmarkModel(createBookmarkDto);
+        return createdBookmark.save();
     }
 
-    async read(): Promise<any> {
-        return {}
+    async findAll(): Promise<Bookmark[]> {
+        return this.bookmarkModel.find().exec();
     }
 }
