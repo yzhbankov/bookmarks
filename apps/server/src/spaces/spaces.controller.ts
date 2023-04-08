@@ -25,8 +25,8 @@ export class SpacesController {
     type: SpaceEntity,
   })
   @UseGuards(JwtAuthGuard)
-  async saveSpace(@Body() createSpaceDto: CreateSpaceDto): Promise<Space> {
-    return this.appService.create(createSpaceDto);
+  async saveSpace(@Req() req, @Body() createSpaceDto: CreateSpaceDto): Promise<Space> {
+    return this.appService.create(req.user.email, createSpaceDto);
   }
 
   @Delete(':id')
@@ -38,8 +38,8 @@ export class SpacesController {
     description: 'Delete space',
   })
   @UseGuards(JwtAuthGuard)
-  async deleteSpace(@Param() params): Promise<any> {
-    await this.appService.delete(params.id);
+  async deleteSpace(@Req() req, @Param() params): Promise<any> {
+    await this.appService.delete(req.user.email, params.id);
     return {};
   }
 

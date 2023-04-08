@@ -8,9 +8,5 @@ export class CreateTagDto {
 
   @ApiProperty()
   @IsString()
-  owner: string;
-
-  @ApiProperty()
-  @IsString()
   description: string;
 }

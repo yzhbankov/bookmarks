@@ -1,4 +1,4 @@
-import { Controller, Post, Delete, Get, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Post, Delete, Get, Body, Param, UseGuards, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TagsService } from './tags.service';
 import { CreateTagDto } from './dto';
@@ -25,8 +25,8 @@ export class TagsController {
     type: TagEntity,
   })
   @UseGuards(JwtAuthGuard)
-  async saveTag(@Body() createTagDto: CreateTagDto): Promise<Tag> {
-    return this.appService.create(createTagDto);
+  async saveTag(@Req() req, @Body() createTagDto: CreateTagDto): Promise<Tag> {
+    return this.appService.create(req.user.email, createTagDto);
   }
 
   @Delete(':id')
@@ -38,8 +38,8 @@ export class TagsController {
     description: 'Delete tag',
   })
   @UseGuards(JwtAuthGuard)
-  async deleteTag(@Param() params): Promise<any> {
-    await this.appService.delete(params.id);
+  async deleteTag(@Req() req, @Param() params): Promise<any> {
+    await this.appService.delete(req.user.email, params.id);
     return {};
   }
 
@@ -50,7 +50,7 @@ export class TagsController {
     type: [TagEntity],
   })
   @UseGuards(JwtAuthGuard)
-  async readTags(): Promise<Tag[]> {
-    return this.appService.findAll();
+  async readTags(@Req() req): Promise<Tag[]> {
+    return this.appService.findAll(req.user.email);
   }
 }

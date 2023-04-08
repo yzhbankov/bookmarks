@@ -2,7 +2,7 @@ import { Model, startSession } from 'mongoose';
 import { Inject, Injectable } from '@nestjs/common';
 import { User } from './interfaces/user.interface';
 import { SpacesService } from '../spaces/spaces.service';
-import { CreateUserDto, UpdateUserDto } from './dto';
+import { CreateUserDto } from './dto';
 
 @Injectable()
 export class UsersService {
@@ -16,17 +16,11 @@ export class UsersService {
     return this.userModel.findOne({ email });
   }
 
-  async update(user: UpdateUserDto): Promise<User> {
-    return this.userModel.findOneAndUpdate({ email: user.email }, user, {
-      new: true,
-    });
-  }
-
   async create(user: CreateUserDto): Promise<User> {
     const session = await startSession();
     const newUser = await session.withTransaction(async () => {
       const createdUser = await new this.userModel(user).save();
-      await this.spacesService.create({ name: 'Default', description: '', owner: user.email });
+      await this.spacesService.create(user.email, { name: 'Default', description: '' });
       return createdUser;
     });
     await session.commitTransaction();

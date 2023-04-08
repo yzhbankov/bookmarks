@@ -1,4 +1,4 @@
-import { Controller, Post, Put, Delete, Get, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Post, Put, Delete, Get, Body, Param, UseGuards, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags, } from '@nestjs/swagger';
 import { BookmarksService } from './bookmarks.service';
 import { CreateBookmarkDto, UpdateBookmarkDto } from './dto';
@@ -25,10 +25,8 @@ export class BookmarksController {
     type: BookmarkEntity,
   })
   @UseGuards(JwtAuthGuard)
-  async saveBookmark(
-    @Body() createBookmarkDto: CreateBookmarkDto,
-  ): Promise<Bookmark> {
-    return this.appService.create(createBookmarkDto);
+  async saveBookmark(@Req() req, @Body() createBookmarkDto: CreateBookmarkDto): Promise<Bookmark> {
+    return this.appService.create(req.user.email, createBookmarkDto);
   }
 
   @Put(':id')
@@ -41,21 +39,18 @@ export class BookmarksController {
     type: BookmarkEntity,
   })
   @UseGuards(JwtAuthGuard)
-  async editBookmark(@Param() params, @Body() editBookmarkDto: UpdateBookmarkDto): Promise<Bookmark> {
-    return this.appService.update(params.id, editBookmarkDto);
+  async editBookmark(@Req() req, @Param() params, @Body() editBookmarkDto: UpdateBookmarkDto): Promise<Bookmark> {
+    return this.appService.update(req.user.email, params.id, editBookmarkDto);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete bookmark' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({ status: 422, description: 'Validation error.' })
-  @ApiResponse({
-    status: 204,
-    description: 'Delete bookmark',
-  })
+  @ApiResponse({ status: 204, description: 'Delete bookmark' })
   @UseGuards(JwtAuthGuard)
-  async deleteBookmark(@Param() params): Promise<any> {
-    await this.appService.delete(params.id);
+  async deleteBookmark(@Req() req, @Param() params): Promise<any> {
+    await this.appService.delete(req.user.email, params.id);
     return {};
   }
 
@@ -66,7 +61,7 @@ export class BookmarksController {
     type: [BookmarkEntity],
   })
   @UseGuards(JwtAuthGuard)
-  async readBookmarks(): Promise<Bookmark[]> {
-    return this.appService.findAll();
+  async readBookmarks(@Req() req): Promise<Bookmark[]> {
+    return this.appService.findAll(req.user.email);
   }
 }

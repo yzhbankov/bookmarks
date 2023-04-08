@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { Tag } from './interfaces/tag.interface';
 import { CreateTagDto } from './dto';
@@ -10,21 +10,22 @@ export class TagsService {
     private tagModel: Model<Tag>,
   ) {}
 
-  async create(createTagDto: CreateTagDto): Promise<Tag> {
-    const createdTag = new this.tagModel(createTagDto);
+  async create(owner: string, createTagDto: CreateTagDto): Promise<Tag> {
+    const createdTag = new this.tagModel({ ...createTagDto, owner });
     return createdTag.save();
   }
 
-  async delete(id: string): Promise<any> {
-    const tag: Tag = await this.tagModel.findOne({ _id: id });
+  async delete(owner: string, id: string): Promise<any> {
+    const objectId = new Types.ObjectId(id);
+    const tag: Tag = await this.tagModel.findOne({ _id: objectId, owner });
 
     if (!tag) {
       throw new NotFoundException({ message: 'Tag not found' });
     }
-    return this.tagModel.deleteOne({ _id: id });
+    return this.tagModel.deleteOne({ _id: objectId });
   }
 
-  async findAll(): Promise<Tag[]> {
-    return this.tagModel.find().exec();
+  async findAll(owner: string): Promise<Tag[]> {
+    return this.tagModel.find({ owner }).exec();
   }
 }

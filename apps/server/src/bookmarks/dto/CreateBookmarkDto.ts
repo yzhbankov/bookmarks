@@ -1,5 +1,5 @@
-import { IsString } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsOptional, IsMongoId } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateBookmarkDto {
   @ApiProperty()
@@ -7,18 +7,18 @@ export class CreateBookmarkDto {
   url: string;
 
   @ApiProperty()
-  @IsString()
+  @IsMongoId()
   space: string;
 
   @ApiProperty()
   @IsString()
+  @IsOptional()
+  @ApiPropertyOptional()
   description: string;
 
   @ApiProperty()
-  @IsString()
+  @IsMongoId()
+  @IsOptional()
+  @ApiPropertyOptional()
   tag: string;
-
-  @ApiProperty()
-  @IsString()
-  owner: string;
 }

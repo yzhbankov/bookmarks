@@ -8,9 +8,5 @@ export class CreateSpaceDto {
 
   @ApiProperty()
   @IsString()
-  owner: string;
-
-  @ApiProperty()
-  @IsString()
   description: string;
 }
