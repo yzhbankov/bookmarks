@@ -24,7 +24,7 @@ export class SpacesService {
     return this.spaceModel.deleteOne({ _id: id });
   }
 
-  async findAll(): Promise<Space[]> {
-    return this.spaceModel.find().exec();
+  async findAll(owner: string): Promise<Space[]> {
+    return this.spaceModel.find({ owner }).exec();
   }
 }

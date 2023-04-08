@@ -7,5 +7,6 @@ import { spacesProviders } from './spaces.providers';
 @Module({
   controllers: [SpacesController],
   providers: [SpacesService, ...databaseProviders, ...spacesProviders],
+  exports: [SpacesService],
 })
 export class SpacesModule {}

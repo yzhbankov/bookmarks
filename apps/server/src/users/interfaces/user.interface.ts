@@ -4,4 +4,5 @@ export interface User extends Document {
   name: string;
   email: string;
   createdAt: Date;
+  spaces: string[];
 }

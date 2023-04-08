@@ -1,4 +1,4 @@
-import { Controller, Post, Delete, Get, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Post, Delete, Get, Body, Param, UseGuards, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SpacesService } from './spaces.service';
 import { CreateSpaceDto } from './dto';
@@ -50,7 +50,7 @@ export class SpacesController {
     type: [SpaceEntity],
   })
   @UseGuards(JwtAuthGuard)
-  async readSpaces(): Promise<Space[]> {
-    return this.appService.findAll();
+  async readSpaces(@Req() req): Promise<Space[]> {
+    return this.appService.findAll(req.user.email);
   }
 }
