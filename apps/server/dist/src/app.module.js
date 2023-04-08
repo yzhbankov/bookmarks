@@ -15,6 +15,7 @@ const bookmarks_module_1 = require("./bookmarks/bookmarks.module");
 const tags_module_1 = require("./tags/tags.module");
 const spaces_module_1 = require("./spaces/spaces.module");
 const auth_module_1 = require("./auth/auth.module");
+const users_module_1 = require("./users/users.module");
 const configuration_1 = require("../config/configuration");
 let AppModule = class AppModule {
 };
@@ -43,6 +44,7 @@ AppModule = __decorate([
             tags_module_1.TagsModule,
             spaces_module_1.SpacesModule,
             auth_module_1.AuthModule,
+            users_module_1.UsersModule,
         ],
         controllers: [],
         providers: [app_service_1.AppService],

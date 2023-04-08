@@ -4,7 +4,6 @@ import { TagsService } from './tags.service';
 import { CreateTagDto } from './dto';
 import { TagEntity } from './entity/tag.entity';
 import { Tag } from './interfaces/tag.interface';
-import { GoogleOauthGuard } from '../auth/guards/google-oauth.guard';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiBearerAuth()

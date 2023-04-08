@@ -1,15 +1,13 @@
-import { Model } from 'mongoose';
-import { BadRequestException, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterUserDto } from './dto';
-import { User } from './interfaces/user.interface';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @Inject('USER_MODEL')
-    private userModel: Model<User>,
     private jwtService: JwtService,
+    private usersService: UsersService,
   ) {}
 
   generateJwt(payload) {
@@ -21,7 +19,7 @@ export class AuthService {
       throw new BadRequestException('Unauthenticated');
     }
 
-    const userExists = await this.userModel.findOne({ email: user.email });
+    const userExists = await this.usersService.findUser(user.email);
 
     if (!userExists) {
       return this.registerUser(user);
@@ -35,7 +33,7 @@ export class AuthService {
 
   async registerUser(user: RegisterUserDto) {
     try {
-      const newUser = await new this.userModel(user).save();
+      const newUser = await this.usersService.create(user);
 
       return this.generateJwt({ sub: newUser._id, email: newUser.email });
     } catch {

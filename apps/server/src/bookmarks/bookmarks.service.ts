@@ -15,7 +15,7 @@ export class BookmarksService {
     return createdBookmark.save();
   }
 
-  async update(id: string, updateBookmarkDto: UpdateBookmarkDto,): Promise<Bookmark> {
+  async update(id: string, updateBookmarkDto: UpdateBookmarkDto): Promise<Bookmark> {
     const bookMark: Bookmark = await this.bookmarkModel.findOne({ _id: id });
 
     if (!bookMark) {
