@@ -2,7 +2,7 @@ name: Build and Publish Docker Image
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'sv*.*.*'
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
         with:
           script: |
             const tag = context.ref.substring(10)
-            const no_v = tag.replace('v', '')
+            const no_v = tag.replace('sv', '')
             const dash_index = no_v.lastIndexOf('-')
             const no_dash = (dash_index > -1) ?  no_v.substring(0, dash_index) : no_v
             core.setOutput('tag', tag)
@@ -40,7 +40,7 @@ jobs:
             BOOKMARKS_GOOGLE_CALLBACK_URL=${{ secrets.BOOKMARKS_GOOGLE_CALLBACK_URL }}
             BOOKMARKS_GOOGLE_CLIENT_ID=${{ secrets.BOOKMARKS_GOOGLE_CLIENT_ID }}
             BOOKMARKS_GOOGLE_CLIENT_SECRET=${{ secrets.BOOKMARKS_GOOGLE_CLIENT_SECRET }}
-            BOOKMARKS_JWT_SECRET=${{ secrets.BOOKMARKS_JWT_SECRET }}
+            BOOKMARKS_DB_HOST=${{ secrets.BOOKMARKS_DB_HOST }}
           tags: |
             yzhbankov/bookmarks:${{ steps.set_version.outputs.no-dash }}
             yzhbankov/bookmarks:latest
