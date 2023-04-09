@@ -49,6 +49,7 @@ export class TagsController {
     description: 'The found tags',
     type: [TagEntity],
   })
+  @ApiOperation({ summary: 'Read tags' })
   @UseGuards(JwtAuthGuard)
   async readTags(@Req() req): Promise<Tag[]> {
     return this.appService.findAll(req.user.email);

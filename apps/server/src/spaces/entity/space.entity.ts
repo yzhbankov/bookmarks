@@ -16,7 +16,7 @@ export class SpaceEntity {
   })
   description: string;
 
-  @ApiProperty({ example: 'Space owner', description: 'Space owner' })
+  @ApiProperty({ example: 'yzhbankov@gmail.com', description: 'Space owner email' })
   owner: string;
 
   @ApiProperty({

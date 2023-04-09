@@ -22,6 +22,7 @@ export class TagsService {
     if (!tag) {
       throw new NotFoundException({ message: 'Tag not found' });
     }
+    // todo: removing tag update all bookmarks
     return this.tagModel.deleteOne({ _id: objectId });
   }
 

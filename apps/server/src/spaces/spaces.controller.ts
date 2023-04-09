@@ -49,6 +49,7 @@ export class SpacesController {
     description: 'The found spaces',
     type: [SpaceEntity],
   })
+  @ApiOperation({ summary: 'Read spaces' })
   @UseGuards(JwtAuthGuard)
   async readSpaces(@Req() req): Promise<Space[]> {
     return this.appService.findAll(req.user.email);

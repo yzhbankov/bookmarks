@@ -18,7 +18,7 @@ export class SpacesService {
   async delete(owner: string, id: string): Promise<any> {
     const objectId = new Types.ObjectId(id);
     const space: Space = await this.spaceModel.findOne({ _id: objectId, owner });
-
+    // todo: removing space remove all related bookmarks
     if (!space) {
       throw new NotFoundException({ message: 'Space not found' });
     }

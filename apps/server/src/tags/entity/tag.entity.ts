@@ -16,7 +16,7 @@ export class TagEntity {
   })
   description: string;
 
-  @ApiProperty({ example: 'Tag owner', description: 'Tag owner' })
+  @ApiProperty({ example: 'yzhbankov@gmail.com', description: 'Tag owner email' })
   owner: string;
 
   @ApiProperty({

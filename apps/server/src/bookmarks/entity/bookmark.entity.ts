@@ -16,13 +16,13 @@ export class BookmarkEntity {
   })
   description: string;
 
-  @ApiProperty({ example: '64318df552f93af0cc9f4779', description: 'Bookmark tag identifier' })
+  @ApiProperty({ example: '64318df552f93af0cc9f4779', description: 'Bookmark tag unique identifier' })
   tag: string;
 
-  @ApiProperty({ example: '64318df552f93af0cc9f4779', description: 'Space identifier' })
+  @ApiProperty({ example: '64318df552f93af0cc9f4779', description: 'Space unique identifier' })
   space: string;
 
-  @ApiProperty({ example: 'Bookmark owner', description: 'Email of bookmark owner' })
+  @ApiProperty({ example: 'yzhbankov@gmail.com', description: 'Email of bookmark owner' })
   owner: string;
 
   @ApiProperty({

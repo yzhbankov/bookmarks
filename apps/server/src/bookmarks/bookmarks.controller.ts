@@ -60,6 +60,7 @@ export class BookmarksController {
     description: 'The found bookmarks',
     type: [BookmarkEntity],
   })
+  @ApiOperation({ summary: 'Read bookmarks' })
   @UseGuards(JwtAuthGuard)
   async readBookmarks(@Req() req): Promise<Bookmark[]> {
     return this.appService.findAll(req.user.email);

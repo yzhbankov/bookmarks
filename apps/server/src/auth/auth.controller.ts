@@ -14,12 +14,13 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(GoogleOauthGuard)
-  @ApiOperation({ summary: 'Auth' })
+  @ApiOperation({ summary: 'Google auth' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({ status: 200 })
   async auth() {}
 
   @Get('google/callback')
+  @ApiOperation({ summary: 'Google auth callback' })
   @UseGuards(GoogleOauthGuard)
   async googleAuthCallback(@Req() req, @Res() res: Response) {
     const token = await this.authService.signIn(req.user);
