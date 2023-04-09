@@ -25,4 +25,4 @@ jobs:
             # Pull the Docker Image 
             sudo docker pull yzhbankov/bookmarks:latest
             # Run a new container from a new image
-            sudo docker run -d -p 3000:3000 -p ${{ vars.BOOKMARKS_DB_PORT }}:27017 --add-host=host.docker.internal:host-gateway yzhbankov/bookmarks:latest
+            sudo docker run -d -p 3000:3000 -p 27017:27017 --add-host=host.docker.internal:host-gateway yzhbankov/bookmarks:latest
