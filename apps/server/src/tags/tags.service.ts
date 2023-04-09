@@ -1,13 +1,16 @@
-import { Model, Types } from 'mongoose';
+import { Model, startSession, Types } from 'mongoose';
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { Tag } from './interfaces/tag.interface';
 import { CreateTagDto } from './dto';
+import { Bookmark } from '../bookmarks/interfaces/bookmark.interface';
 
 @Injectable()
 export class TagsService {
   constructor(
     @Inject('TAG_MODEL')
     private tagModel: Model<Tag>,
+    @Inject('BOOKMARK_MODEL')
+    private bookmarkModel: Model<Bookmark>,
   ) {}
 
   async create(owner: string, createTagDto: CreateTagDto): Promise<Tag> {
@@ -22,8 +25,20 @@ export class TagsService {
     if (!tag) {
       throw new NotFoundException({ message: 'Tag not found' });
     }
-    // todo: removing tag update all bookmarks
-    return this.tagModel.deleteOne({ _id: objectId });
+    const session = await startSession();
+    await session.withTransaction(async () => {
+      await this.bookmarkModel
+        .updateMany(
+          { owner, tag: objectId },
+          { $set: { tag: null, updatedAt: new Date() } },
+          { new: true },
+        )
+        .exec();
+
+      await this.tagModel.deleteOne({ _id: objectId });
+    });
+    await session.commitTransaction();
+    return null;
   }
 
   async findAll(owner: string): Promise<Tag[]> {
