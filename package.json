@@ -18,6 +18,8 @@
     "reset": "yarn run clean && yarn install",
     "start:client": "cd apps/client && yarn start",
     "start:server": "cd apps/server && yarn start",
+    "build:server": "cd apps/server && yarn build",
+    "start:server:prod": "cd apps/server && yarn start:prod",
     "version": "git add .",
     "postversion": "git push && git push --tags",
     "version:patch": "yarn config set version-tag-prefix 'v' && yarn config set version-git-message 'v%s' && yarn version --patch"

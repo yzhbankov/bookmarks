@@ -1,0 +1,26 @@
+name: Deploy Docker Image
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to AWS via SSH action
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USERNAME }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
+          port: 22
+          script: |
+            # Stop all running Docker Containers
+            sudo docker kill $(sudo docker ps -q)
+            # Free up space
+            sudo docker system prune -a -f
+            # Login to Github Container Registry
+            sudo docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+            # Pull the Docker Image 
+            sudo docker pull yzhbankov/bookmarks:latest
+            # Run a new container from a new image
+            sudo docker run -d -p 3000:3000 -p 27017:27017 --add-host=host.docker.internal:host-gateway yzhbankov/bookmarks:latest

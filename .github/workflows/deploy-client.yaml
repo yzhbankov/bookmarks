@@ -2,7 +2,7 @@ name: Deploy WebSite
 on:
   push:
     branches:
-      - deploy
+      - deploy-client
 
 jobs:
   deploy:
