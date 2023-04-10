@@ -19,6 +19,7 @@
     "start:client": "cd apps/client && yarn start",
     "start:server": "cd apps/server && yarn start",
     "build:server": "cd apps/server && yarn build",
+    "build:client": "cd apps/client && yarn build",
     "start:server:prod": "cd apps/server && yarn start:prod",
     "version": "git add .",
     "postversion": "git push && git push --tags",
