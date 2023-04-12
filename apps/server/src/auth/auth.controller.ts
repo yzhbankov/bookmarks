@@ -1,7 +1,8 @@
-import { Body, Controller, HttpStatus, Post, Req, Res } from '@nestjs/common';
+import { Get, Body, Controller, HttpStatus, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('auth')
 @Controller({
@@ -21,6 +22,13 @@ export class AuthController {
       sameSite: true,
       secure: false,
     });
+    res.status(HttpStatus.OK).send();
+  }
+
+  @Get('validate')
+  @ApiOperation({ summary: 'Validate cookie' })
+  @UseGuards(JwtAuthGuard)
+  async validateCookie(@Res() res: Response) {
     res.status(HttpStatus.OK).send();
   }
 }

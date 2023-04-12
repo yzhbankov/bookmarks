@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { config } from './config';
 import { AppContainer } from './app/AppContainer';
-import { ErrorBoundaryComponent } from './components/ErrorBoundary';
+import { AppRouter, ErrorBoundaryComponent } from './components';
 import { AppProvider } from './context';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
@@ -16,7 +16,9 @@ root.render(
             <AppProvider>
                 <ErrorBoundaryComponent>
                     <BrowserRouter>
-                        <AppContainer />
+                        <AppRouter>
+                            <AppContainer />
+                        </AppRouter>
                     </BrowserRouter>
                 </ErrorBoundaryComponent>
             </AppProvider>

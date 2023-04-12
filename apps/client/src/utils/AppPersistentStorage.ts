@@ -1,27 +1,36 @@
+import Cookies from 'js-cookie';
+
 const BrowserKeys = {
-    securityToken: 'BOOKMARKS',
+    LastPath: 'BOOKMARKS_LAST_PATH',
+    Cookie: 'access_token',
 };
 
 export interface IAppPersistentStorage {
-    securityToken: string | null;
+    lastRoutePath: string;
+    token: string | undefined;
 }
 
 class AppPersistentStorage implements IAppPersistentStorage {
     private local: Storage;
 
-    /**
-     * @param {WindowLocalStorage} localStorage - browser local storage
-     */
     constructor(localStorage: Storage) {
         this.local = localStorage;
     }
 
-    /**
-     * @method Read token in a local storage
-     * @return {string|null}
-     */
-    get securityToken(): string | null {
-        return this.local.getItem(BrowserKeys.securityToken);
+    set lastRoutePath(lastPath) {
+        if (!lastPath) {
+            this.local.removeItem(BrowserKeys.LastPath);
+        } else {
+            this.local.setItem(BrowserKeys.LastPath, lastPath);
+        }
+    }
+
+    get lastRoutePath() {
+        return this.local.getItem(BrowserKeys.LastPath) || '';
+    }
+
+    get token() {
+        return Cookies.get(BrowserKeys.Cookie);
     }
 }
 

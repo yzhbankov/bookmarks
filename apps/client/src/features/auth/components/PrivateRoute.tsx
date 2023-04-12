@@ -1,7 +1,8 @@
 import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
+import { useAuth } from '../hooks';
 
 export function PrivateRoute() {
-    const auth: any = { token: null };
-    return auth.token ? <Outlet /> : <Navigate to="/login" />;
+    const { token } = useAuth();
+    return token ? <Outlet /> : <Navigate to="/auth" />;
 }

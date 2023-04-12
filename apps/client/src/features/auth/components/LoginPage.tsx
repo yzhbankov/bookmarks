@@ -1,19 +1,8 @@
 import React from 'react';
-import axios from 'axios';
-import { useGoogleLogin } from '@react-oauth/google';
-import Cookies from 'js-cookie';
+import { useAuth } from '../hooks';
 
 export function LoginPage() {
-    console.log(Cookies.get());
-
-    const login = useGoogleLogin({
-        onSuccess: async (codeResponse) => {
-            const tokens = await axios.post('http://localhost:3000/api/v1/auth/login/', {
-                code: codeResponse.code,
-            });
-        },
-        flow: 'auth-code',
-    });
+    const { login } = useAuth();
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full    space-y-8">
