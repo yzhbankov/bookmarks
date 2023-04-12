@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { config } from './config';
 import { AppContainer } from './app/AppContainer';
 import { ErrorBoundaryComponent } from './components/ErrorBoundary';
 import { AppProvider } from './context';
@@ -10,13 +12,15 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <React.StrictMode>
-        <AppProvider>
-            <ErrorBoundaryComponent>
-                <BrowserRouter>
-                    <AppContainer />
-                </BrowserRouter>
-            </ErrorBoundaryComponent>
-        </AppProvider>
+        <GoogleOAuthProvider clientId={config.clientId}>
+            <AppProvider>
+                <ErrorBoundaryComponent>
+                    <BrowserRouter>
+                        <AppContainer />
+                    </BrowserRouter>
+                </ErrorBoundaryComponent>
+            </AppProvider>
+        </GoogleOAuthProvider>
     </React.StrictMode>
 );
 
