@@ -1,5 +1,5 @@
+import { config } from '../config';
 import { AxiosClientApi, IAxiosClientApi } from './axios';
-// import { IMockClientApi, MockClientApi } from './mock';
 import { appPersistentStorage } from '../utils';
 
 type ConfigOptions = {
@@ -37,7 +37,7 @@ function createClient(
 export const client: ApiClient = createClient({
     type: ClientTypes.Axios,
     options: {
-        baseURL: process.env.IN_CONTACT_MONITOR_API_BASE_URL || '',
+        baseURL: config.baseURL,
         securityToken: appPersistentStorage.securityToken || '',
     },
 });

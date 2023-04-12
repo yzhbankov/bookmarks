@@ -1,8 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import { useGoogleLogin } from '@react-oauth/google';
+import Cookies from 'js-cookie';
 
 export function LoginPage() {
+    console.log(Cookies.get());
+
     const login = useGoogleLogin({
         onSuccess: async (codeResponse) => {
             const tokens = await axios.post('http://localhost:3000/api/v1/auth/login/', {

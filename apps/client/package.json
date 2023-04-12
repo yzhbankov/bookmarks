@@ -8,10 +8,13 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
+    "@types/js-cookie": "^3.0.3",
     "@types/node": "^16.18.23",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "axios": "^1.3.5",
+    "dotenv": "^16.0.3",
+    "js-cookie": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.3",
@@ -22,10 +25,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "./node_modules/.bin/react-scripts start",
-    "build": "./node_modules/.bin/react-scripts build",
-    "test": "./node_modules/.bin/react-scripts test",
-    "eject": "./node_modules/.bin/react-scripts eject"
+    "start": "dotenv --file ../../shared/env/.env run ./node_modules/.bin/react-scripts start",
+    "build": "dotenv --file ../../shared/env/.env run ./node_modules/.bin/react-scripts build",
+    "test": "dotenv --file ../../shared/env/.env.test run ./node_modules/.bin/react-scripts test",
+    "eject": "dotenv --file ../../shared/env/.env.test run ./node_modules/.bin/react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
