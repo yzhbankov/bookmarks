@@ -17,11 +17,15 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Create env file
+          run: |
+            touch ./apps/client/.env
+            echo REACT_APP_BOOKMARKS_GOOGLE_CLIENT_ID=${{ vars.BOOKMARKS_GOOGLE_CLIENT_ID }} >> ./apps/client/.env
+            echo REACT_APP_BOOKMARKS_BASE_URL=${{ vars.BOOKMARKS_BASE_URL }} >> ./apps/client/.env
+            cat ./apps/client/.env
+
       - name: Build
-        env:
-          CLIENT_ID: ${{ secrets.BOOKMARKS_GOOGLE_CLIENT_ID }}
-          BASE_URL: ${{ vars.BOOKMARKS_BASE_URL }}
-        run: CI=false yarn build:client --env REACT_APP_BOOKMARKS_GOOGLE_CLIENT_ID=$CLIENT_ID --env REACT_APP_BOOKMARKS_BASE_URL=$BASE_URL
+        run: CI=false yarn build:client
 
 
       - name: Deploy to S3
