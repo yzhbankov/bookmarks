@@ -18,11 +18,11 @@ jobs:
         run: yarn install
 
       - name: Create env file
-          run: |
-            touch ./apps/client/.env
-            echo REACT_APP_BOOKMARKS_GOOGLE_CLIENT_ID=${{ vars.BOOKMARKS_GOOGLE_CLIENT_ID }} >> ./apps/client/.env
-            echo REACT_APP_BOOKMARKS_BASE_URL=${{ vars.BOOKMARKS_BASE_URL }} >> ./apps/client/.env
-            cat ./apps/client/.env
+        run: |
+          touch ./apps/client/.env
+          echo REACT_APP_BOOKMARKS_GOOGLE_CLIENT_ID=${{ vars.BOOKMARKS_GOOGLE_CLIENT_ID }} >> ./apps/client/.env
+          echo REACT_APP_BOOKMARKS_BASE_URL=${{ vars.BOOKMARKS_BASE_URL }} >> ./apps/client/.env
+          cat ./apps/client/.env
 
       - name: Build
         run: CI=false yarn build:client
