@@ -9,7 +9,7 @@ export interface IBookmarkAdd {
     addBookmark: (bookmark: IBookmark) => any;
 }
 
-export function usePostBookmark(): IBookmarkAdd {
+export function useCreateBookmark(): IBookmarkAdd {
     const { api } = useContext<AppContextType>(AppContext);
     const queryClient: QueryClient = useQueryClient();
 
