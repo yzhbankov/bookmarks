@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { QueryClientProvider } from 'react-query';
+import { queryClient } from './queryClient';
 import { config } from './config';
 import { AppContainer } from './app/AppContainer';
 import { AppRouter, ErrorBoundaryComponent } from './components';
@@ -15,11 +17,13 @@ root.render(
         <GoogleOAuthProvider clientId={config.clientId}>
             <AppProvider>
                 <ErrorBoundaryComponent>
-                    <BrowserRouter>
-                        <AppRouter>
-                            <AppContainer />
-                        </AppRouter>
-                    </BrowserRouter>
+                    <QueryClientProvider client={queryClient}>
+                        <BrowserRouter>
+                            <AppRouter>
+                                <AppContainer />
+                            </AppRouter>
+                        </BrowserRouter>
+                    </QueryClientProvider>
                 </ErrorBoundaryComponent>
             </AppProvider>
         </GoogleOAuthProvider>
