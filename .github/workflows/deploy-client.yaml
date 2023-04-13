@@ -18,7 +18,11 @@ jobs:
         run: yarn install
 
       - name: Build
-        run: CI=false yarn build:client
+        env:
+          CLIENT_ID: ${{ secrets.BOOKMARKS_GOOGLE_CLIENT_ID }}
+          BASE_URL: ${{ vars.BOOKMARKS_BASE_URL }}
+        run: CI=false yarn build:client --env REACT_APP_BOOKMARKS_GOOGLE_CLIENT_ID=$CLIENT_ID --env REACT_APP_BOOKMARKS_BASE_URL=$BASE_URL
+
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
