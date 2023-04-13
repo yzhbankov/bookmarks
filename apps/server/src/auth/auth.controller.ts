@@ -19,7 +19,7 @@ export class AuthController {
 
     res.cookie('access_token', token, {
       maxAge: 2592000000,
-      sameSite: true,
+      sameSite: false,
       secure: false,
     });
     res.status(HttpStatus.OK).send();
