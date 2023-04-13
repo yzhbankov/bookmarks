@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "dotenv --file ../../shared/env/.env run ./node_modules/.bin/react-scripts start",
-    "build": "dotenv --file ../../shared/env/.env run ./node_modules/.bin/react-scripts build",
+    "build": "./node_modules/.bin/react-scripts build",
     "test": "dotenv --file ../../shared/env/.env.test run ./node_modules/.bin/react-scripts test",
     "eject": "dotenv --file ../../shared/env/.env.test run ./node_modules/.bin/react-scripts eject"
   },
