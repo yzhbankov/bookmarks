@@ -4,6 +4,7 @@ exports.default = () => ({
     server: {
         port: parseInt(process.env.BOOKMARKS_SERVER_PORT, 10),
     },
+    domain: process.env.BOOKMARKS_DOMAIN,
     google: {
         clientID: process.env.BOOKMARKS_GOOGLE_CLIENT_ID,
         clientSecret: process.env.BOOKMARKS_GOOGLE_CLIENT_SECRET,

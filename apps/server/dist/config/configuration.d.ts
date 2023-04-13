@@ -2,6 +2,7 @@ declare const _default: () => {
     server: {
         port: number;
     };
+    domain: string;
     google: {
         clientID: string;
         clientSecret: string;

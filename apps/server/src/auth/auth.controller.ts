@@ -1,4 +1,5 @@
 import { Get, Body, Controller, HttpStatus, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
@@ -10,15 +11,22 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
   version: '1',
 })
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private configService: ConfigService,
+  ) {}
 
   @Post('login')
   @ApiOperation({ summary: 'Login with google auth code' })
-  async googleExchangeCodeForToken(@Req() req, @Res() res: Response, @Body() body: { code: string }) {
+  async googleExchangeCodeForToken(
+    @Req() req,
+    @Res() res: Response,
+    @Body() body: { code: string },
+  ) {
     const token = await this.authService.exchangeCodeForToken(body.code);
 
     res.cookie('access_token', token, {
-      domain: 'bookmarks.lat',
+      domain: this.configService.get('domain'),
       maxAge: 2592000000,
       secure: false,
     });

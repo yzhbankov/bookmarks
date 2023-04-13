@@ -40,7 +40,8 @@ jobs:
             BOOKMARKS_GOOGLE_CALLBACK_URL=${{ secrets.BOOKMARKS_GOOGLE_CALLBACK_URL }}
             BOOKMARKS_GOOGLE_CLIENT_ID=${{ secrets.BOOKMARKS_GOOGLE_CLIENT_ID }}
             BOOKMARKS_GOOGLE_CLIENT_SECRET=${{ secrets.BOOKMARKS_GOOGLE_CLIENT_SECRET }}
-            BOOKMARKS_DB_HOST=${{ secrets.BOOKMARKS_DB_HOST }}
+            BOOKMARKS_DB_HOST=${{ vars.BOOKMARKS_DB_HOST }}
+            BOOKMARKS_DOMAIN=${{ vars.BOOKMARKS_DOMAIN }}
           tags: |
             yzhbankov/bookmarks:${{ steps.set_version.outputs.no-dash }}
             yzhbankov/bookmarks:latest
