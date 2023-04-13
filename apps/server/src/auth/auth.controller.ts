@@ -18,9 +18,9 @@ export class AuthController {
     const token = await this.authService.exchangeCodeForToken(body.code);
 
     res.cookie('access_token', token, {
+      domain: 'bookmarks.lat',
       maxAge: 2592000000,
-      sameSite: 'none',
-      secure: true,
+      secure: false,
     });
     res.status(HttpStatus.OK).send();
   }
