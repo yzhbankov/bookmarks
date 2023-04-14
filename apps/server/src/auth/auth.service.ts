@@ -2,7 +2,6 @@ import { BadRequestException, Injectable, InternalServerErrorException, HttpExce
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { OAuth2Client } from 'google-auth-library';
-import { RegisterUserDto } from './dto';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
@@ -31,6 +30,9 @@ export class AuthService {
     return this.generateJwt({
       sub: userExists._id,
       email: userExists.email,
+      name: userExists.name,
+      locale: user.locale,
+      picture: user.picture,
     });
   }
 
@@ -41,20 +43,33 @@ export class AuthService {
         this.configService.get<string>('google.clientSecret'),
         'postmessage',
       );
-      const { tokens } = await oAuth2Client.getToken(code);
-      const tokenInfo = await oAuth2Client.getTokenInfo(tokens.access_token);
+      const {
+        tokens: { id_token },
+      } = await oAuth2Client.getToken(code);
 
-      return this.signIn(tokenInfo);
+      const ticket = await oAuth2Client.verifyIdToken({
+        idToken: id_token,
+        audience: this.configService.get<string>('google.clientID'),
+      });
+      const payload = ticket.getPayload();
+
+      return this.signIn(payload);
     } catch (error) {
       throw new HttpException('Code exchange error', HttpStatus.BAD_REQUEST);
     }
   }
 
-  async registerUser(user: RegisterUserDto) {
+  async registerUser(user) {
     try {
       const newUser = await this.usersService.create(user);
 
-      return this.generateJwt({ sub: newUser._id, email: newUser.email });
+      return this.generateJwt({
+        sub: newUser._id,
+        email: newUser.email,
+        name: newUser.name,
+        locale: user.locale,
+        picture: user.picture,
+      });
     } catch {
       throw new InternalServerErrorException();
     }

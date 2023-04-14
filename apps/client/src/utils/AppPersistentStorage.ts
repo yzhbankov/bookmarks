@@ -8,6 +8,7 @@ const BrowserKeys = {
 export interface IAppPersistentStorage {
     lastRoutePath: string;
     token: string | undefined;
+    clear: () => void;
 }
 
 class AppPersistentStorage implements IAppPersistentStorage {
@@ -31,6 +32,10 @@ class AppPersistentStorage implements IAppPersistentStorage {
 
     get token() {
         return Cookies.get(BrowserKeys.Cookie);
+    }
+
+    clear() {
+        return Cookies.remove(BrowserKeys.Cookie);
     }
 }
 

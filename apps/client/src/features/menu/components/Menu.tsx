@@ -1,8 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useAuth } from '../../auth/hooks';
 
 export function Menu() {
-    return <div className="text-center">Bookmarks menu</div>;
+    const { user, logout } = useAuth();
+    console.log(user);
+    return (
+        <div>
+            <div className="text-center">Bookmarks menu</div>
+            <img src={user && user.picture} />
+            <button onClick={() => logout()}>Logout</button>
+        </div>
+    );
 }
 
 Menu.propTypes = {};
