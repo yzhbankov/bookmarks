@@ -6,13 +6,15 @@ import { CommonDialog, DialogButton } from '../../../components';
 type TagCreateModalType = {
     isOpen: boolean;
     handleOpen: (state: boolean) => void;
-    tagId: string;
+    tagId: string | null;
 };
 
 export function TagDeleteDialog({ isOpen, handleOpen, tagId }: TagCreateModalType) {
     const { delTag, isRemoving } = useDelTags();
     const handeOk = async () => {
-        await delTag(tagId);
+        if (tagId) {
+            await delTag(tagId);
+        }
         handleOpen(false);
     };
     const handleCancel = () => {
@@ -24,7 +26,7 @@ export function TagDeleteDialog({ isOpen, handleOpen, tagId }: TagCreateModalTyp
             handleOpen={handleOpen}
             isOpen={isOpen}
             title={title}
-            content={<TagDeleteForm handleCancel={handleCancel} handleOk={handeOk} isRemoving={isRemoving} />}
+            content={<TagDeleteForm handleCancel={handleCancel} handleOk={handeOk} isRemoving={isRemoving || !tagId} />}
         />
     );
 }

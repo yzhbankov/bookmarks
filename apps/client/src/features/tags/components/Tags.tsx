@@ -35,7 +35,7 @@ export function Tags() {
             <TagDeleteDialog
                 isOpen={openDeleteModal}
                 handleOpen={(val: boolean) => setOpenDeleteModal(val)}
-                tagId={tagsFetch.data[0]?.id}
+                tagId={tagsFetch.data && tagsFetch.data[0] ? tagsFetch.data[0].id : null}
             />
         </div>
     );
