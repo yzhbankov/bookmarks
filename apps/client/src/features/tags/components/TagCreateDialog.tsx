@@ -8,7 +8,7 @@ type TagCreateModalType = {
     handleOpen: (state: boolean) => void;
 };
 
-export function TagCreateModal({ isOpen, handleOpen }: TagCreateModalType) {
+export function TagCreateDialog({ isOpen, handleOpen }: TagCreateModalType) {
     const cancelButtonRef = useRef(null);
 
     return (
@@ -54,10 +54,10 @@ export function TagCreateModal({ isOpen, handleOpen }: TagCreateModalType) {
     );
 }
 
-TagCreateModal.propTypes = {
+TagCreateDialog.propTypes = {
     isOpen: PropTypes.bool,
 };
 
-TagCreateModal.defaultProps = {
+TagCreateDialog.defaultProps = {
     isOpen: false,
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ITagsFetch, useFetchTags } from '../hooks';
-import { TagCreateModal } from './TagCreateModal';
+import { TagCreateDialog } from './TagCreateDialog';
 
 export function Tags() {
     const tagsFetch: ITagsFetch = useFetchTags();
@@ -22,7 +22,7 @@ export function Tags() {
             >
                 Create Tag
             </button>
-            <TagCreateModal isOpen={openCreateModal} handleOpen={(val: boolean) => setOpenCreateModal(val)} />
+            <TagCreateDialog isOpen={openCreateModal} handleOpen={(val: boolean) => setOpenCreateModal(val)} />
         </div>
     );
 }
