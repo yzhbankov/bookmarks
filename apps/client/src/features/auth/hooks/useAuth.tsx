@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { useGoogleLogin } from '@react-oauth/google';
@@ -21,6 +21,9 @@ export function useAuth(): IUseAuth {
     const navigate = useNavigate();
     const { api, appPersistentStorage } = useContext<AppContextType>(AppContext);
     const lastPath = appPersistentStorage?.lastRoutePath || ROOT_PATH;
+    const user = useMemo(() => {
+        return appPersistentStorage.token && jwtDecode(appPersistentStorage.token);
+    }, [appPersistentStorage.token]);
 
     const login = useGoogleLogin({
         onSuccess: async (codeResponse) => {
@@ -36,10 +39,10 @@ export function useAuth(): IUseAuth {
         flow: 'auth-code',
     });
 
-    const logout = () => {
+    const logout = useCallback(() => {
         appPersistentStorage.clear();
         navigate(AUTH_PATH);
-    };
+    }, []);
 
     const checkSession = async () => {
         api?.auth
@@ -57,7 +60,7 @@ export function useAuth(): IUseAuth {
         checkSession,
         login,
         logout,
-        user: appPersistentStorage.token && jwtDecode(appPersistentStorage.token),
+        user,
         error,
     };
 }
