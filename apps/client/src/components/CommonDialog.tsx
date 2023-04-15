@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 type CommonDialogPropsType = {
     isOpen: boolean;
     handleOpen: (state: boolean) => void;
-    children: ReactNode;
+    title: string;
+    content: ReactNode;
 };
 
-export function CommonDialog({ isOpen, handleOpen, children }: CommonDialogPropsType) {
+export function CommonDialog({ isOpen, handleOpen, title, content }: CommonDialogPropsType) {
     const cancelButtonRef = useRef(null);
 
     return (
@@ -38,7 +39,21 @@ export function CommonDialog({ isOpen, handleOpen, children }: CommonDialogProps
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
                             <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                {children}
+                                <div>
+                                    <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                        <div className="sm:flex sm:items-start">
+                                            <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                                <Dialog.Title
+                                                    as="h3"
+                                                    className="text-base font-semibold leading-6 text-gray-900"
+                                                >
+                                                    {title}
+                                                </Dialog.Title>
+                                                <div className="mt-2">{content}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>
@@ -50,8 +65,14 @@ export function CommonDialog({ isOpen, handleOpen, children }: CommonDialogProps
 
 CommonDialog.propTypes = {
     isOpen: PropTypes.bool,
+    handleOpen: PropTypes.func,
+    title: PropTypes.string,
+    content: PropTypes.object,
 };
 
 CommonDialog.defaultProps = {
     isOpen: false,
+    handleOpen: () => {},
+    title: '',
+    content: {},
 };
