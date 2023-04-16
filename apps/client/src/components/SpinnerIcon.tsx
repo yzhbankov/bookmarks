@@ -47,7 +47,7 @@ function ExtraSmallSpinnerIcon({ color = 'blue' }: IconType) {
     return (
         <svg
             aria-hidden="true"
-            className={`inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-200 fill-${color}-600`}
+            className={`inline w-4 h-4 text-gray-200 animate-spin dark:text-gray-200 fill-${color}-600`}
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@ function SmallSpinnerIcon({ color = 'blue' }: IconType) {
     return (
         <svg
             aria-hidden="true"
-            className={`inline w-6 h-6 mr-2 text-gray-200 animate-spin dark:text-gray-200 fill-${color}-600`}
+            className={`inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-200 fill-${color}-600`}
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +89,7 @@ function MediumSpinnerIcon({ color = 'blue' }: IconType) {
     return (
         <svg
             aria-hidden="true"
-            className={`inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-200 fill-${color}-600`}
+            className={`inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-200 fill-${color}-600`}
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +110,7 @@ function LargeSpinnerIcon({ color = 'blue' }: IconType) {
     return (
         <svg
             aria-hidden="true"
-            className={`inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-200 fill-${color}-600`}
+            className={`inline w-10 h-10 text-gray-200 animate-spin dark:text-gray-200 fill-${color}-600`}
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

@@ -29,7 +29,7 @@ export function TagButton({ id, name, title, handleCheck, handleDelete, checked,
             </button>
             <button
                 className={className(
-                    'border border-l-0 border-blue-500 font-bold py-2 px-2 rounded-r',
+                    'text-center border border-l-0 border-blue-500 font-bold py-2 px-2 w-10 rounded-r',
                     checked
                         ? 'bg-blue-500 hover:bg-red-400 text-white '
                         : 'bg-white hover:bg-red-500 text-blue-500 hover:text-white'
