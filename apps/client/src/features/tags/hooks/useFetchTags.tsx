@@ -1,9 +1,10 @@
 import { useContext } from 'react';
 import { useQuery, UseQueryResult } from 'react-query';
 import { AppContext, AppContextType } from '../../../context';
+import { ITag } from '../../../models';
 
 export interface ITagsFetch {
-    data: any;
+    data: ITag[] | undefined;
     isFetching: boolean;
     isError: boolean;
 }
@@ -15,7 +16,7 @@ export function useFetchTags(): ITagsFetch {
         return api?.tags.readList();
     };
 
-    const { data, isFetching, isError }: UseQueryResult = useQuery(['tags'], fetchTags, {
+    const { data, isFetching, isError }: UseQueryResult<ITag[] | undefined> = useQuery(['tags'], fetchTags, {
         keepPreviousData: true,
     });
 

@@ -109,11 +109,19 @@ function TagCreateForm({ tag, handleTag, handleCancel, handleOk, isAdding, valid
 TagCreateForm.propTypes = {
     tag: PropTypes.shape({ name: PropTypes.string, description: PropTypes.string }),
     handleTag: PropTypes.func,
+    handleCancel: PropTypes.func,
+    handleOk: PropTypes.func,
+    isAdding: PropTypes.bool,
+    valid: PropTypes.bool,
 };
 
 TagCreateForm.defaultProps = {
     tag: { name: '', description: '' },
     handleTag: () => {},
+    handleCancel: () => {},
+    handleOk: () => {},
+    isAdding: false,
+    valid: false,
 };
 
 TagCreateDialog.propTypes = {

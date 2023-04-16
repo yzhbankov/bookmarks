@@ -3,3 +3,4 @@ export * from './ErrorBoundary';
 export * from './GoogleButton';
 export * from './CommonDialog';
 export * from './DialogButton';
+export * from './CrossIcon';
