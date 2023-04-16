@@ -5,3 +5,4 @@ export * from './CommonDialog';
 export * from './DialogButton';
 export * from './CrossIcon';
 export * from './SpinnerIcon';
+export * from './Table';

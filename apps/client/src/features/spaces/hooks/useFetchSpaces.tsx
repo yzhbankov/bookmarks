@@ -3,7 +3,7 @@ import { useQuery, UseQueryResult } from 'react-query';
 import { AppContext, AppContextType } from '../../../context';
 
 export interface ISpacesFetch {
-    data: any;
+    spaces: any;
     isFetching: boolean;
     isError: boolean;
 }
@@ -19,5 +19,5 @@ export function useFetchSpaces(): ISpacesFetch {
         keepPreviousData: true,
     });
 
-    return { data, isFetching, isError };
+    return { spaces: data, isFetching, isError };
 }

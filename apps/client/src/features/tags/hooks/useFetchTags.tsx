@@ -4,7 +4,7 @@ import { AppContext, AppContextType } from '../../../context';
 import { ITag } from '../../../models';
 
 export interface ITagsFetch {
-    data: ITag[] | undefined;
+    tags: ITag[] | undefined;
     isFetching: boolean;
     isError: boolean;
 }
@@ -20,5 +20,5 @@ export function useFetchTags(): ITagsFetch {
         keepPreviousData: true,
     });
 
-    return { data, isFetching, isError };
+    return { tags: data, isFetching, isError };
 }

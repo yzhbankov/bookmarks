@@ -1,19 +1,19 @@
 import { useContext } from 'react';
 import { useMutation, useQueryClient, QueryClient } from 'react-query';
 import { AppContext, AppContextType } from '../../../context';
-import { IBookmark } from '../../../models';
+import { IBookmarkCreate } from '../../../models';
 
 export interface IBookmarkAdd {
     isAdding: boolean;
     isError: boolean;
-    addBookmark: (bookmark: IBookmark) => any;
+    addBookmark: (bookmark: IBookmarkCreate) => any;
 }
 
 export function useCreateBookmark(): IBookmarkAdd {
     const { api } = useContext<AppContextType>(AppContext);
     const queryClient: QueryClient = useQueryClient();
 
-    async function postBookmark(data: IBookmark) {
+    async function postBookmark(data: IBookmarkCreate) {
         return api?.bookmarks.create(data);
     }
 

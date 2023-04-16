@@ -4,7 +4,7 @@ import { TagCreateDialog } from './TagCreateDialog';
 import { TagsList } from './TagsList';
 
 export function Tags() {
-    const { data }: ITagsFetch = useFetchTags();
+    const { tags }: ITagsFetch = useFetchTags();
     const [openCreateModal, setOpenCreateModal] = useState<boolean>(false);
 
     return (
@@ -18,7 +18,7 @@ export function Tags() {
                 </button>
             </div>
             <div className="text-center">
-                <TagsList tags={data} />
+                <TagsList tags={tags} />
             </div>
             <TagCreateDialog isOpen={openCreateModal} handleOpen={(val: boolean) => setOpenCreateModal(val)} />
         </div>
