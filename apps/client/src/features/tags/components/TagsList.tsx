@@ -10,7 +10,7 @@ type TagsListType = {
 
 export function TagsList({ tags }: TagsListType) {
     const [checked, setChecked] = useState<string>('');
-    const { delTag } = useDelTags();
+    const { delTag, isRemoving } = useDelTags();
 
     if (!tags) return null;
     return (
@@ -22,6 +22,7 @@ export function TagsList({ tags }: TagsListType) {
                     checked={checked === tag.id}
                     name={tag.name}
                     title={tag.description}
+                    isLoading={isRemoving}
                     handleCheck={() => {
                         if (checked === tag.id) {
                             setChecked('');
