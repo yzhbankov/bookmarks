@@ -24,7 +24,7 @@ export class AuthController {
     @Body() body: { code: string },
   ) {
     const token = await this.authService.exchangeCodeForToken(body.code);
-
+    console.log('domain: ', this.configService.get('domain'));
     res.cookie('access_token', token, {
       domain: this.configService.get('domain'),
       maxAge: 2592000000,
