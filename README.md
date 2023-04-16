@@ -44,3 +44,46 @@ https://miro.com/app/board/uXjVPogokTU=/
 ### Client
 * React
 * React-query
+
+## Local project setup
+
+
+## Project deployment
+### AWS Setup
+#### AWS User and Role
+
+#### S3 bucket
+
+#### EC2
+
+#### Route 53
+
+
+### Environment variables and GitHub secrets
+#### GutHub Actions Secrets
+ - `DOCKER_HUB_USERNAME` - specify docker hub username for your user;
+ - `DOCKER_HUB_ACCESS_TOKEN` - specify docker hub secret token for your user;
+ - `DOCKER_HUB_PASSWORD` - 
+ - `BOOKMARKS_GOOGLE_CALLBACK_URL` - ;
+ - `BOOKMARKS_GOOGLE_CLIENT_ID` - ;
+ - `BOOKMARKS_GOOGLE_CLIENT_SECRET` - ;
+ - `AWS_ACCESS_KEY_ID` - ;
+ - `AWS_SECRET_ACCESS_KEY` - ;
+ - `AWS_HOST` - ;
+ - `AWS_USERNAME` - ;
+ - `AWS_PRIVATE_KEY` - ;
+
+#### GutHub Actions Variables
+- `BOOKMARKS_DB_HOST` - 
+- `BOOKMARKS_DOMAIN` - 
+- `BOOKMARKS_BASE_URL` - 
+- `S3_BUCKET` - 
+- `AWS_REGION` - 
+
+## Deployment instructions
+### Server
+ - to build docker image just generate new tag(`svx.x.x`) and push, it trigger docker image generation and publish in docker hub: `yhbankov/bookmarks:latest`, `yhbankov/bookmarks:x.x.x` 
+ - deploy server just create branch `deploy-server` and push it with force update flag;
+
+### Client
+ - to build and deploy client just create branch `deploy-client` and push it with force update flag;
