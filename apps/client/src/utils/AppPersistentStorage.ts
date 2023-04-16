@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 
-const BrowserKeys = {
+export const BrowserKeys = {
     LastPath: 'BOOKMARKS_LAST_PATH',
     Cookie: 'access_token',
 };
@@ -9,6 +9,9 @@ export interface IAppPersistentStorage {
     lastRoutePath: string;
     token: string | undefined;
     clear: () => void;
+    save: (key: string, value: string) => void;
+    read: (key: string) => string | null;
+    remove: (key: string) => void;
 }
 
 class AppPersistentStorage implements IAppPersistentStorage {
@@ -26,7 +29,7 @@ class AppPersistentStorage implements IAppPersistentStorage {
         }
     }
 
-    get lastRoutePath() {
+    get lastRoutePath(): string {
         return this.local.getItem(BrowserKeys.LastPath) || '';
     }
 
@@ -36,6 +39,18 @@ class AppPersistentStorage implements IAppPersistentStorage {
 
     clear() {
         return Cookies.remove(BrowserKeys.Cookie);
+    }
+
+    save(key: string, value: string) {
+        this.local.setItem(key, value);
+    }
+
+    read(key: string): string | null {
+        return this.local.getItem(key);
+    }
+
+    remove(key: string): void {
+        this.local.removeItem(key);
     }
 }
 

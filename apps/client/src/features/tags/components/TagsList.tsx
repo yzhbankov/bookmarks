@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { TagButton } from './TagButton';
 import { ITag } from '../../../models';
-import { useDelTags } from '../hooks';
+import { useDelTags, useSelectTag } from '../hooks';
 
 type TagsListType = {
     tags: ITag[] | undefined;
 };
 
 export function TagsList({ tags }: TagsListType) {
-    const [checked, setChecked] = useState<string>('');
+    const { selectedTag, saveStoreTag, clearStoreTag } = useSelectTag();
     const { delTag, isRemoving } = useDelTags();
 
     if (!tags) return null;
@@ -19,21 +19,21 @@ export function TagsList({ tags }: TagsListType) {
                 <TagButton
                     key={tag.id}
                     id={tag.id}
-                    checked={checked === tag.id}
+                    checked={selectedTag === tag.id}
                     name={tag.name}
                     title={tag.description}
                     isLoading={isRemoving}
                     handleCheck={() => {
-                        if (checked === tag.id) {
-                            setChecked('');
+                        if (selectedTag === tag.id) {
+                            clearStoreTag();
                         } else {
-                            setChecked(tag.id);
+                            saveStoreTag(tag.id);
                         }
                     }}
                     handleDelete={async () => {
                         await delTag(tag.id);
-                        if (checked === tag.id) {
-                            setChecked('');
+                        if (selectedTag === tag.id) {
+                            clearStoreTag();
                         }
                     }}
                 />

@@ -9,9 +9,13 @@ type ContentLayoutType = {
 export function ContentLayout(props: ContentLayoutType) {
     const { tagsRender, bookmarksRender } = props;
     return (
-        <div>
-            <div>{tagsRender()}</div>
-            <div>{bookmarksRender()}</div>
+        <div className="flex flex-row">
+            <div className="basis-1/5" />
+            <div className="basis-3/5">
+                <div>{tagsRender()}</div>
+                <div>{bookmarksRender()}</div>
+            </div>
+            <div className="basis-1/5" />
         </div>
     );
 }
