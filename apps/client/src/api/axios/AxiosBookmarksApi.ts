@@ -25,6 +25,9 @@ export class AxiosBookmarksApi implements IAxiosBookmarksApi {
     }
 
     async create(data: IBookmarkCreate): Promise<IBookmark> {
+        if (data.tag === '') {
+            delete data.tag;
+        }
         const response = await this.http.post('/api/v1/bookmarks', data);
         return new Bookmark(response.data);
     }

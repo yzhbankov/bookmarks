@@ -17,12 +17,15 @@ function validate(state: IBookmarkCreate): boolean {
     return true;
 }
 
+const initialState: IBookmarkCreate = { url: '', description: '', tag: '', space: '' };
+
 export function BookmarkCreateDialog({ isOpen, handleOpen }: BookmarkCreateDialogType) {
-    const initialState: IBookmarkCreate = { url: '', description: '', tag: '', space: '' };
-    const { spaces } = useFetchSpaces();
     const [bookmark, setBookmark] = useState<IBookmarkCreate>(initialState);
+    const { spaces } = useFetchSpaces();
+    if (!bookmark.space && spaces && spaces[0].id) {
+        setBookmark({ ...bookmark, space: spaces && spaces[0].id });
+    }
     const { addBookmark, isAdding } = useCreateBookmark();
-    initialState.space = spaces && spaces[0].id;
     const { tags } = useFetchTags();
 
     const handeOk = async () => {
@@ -56,7 +59,7 @@ export function BookmarkCreateDialog({ isOpen, handleOpen }: BookmarkCreateDialo
 }
 
 type BookmarkCreateFormType = {
-    bookmark: { url: string; description: string; tag: string };
+    bookmark: { url: string; description: string; tag?: string };
     tags: ITag[] | undefined;
     handleBookmark: (val: any) => void;
     handleCancel: () => void;

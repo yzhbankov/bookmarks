@@ -22,7 +22,7 @@ export interface IBookmark {
 export interface IBookmarkCreate {
     url: string;
     description: string;
-    tag: string;
+    tag?: string;
     space: string;
 }
 
