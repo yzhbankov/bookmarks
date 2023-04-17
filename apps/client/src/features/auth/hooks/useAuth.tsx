@@ -1,4 +1,5 @@
 import React, { useContext, useState, useCallback, useMemo } from 'react';
+import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { useGoogleLogin } from '@react-oauth/google';
@@ -18,6 +19,7 @@ const ROOT_PATH = '/';
 
 export function useAuth(): IUseAuth {
     const [error, setError] = useState<any>(null);
+    const queryClient = useQueryClient();
     const navigate = useNavigate();
     const { api, appPersistentStorage } = useContext<AppContextType>(AppContext);
     const lastPath = appPersistentStorage?.lastRoutePath || ROOT_PATH;
@@ -40,6 +42,7 @@ export function useAuth(): IUseAuth {
     });
 
     const logout = useCallback(() => {
+        queryClient.clear();
         appPersistentStorage.clear();
         navigate(AUTH_PATH);
     }, []);

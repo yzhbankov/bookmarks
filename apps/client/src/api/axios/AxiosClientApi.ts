@@ -24,9 +24,6 @@ export class AxiosClientApi implements IAxiosClientApi {
 
     constructor(options: ClientOptions) {
         const instance = axios.create({
-            headers: {
-                'Cache-Control': 'no-cache',
-            },
             withCredentials: true, // send/receive cookie
             baseURL: options.baseURL,
             timeout: 1000,
