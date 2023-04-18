@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 
+type RowType = { [key: string]: any };
+
+export type ColumnType = {
+    key: string;
+    header: string;
+    renderCell?: (rowData?: RowType, cell?: any) => ReactNode;
+};
+
 type TablePropsType = {
-    data: { [key: string]: any }[];
-    columns: { key: string; header: string }[];
+    data: RowType[];
+    columns: ColumnType[];
 };
 
 export function Table({ data, columns }: TablePropsType) {
@@ -39,7 +47,7 @@ type HeaderPropType = {
     }[];
 };
 
-export function Header({ columns }: HeaderPropType) {
+function Header({ columns }: HeaderPropType) {
     return (
         <thead>
             <tr>
@@ -58,11 +66,14 @@ Header.defaultProps = {
     columns: [],
 };
 
-type ColumnType = {
+type ColumnPropsType = {
     rowData: { [key: string]: any };
-    column: { key: string };
+    column: ColumnType;
 };
-export function Column({ rowData, column }: ColumnType) {
+function Column({ rowData, column }: ColumnPropsType) {
+    if (column.renderCell) {
+        return <td>{column.renderCell(rowData, rowData[column.key])}</td>;
+    }
     return <td>{rowData[column.key]}</td>;
 }
 

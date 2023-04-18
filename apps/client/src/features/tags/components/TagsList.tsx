@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { TagButton } from './TagButton';
 import { ITag } from '../../../models';
-import { useDelTags, useSelectTag } from '../hooks';
+import { useDelTags } from '../hooks';
+import { TagsDispatchContext, TagsContext } from '../../../context';
 
 type TagsListType = {
     tags: ITag[] | undefined;
 };
 
 export function TagsList({ tags }: TagsListType) {
-    const { selectedTag, saveStoreTag, clearStoreTag } = useSelectTag();
+    const dispatch = useContext(TagsDispatchContext);
+    const selected = useContext(TagsContext);
     const { delTag, isRemoving } = useDelTags();
 
     if (!tags) return null;
@@ -19,21 +21,21 @@ export function TagsList({ tags }: TagsListType) {
                 <TagButton
                     key={tag.id}
                     id={tag.id}
-                    checked={selectedTag === tag.id}
+                    checked={selected === tag.id}
                     name={tag.name}
                     title={tag.description}
                     isLoading={isRemoving}
                     handleCheck={() => {
-                        if (selectedTag === tag.id) {
-                            clearStoreTag();
+                        if (selected === tag.id) {
+                            dispatch({ type: 'clear' });
                         } else {
-                            saveStoreTag(tag.id);
+                            dispatch({ type: 'check', payload: tag.id });
                         }
                     }}
                     handleDelete={async () => {
                         await delTag(tag.id);
-                        if (selectedTag === tag.id) {
-                            clearStoreTag();
+                        if (selected === tag.id) {
+                            dispatch({ type: 'clear' });
                         }
                     }}
                 />

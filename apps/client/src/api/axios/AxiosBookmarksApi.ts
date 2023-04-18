@@ -1,10 +1,10 @@
 import { Axios } from 'axios';
-import { IBookmark, IBookmarkRaw, IBookmarkCreate, Bookmark } from '../../models';
+import { IBookmark, IBookmarkRaw, IBookmarkCreate, IBookmarkUpdate, Bookmark } from '../../models';
 
 export interface IAxiosBookmarksApi {
     readList: () => Promise<null | IBookmark[]>;
-    create: (bookmark: IBookmarkCreate) => Promise<IBookmark>;
-    edit: (id: string, bookmark: IBookmark) => Promise<IBookmark | null>;
+    create: (bookmark: IBookmarkCreate) => Promise<IBookmark | null>;
+    edit: (bookmark: IBookmarkUpdate) => Promise<IBookmark | null>;
     delete: (id: string) => Promise<any>;
 }
 
@@ -32,15 +32,15 @@ export class AxiosBookmarksApi implements IAxiosBookmarksApi {
         return new Bookmark(response.data);
     }
 
-    async edit(id: string, bookmark: IBookmark): Promise<IBookmark | null> {
-        const response = await this.http.put(`/api/v1/bookmarks/${id}`, bookmark);
+    async edit(bookmark: IBookmarkUpdate): Promise<IBookmark | null> {
+        const response = await this.http.put(`/api/v1/bookmarks/${bookmark.id}`, bookmark);
         if (response) {
             return new Bookmark(response.data);
         }
         return null;
     }
 
-    async delete(id: string): Promise<any> {
+    async delete(id: string): Promise<IBookmark | null> {
         const response = await this.http.delete(`/api/v1/bookmarks/${id}`);
         if (response) {
             return new Bookmark(response.data);

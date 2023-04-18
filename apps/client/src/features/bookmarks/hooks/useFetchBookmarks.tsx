@@ -2,12 +2,13 @@ import { useContext } from 'react';
 import { useQuery, UseQueryResult } from 'react-query';
 import { AppContext, AppContextType } from '../../../context';
 import { useFetchTags } from '../../tags/hooks';
-import { ITag, IBookmark } from '../../../models';
+import { ITag, IBookmark, IBookmarkTable } from '../../../models';
 
 export interface IBookmarksFetch {
-    bookmarks: any;
+    bookmarks: IBookmarkTable[];
     isFetching: boolean;
     isError: boolean;
+    getFiltered: (id: string | null) => IBookmarkTable[];
 }
 
 export function useFetchBookmarks(): IBookmarksFetch {
@@ -26,8 +27,22 @@ export function useFetchBookmarks(): IBookmarksFetch {
         keepPreviousData: true,
     });
 
-    const bookmarks =
-        data && data.map((bookmark: IBookmark) => ({ ...bookmark, tagName: tagsMap && tagsMap[bookmark.tag]?.name }));
+    const getFiltered = (selectedTag: string | null) => {
+        return data
+            ? data.reduce((memo: IBookmarkTable[], bookmark: IBookmark) => {
+                  if (!selectedTag) {
+                      memo.push({ ...bookmark, tagName: tagsMap && tagsMap[bookmark.tag]?.name });
+                  } else if (bookmark.tag === selectedTag) {
+                      memo.push({ ...bookmark, tagName: tagsMap && tagsMap[bookmark.tag]?.name });
+                  }
+                  return memo;
+              }, [])
+            : [];
+    };
 
-    return { bookmarks, isFetching, isError };
+    const bookmarks = data
+        ? data.map((bookmark: IBookmark) => ({ ...bookmark, tagName: tagsMap && tagsMap[bookmark.tag]?.name }))
+        : [];
+
+    return { bookmarks, isFetching, isError, getFiltered };
 }

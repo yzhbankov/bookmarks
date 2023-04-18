@@ -4,17 +4,20 @@ import { Tags } from '../features/tags/components';
 import { Bookmarks } from '../features/bookmarks/components';
 import { Menu } from '../features/menu/components';
 import { Footer } from '../features/footer/components';
+import { TagsProvider } from '../context';
 
 export function App() {
     return (
         <div className="App">
-            <Layout
-                menuRender={() => <Menu />}
-                contentRender={() => (
-                    <ContentLayout tagsRender={() => <Tags />} bookmarksRender={() => <Bookmarks />} />
-                )}
-                footerRender={() => <Footer />}
-            />
+            <TagsProvider>
+                <Layout
+                    menuRender={() => <Menu />}
+                    contentRender={() => (
+                        <ContentLayout tagsRender={() => <Tags />} bookmarksRender={() => <Bookmarks />} />
+                    )}
+                    footerRender={() => <Footer />}
+                />
+            </TagsProvider>
         </div>
     );
 }

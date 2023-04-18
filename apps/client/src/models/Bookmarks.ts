@@ -26,6 +26,14 @@ export interface IBookmarkCreate {
     space: string;
 }
 
+export interface IBookmarkUpdate extends IBookmarkCreate {
+    id: string;
+}
+
+export interface IBookmarkTable extends IBookmark {
+    tagName: string | undefined;
+}
+
 export class Bookmark implements IBookmark {
     id: string;
 

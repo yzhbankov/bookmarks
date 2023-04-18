@@ -1,15 +1,14 @@
-import { useEffect, useContext, ReactNode } from 'react';
+import { useEffect, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../features/auth/hooks';
-import { AppContext } from '../context';
+import { appPersistentStorage } from '../utils';
 
 interface AppRouterProps {
     children: ReactNode;
 }
 export function AppRouter({ children }: AppRouterProps) {
     const location = useLocation();
-    const { appPersistentStorage } = useContext(AppContext);
     const { checkSession } = useAuth();
     useEffect(() => {
         if (!location.pathname.includes('/auth')) {

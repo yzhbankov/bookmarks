@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { useGoogleLogin } from '@react-oauth/google';
 import { AppContext, AppContextType } from '../../../context';
+import { appPersistentStorage } from '../../../utils';
 
 interface IUseAuth {
     token: string | undefined;
@@ -21,7 +22,7 @@ export function useAuth(): IUseAuth {
     const [error, setError] = useState<any>(null);
     const queryClient = useQueryClient();
     const navigate = useNavigate();
-    const { api, appPersistentStorage } = useContext<AppContextType>(AppContext);
+    const { api } = useContext<AppContextType>(AppContext);
     const lastPath = appPersistentStorage?.lastRoutePath || ROOT_PATH;
     const user = useMemo(() => {
         return appPersistentStorage.token && jwtDecode(appPersistentStorage.token);

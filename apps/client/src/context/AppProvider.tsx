@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { client } from '../api';
-import { appPersistentStorage } from '../utils';
 import { AppContext } from './AppContext';
 
 interface AppProviderProps {
@@ -9,7 +8,7 @@ interface AppProviderProps {
 }
 
 export function AppProvider({ children }: AppProviderProps) {
-    return <AppContext.Provider value={{ api: client, appPersistentStorage }}>{children}</AppContext.Provider>;
+    return <AppContext.Provider value={{ api: client }}>{children}</AppContext.Provider>;
 }
 
 AppProvider.propTypes = {
