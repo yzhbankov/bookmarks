@@ -9,11 +9,11 @@ export function Tags() {
     const [openCreateModal, setOpenCreateModal] = useState<boolean>(false);
 
     return (
-        <div>
-            <div className="text-center my-2">
+        <div className="flex flex-row">
+            <div className="basis-1/5 my-2">
                 <CommonButton title="Create Tag" handleClick={() => setOpenCreateModal(true)} />
             </div>
-            <div className="text-center">
+            <div className="basis-4/5 my-2">
                 <TagsList tags={tags} />
             </div>
             <TagCreateDialog isOpen={openCreateModal} handleOpen={(val: boolean) => setOpenCreateModal(val)} />

@@ -2,17 +2,22 @@ import React, { useState } from 'react';
 import { BookmarkCreateDialog } from './BookmarkCreateDialog';
 import { BookmarksTable } from './BookmarksTable';
 import { CommonButton } from '../../../components';
+import { Search } from './Search';
 
 export function Bookmarks() {
     const [openCreateModal, setOpenCreateModal] = useState<boolean>(false);
-
+    const [searchText, setSearchText] = useState<string>('');
     return (
         <div>
-            <div className="text-center">Bookmarks components</div>
-            <div className="text-center my-2">
-                <CommonButton title="Add bookmark" handleClick={() => setOpenCreateModal(true)} />
+            <div className="flex flex-row my-2">
+                <div className="basis-1/2">
+                    <CommonButton title="Add bookmark" handleClick={() => setOpenCreateModal(true)} />
+                </div>
+                <div className="basis-1/2">
+                    <Search handleChange={(val) => setSearchText(val)} />
+                </div>
             </div>
-            <BookmarksTable />
+            <BookmarksTable searchText={searchText} />
             <BookmarkCreateDialog isOpen={openCreateModal} handleOpen={(val: boolean) => setOpenCreateModal(val)} />
         </div>
     );

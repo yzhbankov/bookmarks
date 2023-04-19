@@ -2,7 +2,7 @@ import React, { ChangeEvent, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useFetchBookmarks, useUpdateBookmark } from '../hooks';
 import { Table, ColumnType } from '../../../components';
-import { ITag } from '../../../models';
+import { IBookmarkTable, ITag } from '../../../models';
 import { useFetchTags } from '../../tags/hooks';
 import { TagsContext } from '../../../context';
 
@@ -13,11 +13,33 @@ import { TagsContext } from '../../../context';
 // todo: bookmark links click
 // todo: multiple tag selecting
 
-export function BookmarksTable() {
+function getSearched(data: IBookmarkTable[], searchText: string): IBookmarkTable[] {
+    if (!searchText) return data;
+    return data
+        ? data.reduce((memo: IBookmarkTable[], bookmark: IBookmarkTable) => {
+              const includesInUrl: boolean = bookmark.url.toLowerCase().includes(searchText);
+              const includesInDescription: boolean = bookmark.description.toLowerCase().includes(searchText);
+
+              if (includesInUrl || includesInDescription) {
+                  memo.push(bookmark);
+              }
+              return memo;
+          }, [])
+        : [];
+}
+
+type BookmarksTableType = {
+    searchText: string;
+};
+
+export function BookmarksTable({ searchText }: BookmarksTableType) {
     const { getFiltered } = useFetchBookmarks();
     const selected = useContext(TagsContext);
     const { tags } = useFetchTags();
     const { updateBookmark } = useUpdateBookmark();
+
+    const filteredBookmarks = getFiltered(selected);
+    const searchedBookmarks = getSearched(filteredBookmarks, searchText);
 
     const columns: ColumnType[] = [
         { key: 'url', header: 'URL', className: 'w-1/2' },
@@ -35,12 +57,16 @@ export function BookmarksTable() {
             ),
         },
     ];
-    return <Table data={getFiltered(selected)} columns={columns} className="w-full" />;
+    return <Table data={searchedBookmarks} columns={columns} className="w-full" />;
 }
 
-BookmarksTable.propTypes = {};
+BookmarksTable.propTypes = {
+    searchText: PropTypes.string,
+};
 
-BookmarksTable.defaultProps = {};
+BookmarksTable.defaultProps = {
+    searchText: '',
+};
 
 type TagSelectPropType = {
     handleChange: (e: ChangeEvent) => void;
