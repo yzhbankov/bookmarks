@@ -1,8 +1,7 @@
 import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
-import { useAuth } from '../hooks';
+import { appPersistentStorage } from '../../../utils';
 
 export function PrivateRoute() {
-    const { token } = useAuth();
-    return token ? <Outlet /> : <Navigate to="/auth" />;
+    return appPersistentStorage.token ? <Outlet /> : <Navigate to="/auth" />;
 }

@@ -4,7 +4,7 @@ import { AppContext, AppContextType } from '../../../context';
 
 export interface ISpacesFetch {
     spaces: any;
-    isFetching: boolean;
+    isLoading: boolean;
     isError: boolean;
 }
 
@@ -15,9 +15,9 @@ export function useFetchSpaces(): ISpacesFetch {
         return api?.spaces.readList();
     };
 
-    const { data, isFetching, isError }: UseQueryResult = useQuery(['spaces'], fetchSpaces, {
+    const { data, isLoading, isError }: UseQueryResult = useQuery(['spaces'], fetchSpaces, {
         keepPreviousData: true,
     });
 
-    return { spaces: data, isFetching, isError };
+    return { spaces: data, isLoading, isError };
 }

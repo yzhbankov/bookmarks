@@ -13,12 +13,7 @@ export interface ITag {
     createdAt: string;
 }
 
-export interface ITagAddBody {
-    name: string;
-    description: string;
-}
-
-export interface ITagCreate {
+export interface ITagPostBody {
     name: string;
     description: string;
 }

@@ -3,7 +3,7 @@ import { useMutation, useQueryClient, QueryClient } from 'react-query';
 import { AppContext, AppContextType } from '../../../context';
 
 export interface ITagsDel {
-    isRemoving: boolean;
+    isLoading: boolean;
     isError: boolean;
     delTag: (id: string) => any;
 }
@@ -16,11 +16,11 @@ export function useDelTags(): ITagsDel {
         return api?.tags.delete(id);
     }
 
-    const { isLoading: isRemoving, isError, mutate: delTag } = useMutation(removeTag, {
+    const { isLoading, isError, mutate: delTag } = useMutation(removeTag, {
         onSuccess: () => {
             queryClient.invalidateQueries(['tags']);
         },
     });
 
-    return { isRemoving, isError, delTag };
+    return { isLoading, isError, delTag };
 }

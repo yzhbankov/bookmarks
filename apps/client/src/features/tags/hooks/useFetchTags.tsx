@@ -5,7 +5,7 @@ import { ITag } from '../../../models';
 
 export interface ITagsFetch {
     tags: ITag[];
-    isFetching: boolean;
+    isLoading: boolean;
     isError: boolean;
 }
 
@@ -16,9 +16,9 @@ export function useFetchTags(): ITagsFetch {
         return api?.tags.readList();
     };
 
-    const { data, isFetching, isError }: UseQueryResult<ITag[] | undefined> = useQuery(['tags'], fetchTags, {
+    const { data, isLoading, isError }: UseQueryResult<ITag[] | undefined> = useQuery(['tags'], fetchTags, {
         keepPreviousData: true,
     });
 
-    return { tags: data || [], isFetching, isError };
+    return { tags: data || [], isLoading, isError };
 }

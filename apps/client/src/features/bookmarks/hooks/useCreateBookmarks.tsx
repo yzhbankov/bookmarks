@@ -4,7 +4,7 @@ import { AppContext, AppContextType } from '../../../context';
 import { IBookmarkCreate } from '../../../models';
 
 export interface IBookmarkAdd {
-    isAdding: boolean;
+    isLoading: boolean;
     isError: boolean;
     addBookmark: (bookmark: IBookmarkCreate) => any;
 }
@@ -17,11 +17,11 @@ export function useCreateBookmark(): IBookmarkAdd {
         return api?.bookmarks.create(data);
     }
 
-    const { isLoading: isAdding, isError, mutate: addBookmark } = useMutation(postBookmark, {
+    const { isLoading, isError, mutate: addBookmark } = useMutation(postBookmark, {
         onSuccess: () => {
             queryClient.invalidateQueries(['bookmarks']);
         },
     });
 
-    return { isAdding, isError, addBookmark };
+    return { isLoading, isError, addBookmark };
 }

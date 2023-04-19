@@ -25,7 +25,7 @@ export function BookmarkCreateDialog({ isOpen, handleOpen }: BookmarkCreateDialo
     if (!bookmark.space && spaces && spaces[0].id) {
         setBookmark({ ...bookmark, space: spaces && spaces[0].id });
     }
-    const { addBookmark, isAdding } = useCreateBookmark();
+    const { addBookmark, isLoading } = useCreateBookmark();
     const { tags } = useFetchTags();
 
     const handeOk = async () => {
@@ -50,7 +50,7 @@ export function BookmarkCreateDialog({ isOpen, handleOpen }: BookmarkCreateDialo
                     handleBookmark={(val: any) => setBookmark(val)}
                     handleCancel={handleCancel}
                     handleOk={handeOk}
-                    isAdding={isAdding}
+                    isLoading={isLoading}
                     valid={validate(bookmark)}
                 />
             }
@@ -64,7 +64,7 @@ type BookmarkCreateFormType = {
     handleBookmark: (val: any) => void;
     handleCancel: () => void;
     handleOk: () => void;
-    isAdding: boolean;
+    isLoading: boolean;
     valid: boolean;
 };
 
@@ -74,7 +74,7 @@ function BookmarkCreateForm({
     handleBookmark,
     handleCancel,
     handleOk,
-    isAdding,
+    isLoading,
     valid,
 }: BookmarkCreateFormType) {
     return (
@@ -130,13 +130,13 @@ function BookmarkCreateForm({
                         handleClick={handleOk}
                         text="Ok"
                         className="bg-blue-500 hover:bg-blue-700 text-white"
-                        disabled={isAdding || !valid}
+                        disabled={isLoading || !valid}
                     />
                     <DialogButton
                         handleClick={handleCancel}
                         text="Cancel"
                         className="bg-white hover:bg-gray-50 text-gray-900"
-                        disabled={isAdding}
+                        disabled={isLoading}
                     />
                 </div>
             </form>
@@ -150,7 +150,7 @@ BookmarkCreateForm.propTypes = {
     handleBookmark: PropTypes.func,
     handleCancel: PropTypes.func,
     handleOk: PropTypes.func,
-    isAdding: PropTypes.bool,
+    isLoading: PropTypes.bool,
     valid: PropTypes.bool,
 };
 
@@ -160,7 +160,7 @@ BookmarkCreateForm.defaultProps = {
     handleBookmark: () => {},
     handleCancel: () => {},
     handleOk: () => {},
-    isAdding: false,
+    isLoading: false,
     valid: false,
 };
 

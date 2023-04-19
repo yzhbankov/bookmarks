@@ -6,7 +6,7 @@ import { ITag, IBookmark, IBookmarkTable } from '../../../models';
 
 export interface IBookmarksFetch {
     bookmarks: IBookmarkTable[];
-    isFetching: boolean;
+    isLoading: boolean;
     isError: boolean;
     getFiltered: (id: string | null) => IBookmarkTable[];
 }
@@ -23,7 +23,7 @@ export function useFetchBookmarks(): IBookmarksFetch {
         return api?.bookmarks.readList();
     };
 
-    const { data, isFetching, isError }: UseQueryResult<IBookmark[]> = useQuery(['bookmarks'], fetchBookmarks, {
+    const { isLoading, data, isError }: UseQueryResult<IBookmark[]> = useQuery(['bookmarks'], fetchBookmarks, {
         keepPreviousData: true,
     });
 
@@ -44,5 +44,5 @@ export function useFetchBookmarks(): IBookmarksFetch {
         ? data.map((bookmark: IBookmark) => ({ ...bookmark, tagName: tagsMap && tagsMap[bookmark.tag]?.name }))
         : [];
 
-    return { bookmarks, isFetching, isError, getFiltered };
+    return { bookmarks, isLoading, isError, getFiltered };
 }

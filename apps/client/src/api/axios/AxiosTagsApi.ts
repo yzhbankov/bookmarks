@@ -1,9 +1,9 @@
 import { Axios } from 'axios';
-import { Tag, ITagRaw, ITag, ITagCreate } from '../../models';
+import { Tag, ITagRaw, ITag, ITagPostBody } from '../../models';
 
 export interface IAxiosTagsApi {
     readList: () => Promise<null | ITag[]>;
-    create: (bookmark: ITagCreate) => Promise<ITag>;
+    create: (tag: ITagPostBody) => Promise<ITag>;
     edit: (id: string, tag: ITag) => Promise<ITag | null>;
     delete: (id: string) => Promise<any>;
 }
@@ -24,7 +24,7 @@ export class AxiosTagsApi implements IAxiosTagsApi {
         return null;
     }
 
-    async create(data: ITagCreate): Promise<ITag> {
+    async create(data: ITagPostBody): Promise<ITag> {
         const response = await this.http.post('/api/v1/tags', data);
         return new Tag(response.data);
     }

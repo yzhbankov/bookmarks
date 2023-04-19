@@ -10,7 +10,7 @@ type TagCreateModalType = {
 };
 
 export function TagDeleteDialog({ isOpen, handleOpen, tagId }: TagCreateModalType) {
-    const { delTag, isRemoving } = useDelTags();
+    const { delTag, isLoading } = useDelTags();
     const handeOk = async () => {
         if (tagId) {
             await delTag(tagId);
@@ -26,7 +26,7 @@ export function TagDeleteDialog({ isOpen, handleOpen, tagId }: TagCreateModalTyp
             handleOpen={handleOpen}
             isOpen={isOpen}
             title={title}
-            content={<TagDeleteForm handleCancel={handleCancel} handleOk={handeOk} isRemoving={isRemoving || !tagId} />}
+            content={<TagDeleteForm handleCancel={handleCancel} handleOk={handeOk} isLoading={isLoading || !tagId} />}
         />
     );
 }
@@ -34,10 +34,10 @@ export function TagDeleteDialog({ isOpen, handleOpen, tagId }: TagCreateModalTyp
 type TagDeleteFormType = {
     handleCancel: () => void;
     handleOk: () => void;
-    isRemoving: boolean;
+    isLoading: boolean;
 };
 
-function TagDeleteForm({ handleCancel, handleOk, isRemoving }: TagDeleteFormType) {
+function TagDeleteForm({ handleCancel, handleOk, isLoading }: TagDeleteFormType) {
     return (
         <div className="w-full max-w-xs">
             <form className="bg-white px-8 pt-6 pb-8 mb-4">
@@ -46,13 +46,13 @@ function TagDeleteForm({ handleCancel, handleOk, isRemoving }: TagDeleteFormType
                         handleClick={handleOk}
                         text="Ok"
                         className="bg-blue-500 hover:bg-blue-700 text-white"
-                        disabled={isRemoving}
+                        disabled={isLoading}
                     />
                     <DialogButton
                         handleClick={handleCancel}
                         text="Cancel"
                         className="bg-white hover:bg-gray-50 text-gray-900"
-                        disabled={isRemoving}
+                        disabled={isLoading}
                     />
                 </div>
             </form>
@@ -63,13 +63,13 @@ function TagDeleteForm({ handleCancel, handleOk, isRemoving }: TagDeleteFormType
 TagDeleteForm.propTypes = {
     handleCancel: PropTypes.func,
     handleOk: PropTypes.func,
-    isRemoving: PropTypes.bool,
+    isLoading: PropTypes.bool,
 };
 
 TagDeleteForm.defaultProps = {
     handleCancel: () => {},
     handleOk: () => {},
-    isRemoving: false,
+    isLoading: false,
 };
 
 TagDeleteDialog.propTypes = {

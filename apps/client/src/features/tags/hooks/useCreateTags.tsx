@@ -1,27 +1,27 @@
 import { useContext } from 'react';
 import { useMutation, useQueryClient, QueryClient } from 'react-query';
 import { AppContext, AppContextType } from '../../../context';
-import { ITagAddBody } from '../../../models';
+import { ITagPostBody } from '../../../models';
 
 export interface ITagAdd {
-    isAdding: boolean;
+    isLoading: boolean;
     isError: boolean;
-    addTag: (tag: ITagAddBody) => any;
+    addTag: (tag: ITagPostBody) => any;
 }
 
 export function useCreateTag(): ITagAdd {
     const { api } = useContext<AppContextType>(AppContext);
     const queryClient: QueryClient = useQueryClient();
 
-    async function postTag(data: ITagAddBody) {
+    async function postTag(data: ITagPostBody) {
         return api?.tags.create(data);
     }
 
-    const { isLoading: isAdding, isError, mutate: addTag } = useMutation(postTag, {
+    const { isLoading, isError, mutate: addTag } = useMutation(postTag, {
         onSuccess: () => {
             queryClient.invalidateQueries(['tags']);
         },
     });
 
-    return { isAdding, isError, addTag };
+    return { isLoading, isError, addTag };
 }

@@ -3,15 +3,16 @@ import Cookies from 'js-cookie';
 export const BrowserKeys = {
     LastPath: 'BOOKMARKS_LAST_PATH',
     Cookie: 'access_token',
+    BookmarksTag: 'BOOKMARKS_TAG',
 };
 
 export interface IAppPersistentStorage {
     lastRoutePath: string;
     token: string | undefined;
     clear: () => void;
-    save: (key: string, value: string) => void;
-    read: (key: string) => string | null;
-    remove: (key: string) => void;
+    saveSelectedTag: (value: string) => void;
+    getSelectedTag: () => string | null;
+    clearSelectedTag: () => void;
 }
 
 class AppPersistentStorage implements IAppPersistentStorage {
@@ -41,16 +42,16 @@ class AppPersistentStorage implements IAppPersistentStorage {
         return Cookies.remove(BrowserKeys.Cookie);
     }
 
-    save(key: string, value: string) {
-        this.local.setItem(key, value);
+    saveSelectedTag(value: string) {
+        this.local.setItem(BrowserKeys.BookmarksTag, value);
     }
 
-    read(key: string): string | null {
-        return this.local.getItem(key);
+    getSelectedTag(): string | null {
+        return this.local.getItem(BrowserKeys.BookmarksTag);
     }
 
-    remove(key: string): void {
-        this.local.removeItem(key);
+    clearSelectedTag(): void {
+        this.local.removeItem(BrowserKeys.BookmarksTag);
     }
 }
 

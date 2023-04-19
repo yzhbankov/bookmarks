@@ -7,7 +7,6 @@ import { AppContext, AppContextType } from '../../../context';
 import { appPersistentStorage } from '../../../utils';
 
 interface IUseAuth {
-    token: string | undefined;
     login: () => void;
     logout: () => void;
     checkSession: () => Promise<void>;
@@ -60,7 +59,6 @@ export function useAuth(): IUseAuth {
     };
 
     return {
-        token: appPersistentStorage.token,
         checkSession,
         login,
         logout,

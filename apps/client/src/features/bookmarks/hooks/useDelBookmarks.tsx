@@ -3,7 +3,7 @@ import { useMutation, useQueryClient, QueryClient } from 'react-query';
 import { AppContext, AppContextType } from '../../../context';
 
 export interface IBookmarksDel {
-    isRemoving: boolean;
+    isLoading: boolean;
     isError: boolean;
     delBookmark: (id: string) => any;
 }
@@ -16,11 +16,11 @@ export function useDelBookmark(): IBookmarksDel {
         return api?.bookmarks.delete(id);
     }
 
-    const { isLoading: isRemoving, isError, mutate: delBookmark } = useMutation(removeBookmark, {
+    const { isLoading, isError, mutate: delBookmark } = useMutation(removeBookmark, {
         onSuccess: () => {
             queryClient.invalidateQueries(['bookmarks']);
         },
     });
 
-    return { isRemoving, isError, delBookmark };
+    return { isLoading, isError, delBookmark };
 }

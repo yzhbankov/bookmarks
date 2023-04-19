@@ -12,7 +12,7 @@ type TagsListType = {
 export function TagsList({ tags }: TagsListType) {
     const dispatch = useContext(TagsDispatchContext);
     const selected = useContext(TagsContext);
-    const { delTag, isRemoving } = useDelTags();
+    const { delTag, isLoading } = useDelTags();
 
     if (!tags) return null;
     return (
@@ -24,7 +24,7 @@ export function TagsList({ tags }: TagsListType) {
                     checked={selected === tag.id}
                     name={tag.name}
                     title={tag.description}
-                    isLoading={isRemoving}
+                    isLoading={isLoading}
                     handleCheck={() => {
                         if (selected === tag.id) {
                             dispatch({ type: 'clear' });

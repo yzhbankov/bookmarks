@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useCreateTag } from '../hooks';
-import { ITagAddBody } from '../../../models';
+import { ITagPostBody } from '../../../models';
 import { CommonDialog, DialogButton } from '../../../components';
 
 type TagCreateModalType = {
@@ -9,16 +9,16 @@ type TagCreateModalType = {
     handleOpen: (state: boolean) => void;
 };
 
-const initialState: ITagAddBody = { name: '', description: '' };
+const initialState: ITagPostBody = { name: '', description: '' };
 
-function validate(state: ITagAddBody): boolean {
+function validate(state: ITagPostBody): boolean {
     if (state.name.length < 1) return false;
     return true;
 }
 
 export function TagCreateDialog({ isOpen, handleOpen }: TagCreateModalType) {
-    const [tag, setTag] = useState<ITagAddBody>(initialState);
-    const { addTag, isAdding } = useCreateTag();
+    const [tag, setTag] = useState<ITagPostBody>(initialState);
+    const { addTag, isLoading } = useCreateTag();
     const handeOk = async () => {
         await addTag(tag);
         setTag(initialState);
@@ -40,7 +40,7 @@ export function TagCreateDialog({ isOpen, handleOpen }: TagCreateModalType) {
                     handleTag={(val: any) => setTag(val)}
                     handleCancel={handleCancel}
                     handleOk={handeOk}
-                    isAdding={isAdding}
+                    isLoading={isLoading}
                     valid={validate(tag)}
                 />
             }
@@ -53,11 +53,11 @@ type TagCreateFormType = {
     handleTag: (val: any) => void;
     handleCancel: () => void;
     handleOk: () => void;
-    isAdding: boolean;
+    isLoading: boolean;
     valid: boolean;
 };
 
-function TagCreateForm({ tag, handleTag, handleCancel, handleOk, isAdding, valid }: TagCreateFormType) {
+function TagCreateForm({ tag, handleTag, handleCancel, handleOk, isLoading, valid }: TagCreateFormType) {
     return (
         <div className="w-full max-w-xs">
             <form className="bg-white px-8 pt-6 pb-8 mb-4">
@@ -92,13 +92,13 @@ function TagCreateForm({ tag, handleTag, handleCancel, handleOk, isAdding, valid
                         handleClick={handleOk}
                         text="Ok"
                         className="bg-blue-500 hover:bg-blue-700 text-white"
-                        disabled={isAdding || !valid}
+                        disabled={isLoading || !valid}
                     />
                     <DialogButton
                         handleClick={handleCancel}
                         text="Cancel"
                         className="bg-white hover:bg-gray-50 text-gray-900"
-                        disabled={isAdding}
+                        disabled={isLoading}
                     />
                 </div>
             </form>
@@ -111,7 +111,7 @@ TagCreateForm.propTypes = {
     handleTag: PropTypes.func,
     handleCancel: PropTypes.func,
     handleOk: PropTypes.func,
-    isAdding: PropTypes.bool,
+    isLoading: PropTypes.bool,
     valid: PropTypes.bool,
 };
 
@@ -120,7 +120,7 @@ TagCreateForm.defaultProps = {
     handleTag: () => {},
     handleCancel: () => {},
     handleOk: () => {},
-    isAdding: false,
+    isLoading: false,
     valid: false,
 };
 
