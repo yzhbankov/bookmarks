@@ -6,6 +6,13 @@ import { ITag } from '../../../models';
 import { useFetchTags } from '../../tags/hooks';
 import { TagsContext } from '../../../context';
 
+// todo: search
+// todo: tag bookmark removing
+// todo: bookmark icons
+// todo: bookmark titles
+// todo: bookmark links click
+// todo: multiple tag selecting
+
 export function BookmarksTable() {
     const { getFiltered } = useFetchBookmarks();
     const selected = useContext(TagsContext);
