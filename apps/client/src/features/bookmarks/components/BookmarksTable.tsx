@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { useFetchBookmarks, useUpdateBookmark } from '../hooks';
 import { Table, ColumnType } from '../../../components';
 import { ITag } from '../../../models';
@@ -46,7 +47,7 @@ function TagSelect({ handleChange, tags = [], tagId }: TagSelectPropType) {
             id="tags"
             className="w-full border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChange(e)}
-            defaultValue={tagId}
+            value={tagId || ''}
         >
             <option value="">-</option>
             {tags.map((tag) => (
@@ -57,3 +58,15 @@ function TagSelect({ handleChange, tags = [], tagId }: TagSelectPropType) {
         </select>
     );
 }
+
+TagSelect.propTypes = {
+    handleChange: PropTypes.func,
+    tags: PropTypes.arrayOf(PropTypes.object),
+    tagId: PropTypes.string,
+};
+
+TagSelect.defaultProps = {
+    handleChange: () => {},
+    tags: [],
+    tagId: '',
+};
