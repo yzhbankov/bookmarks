@@ -1,13 +1,11 @@
 import React, { ChangeEvent, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useFetchBookmarks, useUpdateBookmark } from '../hooks';
-import { Table, ColumnType } from '../../../components';
+import { useFetchBookmarks, useUpdateBookmark, useDelBookmark } from '../hooks';
+import { Table, ColumnType, TrashIcon, SpinnerIcon, SpinnerSize } from '../../../components';
 import { IBookmarkTable, ITag } from '../../../models';
 import { useFetchTags } from '../../tags/hooks';
 import { TagsContext } from '../../../context';
 
-// todo: search
-// todo: tag bookmark removing
 // todo: bookmark icons
 // todo: bookmark titles
 // todo: bookmark links click
@@ -34,6 +32,7 @@ type BookmarksTableType = {
 
 export function BookmarksTable({ searchText }: BookmarksTableType) {
     const { getFiltered } = useFetchBookmarks();
+    const { delBookmark, isLoading } = useDelBookmark();
     const selected = useContext(TagsContext);
     const { tags } = useFetchTags();
     const { updateBookmark } = useUpdateBookmark();
@@ -54,6 +53,21 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
                     tags={tags}
                     tagId={row.tag}
                 />
+            ),
+        },
+        {
+            key: 'action',
+            className: 'w-1/6',
+            header: '',
+            renderCell: (row: any) => (
+                <div
+                    className="cursor-pointer"
+                    onClick={() => {
+                        delBookmark(row.id);
+                    }}
+                >
+                    {isLoading ? <SpinnerIcon size={SpinnerSize.xs} /> : <TrashIcon />}
+                </div>
             ),
         },
     ];
