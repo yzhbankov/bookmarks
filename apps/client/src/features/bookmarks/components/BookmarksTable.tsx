@@ -12,10 +12,11 @@ export function BookmarksTable() {
     const { updateBookmark } = useUpdateBookmark();
 
     const columns: ColumnType[] = [
-        { key: 'url', header: 'URL' },
-        { key: 'description', header: 'Description' },
+        { key: 'url', header: 'URL', className: 'w-1/2' },
+        { key: 'description', header: 'Description', className: 'hidden md:table-cell' },
         {
             key: 'tagName',
+            className: 'w-1/5 hidden sm:table-cell',
             header: 'Tag',
             renderCell: (row: any) => (
                 <TagSelect
@@ -26,7 +27,7 @@ export function BookmarksTable() {
             ),
         },
     ];
-    return <Table data={getFiltered(selected)} columns={columns} />;
+    return <Table data={getFiltered(selected)} columns={columns} className="w-full" />;
 }
 
 BookmarksTable.propTypes = {};
