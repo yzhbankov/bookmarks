@@ -6,6 +6,7 @@ export interface IAxiosBookmarksApi {
     create: (bookmark: IBookmarkCreate) => Promise<IBookmark | null>;
     edit: (bookmark: IBookmarkUpdate) => Promise<IBookmark | null>;
     delete: (id: string) => Promise<any>;
+    getTitle: (url: string) => Promise<null>;
 }
 
 export class AxiosBookmarksApi implements IAxiosBookmarksApi {
@@ -45,6 +46,12 @@ export class AxiosBookmarksApi implements IAxiosBookmarksApi {
         if (response) {
             return new Bookmark(response.data);
         }
+        return null;
+    }
+
+    async getTitle(url: string): Promise<null> {
+        const response = await this.http.get(url);
+        console.log(response);
         return null;
     }
 }

@@ -43,7 +43,14 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
     const searchedBookmarks = getSearched(filteredBookmarks, searchText);
 
     const columns: ColumnType[] = [
-        { key: 'url', header: 'URL', className: 'w-1/2' },
+        {
+            key: 'title',
+            header: 'Title',
+            className: 'w-1/2',
+            renderCell: (row: any, cell: string) => (
+                <a href={row.url} target="_blank">{cell}</a>
+            ),
+        },
         { key: 'description', header: 'Description', className: 'hidden md:table-cell' },
         {
             key: 'tagName',

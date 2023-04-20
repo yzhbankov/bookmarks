@@ -5,6 +5,7 @@ import { useFetchTags } from '../../tags/hooks';
 import { useFetchSpaces } from '../../spaces/hooks';
 import { IBookmarkCreate, ITag } from '../../../models';
 import { CommonDialog, DialogButton } from '../../../components';
+import { validateHttpUrl } from '../../../utils';
 
 type BookmarkCreateDialogType = {
     isOpen: boolean;
@@ -59,7 +60,7 @@ export function BookmarkCreateDialog({ isOpen, handleOpen }: BookmarkCreateDialo
 }
 
 type BookmarkCreateFormType = {
-    bookmark: { url: string; description: string; tag?: string };
+    bookmark: { url: string; description: string; tag?: string; title: string };
     tags: ITag[] | undefined;
     handleBookmark: (val: any) => void;
     handleCancel: () => void;
@@ -68,15 +69,7 @@ type BookmarkCreateFormType = {
     valid: boolean;
 };
 
-function BookmarkCreateForm({
-    bookmark,
-    tags,
-    handleBookmark,
-    handleCancel,
-    handleOk,
-    isLoading,
-    valid,
-}: BookmarkCreateFormType) {
+function BookmarkCreateForm({ bookmark, tags, handleBookmark, handleCancel, handleOk, isLoading, valid }: BookmarkCreateFormType) {
     return (
         <div className="w-full max-w-xs">
             <form className="bg-white px-8 pt-6 pb-8 mb-4">
@@ -89,8 +82,28 @@ function BookmarkCreateForm({
                         id="bookmarkUrl"
                         type="text"
                         value={bookmark.url}
-                        onChange={(e) => handleBookmark({ ...bookmark, url: e.target.value })}
+                        onChange={(e) => {
+                            const res = validateHttpUrl(e.target.value);
+                            if (res.valid) {
+                                handleBookmark({ ...bookmark, url: e.target.value, title: res.title });
+                            } else {
+                                handleBookmark({ ...bookmark, url: e.target.value });
+                            }
+                        }}
                         placeholder="URL"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="bookmarkTitle">
+                        Title
+                    </label>
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="bookmarkTitle"
+                        type="text"
+                        value={bookmark.title}
+                        onChange={(e) => handleBookmark({ ...bookmark, title: e.target.value })}
+                        placeholder="Title"
                     />
                 </div>
                 <div className="mb-4">
