@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { TagButton } from './TagButton';
 import { ITag } from '../../../models';
@@ -13,6 +13,7 @@ export function TagsList({ tags }: TagsListType) {
     const dispatch = useContext(TagsDispatchContext);
     const selected = useContext(TagsContext);
     const { delTag, isLoading } = useDelTags();
+    const [deleted, setDeleted] = useState('');
 
     if (!tags) return null;
     return (
@@ -24,7 +25,7 @@ export function TagsList({ tags }: TagsListType) {
                     checked={selected === tag.id}
                     name={tag.name}
                     title={tag.description}
-                    isLoading={isLoading}
+                    isLoading={isLoading && deleted === tag.id}
                     handleCheck={() => {
                         if (selected === tag.id) {
                             dispatch({ type: 'clear' });
@@ -33,6 +34,7 @@ export function TagsList({ tags }: TagsListType) {
                         }
                     }}
                     handleDelete={async () => {
+                        setDeleted(tag.id);
                         await delTag(tag.id);
                         if (selected === tag.id) {
                             dispatch({ type: 'clear' });

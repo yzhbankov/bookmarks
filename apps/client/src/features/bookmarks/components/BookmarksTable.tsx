@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useContext } from 'react';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useFetchBookmarks, useUpdateBookmark, useDelBookmark } from '../hooks';
 import { Table, ColumnType, TrashIcon, SpinnerIcon, SpinnerSize } from '../../../components';
@@ -32,7 +32,6 @@ type BookmarksTableType = {
 
 export function BookmarksTable({ searchText }: BookmarksTableType) {
     const { getFiltered } = useFetchBookmarks();
-    const { delBookmark, isLoading } = useDelBookmark();
     const selected = useContext(TagsContext);
     const { tags } = useFetchTags();
     const { updateBookmark } = useUpdateBookmark();
@@ -59,16 +58,7 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
             key: 'action',
             className: 'w-1/6',
             header: '',
-            renderCell: (row: any) => (
-                <div
-                    className="cursor-pointer"
-                    onClick={() => {
-                        delBookmark(row.id);
-                    }}
-                >
-                    {isLoading ? <SpinnerIcon size={SpinnerSize.xs} /> : <TrashIcon />}
-                </div>
-            ),
+            renderCell: (row: any) => <BookmarksButton id={row.id} />,
         },
     ];
     return <Table data={searchedBookmarks} columns={columns} className="w-full" />;
@@ -116,4 +106,32 @@ TagSelect.defaultProps = {
     handleChange: () => {},
     tags: [],
     tagId: '',
+};
+
+type BookmarksButtonType = {
+    id: string;
+};
+
+function BookmarksButton({ id }: BookmarksButtonType) {
+    const { delBookmark, isLoading } = useDelBookmark();
+    const [clicked, setClicked] = useState('');
+    return (
+        <div
+            className="cursor-pointer"
+            onClick={() => {
+                setClicked(id);
+                delBookmark(id);
+            }}
+        >
+            {isLoading && clicked === id ? <SpinnerIcon size={SpinnerSize.xs} /> : <TrashIcon />}
+        </div>
+    );
+}
+
+BookmarksButton.propTypes = {
+    id: PropTypes.string,
+};
+
+BookmarksButton.defaultProps = {
+    id: '',
 };
