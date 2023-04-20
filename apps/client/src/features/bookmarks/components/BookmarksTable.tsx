@@ -6,6 +6,9 @@ import { IBookmarkTable, ITag } from '../../../models';
 import { useFetchTags } from '../../tags/hooks';
 import { TagsContext } from '../../../context';
 
+// todo: add bookmark title
+// todo: get website title
+// todo: url to link title for displaying
 // todo: bookmark icons
 // todo: bookmark titles
 // todo: bookmark links click

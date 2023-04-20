@@ -17,7 +17,7 @@ function validate(state: IBookmarkCreate): boolean {
     return true;
 }
 
-const initialState: IBookmarkCreate = { url: '', description: '', tag: '', space: '' };
+const initialState: IBookmarkCreate = { url: '', description: '', tag: '', space: '', title: '' };
 
 export function BookmarkCreateDialog({ isOpen, handleOpen }: BookmarkCreateDialogType) {
     const [bookmark, setBookmark] = useState<IBookmarkCreate>(initialState);

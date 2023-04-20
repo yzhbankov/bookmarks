@@ -17,6 +17,12 @@ export class CreateBookmarkDto {
   description: string;
 
   @ApiProperty()
+  @IsString()
+  @IsOptional()
+  @ApiPropertyOptional()
+  title: string;
+
+  @ApiProperty()
   @IsMongoId()
   @IsOptional()
   @ApiPropertyOptional()

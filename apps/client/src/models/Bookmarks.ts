@@ -2,6 +2,7 @@ export interface IBookmarkRaw {
     _id: string;
     url: string;
     description: string;
+    title: string;
     tag: string;
     space: string;
     owner: string;
@@ -13,6 +14,7 @@ export interface IBookmark {
     id: string;
     url: string;
     description: string;
+    title: string;
     tag: string;
     space: string;
     createdAt: string;
@@ -22,6 +24,7 @@ export interface IBookmark {
 export interface IBookmarkCreate {
     url: string;
     description: string;
+    title: string;
     tag?: string;
     space: string;
 }
@@ -41,6 +44,8 @@ export class Bookmark implements IBookmark {
 
     description: string;
 
+    title: string;
+
     tag: string;
 
     space: string;
@@ -53,6 +58,7 @@ export class Bookmark implements IBookmark {
         this.id = props._id;
         this.url = props.url;
         this.description = props.description;
+        this.title = props.title;
         this.tag = props.tag;
         this.space = props.space;
         this.createdAt = props.createdAt;
