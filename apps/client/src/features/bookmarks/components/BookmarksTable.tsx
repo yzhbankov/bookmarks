@@ -6,12 +6,6 @@ import { IBookmarkTable, ITag } from '../../../models';
 import { useFetchTags } from '../../tags/hooks';
 import { TagsContext } from '../../../context';
 
-// todo: add bookmark title
-// todo: get website title
-// todo: url to link title for displaying
-// todo: bookmark icons
-// todo: bookmark titles
-// todo: bookmark links click
 // todo: multiple tag selecting
 
 function getSearched(data: IBookmarkTable[], searchText: string): IBookmarkTable[] {
@@ -48,7 +42,12 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
             header: 'Title',
             className: 'w-1/2',
             renderCell: (row: any, cell: string) => (
-                <a href={row.url} target="_blank">{cell}</a>
+                <div>
+                    <a href={row.url} target="_blank">
+                        <img src={`https://www.google.com/s2/favicons?domain=${row.url}`} />
+                        {cell}
+                    </a>
+                </div>
             ),
         },
         { key: 'description', header: 'Description', className: 'hidden md:table-cell' },
