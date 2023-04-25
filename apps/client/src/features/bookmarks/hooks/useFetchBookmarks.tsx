@@ -8,7 +8,7 @@ export interface IBookmarksFetch {
     bookmarks: IBookmarkTable[];
     isLoading: boolean;
     isError: boolean;
-    getFiltered: (id: string | null) => IBookmarkTable[];
+    getFiltered: (ids: string | null) => IBookmarkTable[];
 }
 
 export function useFetchBookmarks(): IBookmarksFetch {
@@ -27,12 +27,12 @@ export function useFetchBookmarks(): IBookmarksFetch {
         keepPreviousData: true,
     });
 
-    const getFiltered = (selectedTag: string | null) => {
+    const getFiltered = (selectedTags: string | null) => {
         return data
             ? data.reduce((memo: IBookmarkTable[], bookmark: IBookmark) => {
-                  if (!selectedTag) {
+                  if (!selectedTags) {
                       memo.push({ ...bookmark, tagName: tagsMap && tagsMap[bookmark.tag]?.name });
-                  } else if (bookmark.tag === selectedTag) {
+                  } else if (selectedTags.includes(bookmark.tag)) {
                       memo.push({ ...bookmark, tagName: tagsMap && tagsMap[bookmark.tag]?.name });
                   }
                   return memo;

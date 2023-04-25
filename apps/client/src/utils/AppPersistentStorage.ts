@@ -10,9 +10,8 @@ export interface IAppPersistentStorage {
     lastRoutePath: string;
     token: string | undefined;
     clear: () => void;
-    saveSelectedTag: (value: string) => void;
-    getSelectedTag: () => string | null;
-    clearSelectedTag: () => void;
+    setItem: (key: string, val: string) => void;
+    getItem: (key: string) => string | null;
 }
 
 class AppPersistentStorage implements IAppPersistentStorage {
@@ -42,16 +41,12 @@ class AppPersistentStorage implements IAppPersistentStorage {
         return Cookies.remove(BrowserKeys.Cookie);
     }
 
-    saveSelectedTag(value: string) {
-        this.local.setItem(BrowserKeys.BookmarksTag, value);
+    setItem(key: string, value: string) {
+        this.local.setItem(key, value);
     }
 
-    getSelectedTag(): string | null {
-        return this.local.getItem(BrowserKeys.BookmarksTag);
-    }
-
-    clearSelectedTag(): void {
-        this.local.removeItem(BrowserKeys.BookmarksTag);
+    getItem(key: string): string | null {
+        return this.local.getItem(key);
     }
 }
 
