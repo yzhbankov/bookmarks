@@ -6,11 +6,7 @@ import { IBookmarkTable, ITag } from '../../../models';
 import { useFetchTags } from '../../tags/hooks';
 import { TagsContext } from '../../../context';
 
-// todo: multiple tag selecting
-// todo: add footer
 // todo: make pretty UI
-// todo: fix cookie refreshing in prod
-
 function getSearched(data: IBookmarkTable[], searchText: string): IBookmarkTable[] {
     if (!searchText) return data;
     return data
