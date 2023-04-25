@@ -22,12 +22,12 @@ export function TagsList({ tags }: TagsListType) {
                 <TagButton
                     key={tag.id}
                     id={tag.id}
-                    checked={selected.includes(tag.id)}
+                    checked={(selected || '').includes(tag.id)}
                     name={tag.name}
                     title={tag.description}
                     isLoading={isLoading && deleted === tag.id}
                     handleCheck={() => {
-                        if (selected.includes(tag.id)) {
+                        if ((selected || '').includes(tag.id)) {
                             dispatch({ type: 'clear', payload: tag.id });
                         } else {
                             dispatch({ type: 'check', payload: tag.id });
@@ -36,7 +36,7 @@ export function TagsList({ tags }: TagsListType) {
                     handleDelete={async () => {
                         setDeleted(tag.id);
                         await delTag(tag.id);
-                        if (selected.includes(tag.id)) {
+                        if ((selected || '').includes(tag.id)) {
                             dispatch({ type: 'clear', payload: tag.id });
                         }
                     }}
