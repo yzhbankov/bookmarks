@@ -39,20 +39,31 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
         {
             key: 'title',
             header: 'Title',
-            className: 'w-1/2',
+            className: 'w-auto',
             renderCell: (row: any, cell: string) => (
-                <div>
-                    <a href={row.url} target="_blank">
-                        <img src={`https://www.google.com/s2/favicons?domain=${row.url}`} />
-                        {cell}
+                <div title={cell}>
+                    <a href={row.url} target="_blank" className="flex">
+                        <div className="flex mr-2 justify-center items-center">
+                            <img src={`https://www.google.com/s2/favicons?domain=${row.url}`} />
+                        </div>
+                        <div className="truncate w-max-xs">{cell}</div>
                     </a>
                 </div>
             ),
         },
-        { key: 'description', header: 'Description', className: 'hidden md:table-cell' },
+        {
+            key: 'description',
+            header: 'Description',
+            className: 'w-auto hidden md:table-cell',
+            renderCell: (row: any, cell: string) => (
+                <div title={cell} className="truncate cursor-default">
+                    {cell}
+                </div>
+            ),
+        },
         {
             key: 'tagName',
-            className: 'w-1/5 hidden sm:table-cell',
+            className: 'w-32 hidden sm:table-cell',
             header: 'Tag',
             renderCell: (row: any) => (
                 <TagSelect
@@ -64,7 +75,7 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
         },
         {
             key: 'action',
-            className: 'w-1/6',
+            className: 'w-auto',
             header: '',
             renderCell: (row: any) => <BookmarksButton id={row.id} />,
         },
@@ -90,7 +101,7 @@ function TagSelect({ handleChange, tags = [], tagId }: TagSelectPropType) {
     return (
         <select
             id="tags"
-            className="w-full border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChange(e)}
             value={tagId || ''}
         >
@@ -125,7 +136,7 @@ function BookmarksButton({ id }: BookmarksButtonType) {
     const [clicked, setClicked] = useState('');
     return (
         <div
-            className="cursor-pointer"
+            className="cursor-pointer flex justify-center"
             onClick={() => {
                 setClicked(id);
                 delBookmark(id);
