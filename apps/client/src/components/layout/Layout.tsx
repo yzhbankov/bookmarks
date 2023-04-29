@@ -10,11 +10,13 @@ type LayoutPropsType = {
 export function Layout(props: LayoutPropsType) {
     const { menuRender, contentRender, footerRender } = props;
     return (
-        <div className="h-screen w-screen">
-            <div>{menuRender()}</div>
-            <div>{contentRender()}</div>
-            <div className="fixed bottom-0 text-center w-screen">{footerRender()}</div>
-        </div>
+        <>
+            <div className="min-h-[calc(100vh-30px)] w-screen">
+                <div>{menuRender()}</div>
+                <div>{contentRender()}</div>
+            </div>
+            <div className="text-center">{footerRender()}</div>
+        </>
     );
 }
 
