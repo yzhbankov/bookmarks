@@ -7,10 +7,11 @@ export function Menu() {
     return (
         <nav className="bg-white border-gray-200 dark:bg-gray-900">
             <div className="flex flex-wrap items-center justify-between p-4">
-                <div className="flex text-left md:order-2">
+                <div className="text-center md:order-1 w-10 h-8" />
+                <div className="text-center md:order-2">
                     <Title />
                 </div>
-                <div className="relative inline-block text-left md:order-3">
+                <div className="relative inline-block text-left md:order-3 w-10">
                     <UserButton />
                 </div>
             </div>

@@ -12,7 +12,7 @@ export function Layout(props: LayoutPropsType) {
     return (
         <>
             <div className="min-h-[calc(100vh-30px)] w-screen">
-                <div>{menuRender()}</div>
+                <div className="sticky top-0">{menuRender()}</div>
                 <div>{contentRender()}</div>
             </div>
             <div className="text-center">{footerRender()}</div>
