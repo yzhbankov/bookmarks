@@ -9,7 +9,7 @@ export function Bookmarks() {
     const [searchText, setSearchText] = useState<string>('');
     return (
         <div>
-            <div className="flex-none sm:flex my-2">
+            <div className="flex my-2">
                 <div className="basis-1/2">
                     <CommonButton title="Add bookmark" handleClick={() => setOpenCreateModal(true)} />
                 </div>

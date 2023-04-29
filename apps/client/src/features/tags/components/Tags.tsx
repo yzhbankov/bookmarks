@@ -10,10 +10,10 @@ export function Tags() {
 
     return (
         <div className="flex flex-row">
-            <div className="basis-1/5 my-2">
+            <div className="basis-1/2 my-2">
                 <CommonButton title="Create Tag" handleClick={() => setOpenCreateModal(true)} />
             </div>
-            <div className="basis-4/5 my-2">
+            <div className="basis-1/2 my-2">
                 <TagsList tags={tags} />
             </div>
             <TagCreateDialog isOpen={openCreateModal} handleOpen={(val: boolean) => setOpenCreateModal(val)} />

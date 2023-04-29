@@ -6,7 +6,6 @@ import { IBookmarkTable, ITag } from '../../../models';
 import { useFetchTags } from '../../tags/hooks';
 import { TagsContext } from '../../../context';
 
-// todo: make pretty UI
 function getSearched(data: IBookmarkTable[], searchText: string): IBookmarkTable[] {
     if (!searchText) return data;
     return data
@@ -54,7 +53,7 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
         {
             key: 'description',
             header: 'Description',
-            className: 'w-auto hidden md:table-cell',
+            className: 'w-auto hidden lg:table-cell',
             renderCell: (row: any, cell: string) => (
                 <div title={cell} className="truncate cursor-default">
                     {cell}
@@ -63,7 +62,7 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
         },
         {
             key: 'tagName',
-            className: 'w-32 hidden sm:table-cell',
+            className: 'w-32 hidden md:table-cell',
             header: 'Tag',
             renderCell: (row: any) => (
                 <TagSelect
@@ -101,7 +100,7 @@ function TagSelect({ handleChange, tags = [], tagId }: TagSelectPropType) {
     return (
         <select
             id="tags"
-            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
             onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChange(e)}
             value={tagId || ''}
         >
