@@ -1,38 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Size, Color } from '../utils';
 
 type SpinnerIconType = {
-    size: SpinnerSize;
-    color?: SpinnerColor;
+    size: Size;
+    color?: Color;
 };
 
 type IconType = {
     color?: string | undefined;
 };
 
-export enum SpinnerSize {
-    xs = 'xs',
-    sm = 'sm',
-    md = 'md',
-    lg = 'lg',
-}
-
-export enum SpinnerColor {
-    blue = 'blue',
-    red = 'red',
-    green = 'green',
-    black = 'black',
-}
-
 export function SpinnerIcon({ size, color }: SpinnerIconType) {
     switch (size) {
-        case SpinnerSize.xs:
+        case Size.xs:
             return <ExtraSmallSpinnerIcon color={color} />;
-        case SpinnerSize.sm:
+        case Size.sm:
             return <SmallSpinnerIcon color={color} />;
-        case SpinnerSize.md:
+        case Size.md:
             return <MediumSpinnerIcon color={color} />;
-        case SpinnerSize.lg:
+        case Size.lg:
             return <LargeSpinnerIcon color={color} />;
         default:
             return <MediumSpinnerIcon color={color} />;

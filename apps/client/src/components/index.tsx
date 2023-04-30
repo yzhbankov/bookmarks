@@ -8,3 +8,4 @@ export * from './SpinnerIcon';
 export * from './Table';
 export * from './CommonButton';
 export * from './TrashIcon';
+export * from './ChevronUpIcon';

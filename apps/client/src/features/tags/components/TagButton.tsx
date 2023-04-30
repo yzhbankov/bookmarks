@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import className from 'classnames';
-import { CrossIcon, SpinnerIcon, SpinnerSize, SpinnerColor } from '../../../components';
+import { CrossIcon, SpinnerIcon } from '../../../components';
+import { Color, Size } from '../../../utils';
 
 type TagButton = {
     id: string;
@@ -15,10 +16,10 @@ type TagButton = {
 
 export function TagButton({ id, name, title, handleCheck, handleDelete, checked, isLoading }: TagButton) {
     return (
-        <div className="inline-flex mx-1 mb-1" title={title}>
+        <div className="inline-flex mx-1" title={title}>
             <button
                 className={className(
-                    'border border-r-0 border-blue-500 font-bold py-2 px-4 rounded-l',
+                    'flex justify-between border border-blue-500 font-bold pl-2 pr-1 py-2 rounded',
                     checked
                         ? 'bg-blue-500 hover:bg-blue-400 text-white '
                         : 'bg-white hover:bg-blue-500 text-blue-500 hover:text-white'
@@ -26,20 +27,15 @@ export function TagButton({ id, name, title, handleCheck, handleDelete, checked,
                 onClick={() => handleCheck(id)}
             >
                 {name}
-            </button>
-            <button
-                className={className(
-                    'text-center border border-l-0 border-blue-500 font-bold py-2 px-2 w-10 rounded-r',
-                    checked
-                        ? 'bg-blue-500 hover:bg-red-400 text-white '
-                        : 'bg-white hover:bg-red-500 text-blue-500 hover:text-white'
-                )}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    handleDelete(id);
-                }}
-            >
-                {isLoading ? <SpinnerIcon size={SpinnerSize.xs} color={SpinnerColor.blue} /> : <CrossIcon />}
+                <div
+                    className="h-6 w-6 ml-2 flex justify-center items-center rounded-full hover:bg-blue-400"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(id);
+                    }}
+                >
+                    {isLoading ? <SpinnerIcon size={Size.xs} color={Color.blue} /> : <CrossIcon size={Size.xs} />}
+                </div>
             </button>
         </div>
     );

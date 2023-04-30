@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useFetchBookmarks, useUpdateBookmark, useDelBookmark } from '../hooks';
-import { Table, ColumnType, TrashIcon, SpinnerIcon, SpinnerSize } from '../../../components';
+import { Table, ColumnType, TrashIcon, SpinnerIcon } from '../../../components';
+import { Size } from '../../../utils';
 import { IBookmarkTable, ITag } from '../../../models';
 import { useFetchTags } from '../../tags/hooks';
 import { TagsContext } from '../../../context';
@@ -141,7 +142,7 @@ function BookmarksButton({ id }: BookmarksButtonType) {
                 delBookmark(id);
             }}
         >
-            {isLoading && clicked === id ? <SpinnerIcon size={SpinnerSize.xs} /> : <TrashIcon />}
+            {isLoading && clicked === id ? <SpinnerIcon size={Size.xs} /> : <TrashIcon />}
         </div>
     );
 }
