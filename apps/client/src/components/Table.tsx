@@ -15,15 +15,16 @@ type TablePropsType = {
     data: RowType[];
     columns: ColumnType[];
     className?: string;
+    rowClassName?: string;
 };
 
-export function Table({ data, columns, className }: TablePropsType) {
+export function Table({ data, columns, className, rowClassName }: TablePropsType) {
     return (
         <table className={classNames(className)}>
             <Header columns={columns} />
             <tbody>
                 {data.map((rowData, index) => (
-                    <tr key={index}>
+                    <tr key={index} className={rowClassName}>
                         {columns.map((column) => (
                             <Column key={column.key} rowData={rowData} column={column} />
                         ))}

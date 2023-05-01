@@ -8,7 +8,7 @@ export function Bookmarks() {
     const [openCreateModal, setOpenCreateModal] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>('');
     return (
-        <div>
+        <>
             <div className="flex my-2">
                 <div className="basis-1/2">
                     <CommonButton title="Add bookmark" handleClick={() => setOpenCreateModal(true)} />
@@ -19,7 +19,7 @@ export function Bookmarks() {
             </div>
             <BookmarksTable searchText={searchText} />
             <BookmarkCreateDialog isOpen={openCreateModal} handleOpen={(val: boolean) => setOpenCreateModal(val)} />
-        </div>
+        </>
     );
 }
 

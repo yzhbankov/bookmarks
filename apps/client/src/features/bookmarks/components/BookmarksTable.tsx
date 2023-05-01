@@ -41,7 +41,7 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
             header: 'Title',
             className: 'w-auto',
             renderCell: (row: any, cell: string) => (
-                <div title={cell}>
+                <div title={cell} className="w-72">
                     <a href={row.url} target="_blank" className="flex">
                         <div className="flex mr-2 justify-center items-center">
                             <img src={`https://www.google.com/s2/favicons?domain=${row.url}`} />
@@ -54,33 +54,45 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
         {
             key: 'description',
             header: 'Description',
-            className: 'w-auto hidden lg:table-cell',
+            className: 'w-auto truncate hidden lg:table-cell',
             renderCell: (row: any, cell: string) => (
-                <div title={cell} className="truncate cursor-default">
+                <div title={cell} className="w-48 truncate cursor-default">
                     {cell}
                 </div>
             ),
         },
         {
             key: 'tagName',
-            className: 'w-32 hidden md:table-cell',
+            className: 'w-24 hidden md:table-cell',
             header: 'Tag',
             renderCell: (row: any) => (
-                <TagSelect
-                    handleChange={(e: ChangeEvent<any>) => updateBookmark({ ...row, tag: e.target.value })}
-                    tags={tags}
-                    tagId={row.tag}
-                />
+                <div className="w-24">
+                    <TagSelect
+                        handleChange={(e: ChangeEvent<any>) => updateBookmark({ ...row, tag: e.target.value })}
+                        tags={tags}
+                        tagId={row.tag}
+                    />
+                </div>
             ),
         },
         {
             key: 'action',
-            className: 'w-auto',
             header: '',
-            renderCell: (row: any) => <BookmarksButton id={row.id} />,
+            renderCell: (row: any) => (
+                <div className="w-8">
+                    <BookmarksDelButton id={row.id} />
+                </div>
+            ),
         },
     ];
-    return <Table data={searchedBookmarks} columns={columns} className="w-full" />;
+    return (
+        <Table
+            data={searchedBookmarks}
+            columns={columns}
+            className="w-full"
+            rowClassName="odd:bg-white even:bg-slate-50 hover:bg-slate-100"
+        />
+    );
 }
 
 BookmarksTable.propTypes = {
@@ -127,11 +139,11 @@ TagSelect.defaultProps = {
     tagId: '',
 };
 
-type BookmarksButtonType = {
+type BookmarksDelButtonType = {
     id: string;
 };
 
-function BookmarksButton({ id }: BookmarksButtonType) {
+function BookmarksDelButton({ id }: BookmarksDelButtonType) {
     const { delBookmark, isLoading } = useDelBookmark();
     const [clicked, setClicked] = useState('');
     return (
@@ -147,10 +159,10 @@ function BookmarksButton({ id }: BookmarksButtonType) {
     );
 }
 
-BookmarksButton.propTypes = {
+BookmarksDelButton.propTypes = {
     id: PropTypes.string,
 };
 
-BookmarksButton.defaultProps = {
+BookmarksDelButton.defaultProps = {
     id: '',
 };
