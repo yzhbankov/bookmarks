@@ -16,13 +16,11 @@ type TagButton = {
 
 export function TagButton({ id, name, title, handleCheck, handleDelete, checked, isLoading }: TagButton) {
     return (
-        <div className="inline-flex mx-1" title={title}>
+        <div className="inline-flex mr-1" title={title}>
             <button
                 className={className(
-                    'flex justify-between border border-blue-500 font-bold pl-2 pr-1 py-2 rounded',
-                    checked
-                        ? 'bg-blue-500 hover:bg-blue-400 text-white '
-                        : 'bg-white hover:bg-blue-500 text-blue-500 hover:text-white'
+                    'flex justify-between border border-gray-300 font-bold pl-2 pr-2 py-1.5 rounded h-[36px]',
+                    checked ? 'bg-gray-100 hover:bg-gray-50 text-gray-500 ' : 'bg-white hover:bg-gray-100 text-gray-500'
                 )}
                 onClick={() => handleCheck(id)}
             >

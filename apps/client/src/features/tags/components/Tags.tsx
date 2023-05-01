@@ -14,7 +14,7 @@ export function Tags() {
     return (
         <div className="flex flex-row">
             <div className="basis-1/2 my-2">
-                <CommonButton title="Create Tag" handleClick={() => setOpenCreateModal(true)} />
+                <CommonButton title="Create Tag" handleClick={() => setOpenCreateModal(true)} className="w-[145px]" />
             </div>
             <div className="basis-1/2 my-2">
                 {isDesktop && <TagsList tags={tags} />}

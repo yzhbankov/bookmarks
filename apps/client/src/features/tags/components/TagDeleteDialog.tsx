@@ -23,7 +23,7 @@ export function TagDeleteDialog({ isOpen, handleOpen, tagId }: TagCreateModalTyp
     const title = 'Delete Tag';
     return (
         <CommonDialog
-            handleOpen={handleOpen}
+            onClose={handleCancel}
             isOpen={isOpen}
             title={title}
             content={<TagDeleteForm handleCancel={handleCancel} handleOk={handeOk} isLoading={isLoading || !tagId} />}

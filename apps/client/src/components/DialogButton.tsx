@@ -14,7 +14,7 @@ export function DialogButton({ handleClick, className, text, disabled }: ButtonT
         <button
             type="button"
             className={classNames(
-                'inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm sm:ml-3 sm:w-auto',
+                'inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm',
                 className,
                 disabled ? 'disabled:opacity-50' : ''
             )}
