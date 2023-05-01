@@ -85,7 +85,7 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
             ),
         },
     ];
-    return <Table data={searchedBookmarks} columns={columns} className="w-full" rowClassName="hover:bg-orange-200" />;
+    return <Table data={searchedBookmarks} columns={columns} className="w-full" rowClassName="hover:bg-gray-100" />;
 }
 
 BookmarksTable.propTypes = {

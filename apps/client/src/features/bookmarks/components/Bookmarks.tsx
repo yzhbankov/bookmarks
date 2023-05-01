@@ -11,7 +11,11 @@ export function Bookmarks() {
         <>
             <div className="flex my-2">
                 <div className="basis-1/2">
-                    <CommonButton title="Add bookmark" handleClick={() => setOpenCreateModal(true)} />
+                    <CommonButton
+                        className="w-[146px]"
+                        title="Add bookmark"
+                        handleClick={() => setOpenCreateModal(true)}
+                    />
                 </div>
                 <div className="basis-1/2">
                     <Search handleChange={(val) => setSearchText(val)} />
