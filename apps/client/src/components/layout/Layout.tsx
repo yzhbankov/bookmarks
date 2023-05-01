@@ -15,7 +15,7 @@ export function Layout(props: LayoutPropsType) {
                 <div className="sticky top-0">{menuRender()}</div>
                 <div>{contentRender()}</div>
             </div>
-            <div className="text-center">{footerRender()}</div>
+            <div className="text-center mt-2">{footerRender()}</div>
         </>
     );
 }

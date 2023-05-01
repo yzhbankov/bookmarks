@@ -69,7 +69,15 @@ type BookmarkCreateFormType = {
     valid: boolean;
 };
 
-function BookmarkCreateForm({ bookmark, tags, handleBookmark, handleCancel, handleOk, isLoading, valid }: BookmarkCreateFormType) {
+function BookmarkCreateForm({
+    bookmark,
+    tags,
+    handleBookmark,
+    handleCancel,
+    handleOk,
+    isLoading,
+    valid,
+}: BookmarkCreateFormType) {
     return (
         <div className="w-full max-w-xs">
             <form className="bg-white px-8 pt-6 pb-8 mb-4">

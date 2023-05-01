@@ -21,24 +21,21 @@ export function TagsListMobile({ tags }: TagsListType) {
 
     return (
         <>
-            <div className="relative inline-block justify-between text-left" ref={ref}>
-                <div>
-                    <button
-                        type="button"
-                        className="inline-flex items-center w-full gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100"
-                        id="menu-button"
-                        aria-expanded="true"
-                        aria-haspopup="true"
-                        onClick={handleMenuClick}
-                    >
-                        <span>Tags</span>
-                        <ChevronUpIcon className={opened ? 'rotate-0' : 'rotate-180'} />
-                    </button>
-                </div>
-
+            <div className="inline-block justify-between text-left" ref={ref}>
+                <button
+                    type="button"
+                    className="inline-flex items-center w-full gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100"
+                    id="menu-button"
+                    aria-expanded="true"
+                    aria-haspopup="true"
+                    onClick={handleMenuClick}
+                >
+                    <span>Tags</span>
+                    <ChevronUpIcon className={opened ? 'rotate-0' : 'rotate-180'} />
+                </button>
                 <div
                     className={classNames(
-                        'absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none',
+                        'absolute mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none',
                         opened ? '' : 'hidden'
                     )}
                     role="menu"

@@ -5,7 +5,7 @@ import { useOnClickOutside } from '../../../hooks';
 
 export function Menu() {
     return (
-        <nav className="bg-white border-gray-200 dark:bg-gray-900">
+        <nav className="z-10 bg-white border-gray-200 dark:bg-gray-900">
             <div className="flex flex-wrap items-center justify-between p-4">
                 <div className="text-center md:order-1 w-10 h-8" />
                 <div className="text-center md:order-2">
