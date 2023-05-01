@@ -63,7 +63,7 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
         },
         {
             key: 'tagName',
-            className: 'w-24 hidden md:table-cell',
+            className: 'w-24',
             header: 'Tag',
             renderCell: (row: any) => (
                 <div className="w-24">
@@ -85,14 +85,7 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
             ),
         },
     ];
-    return (
-        <Table
-            data={searchedBookmarks}
-            columns={columns}
-            className="w-full"
-            rowClassName="odd:bg-white even:bg-slate-50 hover:bg-slate-100"
-        />
-    );
+    return <Table data={searchedBookmarks} columns={columns} className="w-full" rowClassName="hover:bg-orange-200" />;
 }
 
 BookmarksTable.propTypes = {

@@ -26,7 +26,7 @@ export function TagButton({ id, name, title, handleCheck, handleDelete, checked,
             >
                 {name}
                 <div
-                    className="h-6 w-6 ml-2 flex justify-center items-center rounded-full hover:bg-blue-400"
+                    className="h-6 w-6 ml-2 flex justify-center items-center rounded-full hover:bg-gray-400"
                     onClick={(e) => {
                         e.stopPropagation();
                         handleDelete(id);
