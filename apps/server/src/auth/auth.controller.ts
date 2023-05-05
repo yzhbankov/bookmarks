@@ -27,7 +27,7 @@ export class AuthController {
     res.cookie('access_token', token, {
       domain: this.configService.get('domain'),
       maxAge: 2592000000,
-      secure: false,
+      secure: true,
     });
     res.status(HttpStatus.OK).send();
   }
