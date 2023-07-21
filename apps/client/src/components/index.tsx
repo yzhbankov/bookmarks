@@ -9,3 +9,4 @@ export * from './Table';
 export * from './CommonButton';
 export * from './TrashIcon';
 export * from './ChevronUpIcon';
+export * from './SortArrorIcon';

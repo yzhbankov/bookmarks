@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { SortArrowIcon } from '../components';
+import { useSortTable, SortDirection } from '../hooks';
 
 type RowType = { [key: string]: any };
 
@@ -19,11 +21,12 @@ type TablePropsType = {
 };
 
 export function Table({ data, columns, className, rowClassName }: TablePropsType) {
+    const { sortedData, handleSort, sortBy, sortDirection } = useSortTable(data);
     return (
         <table className={classNames(className)}>
-            <Header columns={columns} />
+            <Header columns={columns} handleClick={handleSort} sortBy={sortBy} sortDirection={sortDirection} />
             <tbody>
-                {data.map((rowData, index) => (
+                {sortedData.map((rowData, index) => (
                     <tr key={index} className={rowClassName}>
                         {columns.map((column) => (
                             <Column key={column.key} rowData={rowData} column={column} />
@@ -52,15 +55,25 @@ type HeaderPropType = {
         header: string;
         className?: string;
     }[];
+    handleClick: (key: string) => void;
+    sortBy: string;
+    sortDirection: SortDirection;
 };
 
-function Header({ columns }: HeaderPropType) {
+function Header({ columns, handleClick, sortBy, sortDirection }: HeaderPropType) {
     return (
         <thead>
             <tr>
                 {columns.map((column) => (
-                    <th className={classNames(column.className)} key={column.key}>
-                        {column.header}
+                    <th
+                        className={classNames(column.className, 'cursor-pointer')}
+                        key={column.key}
+                        onClick={() => handleClick(column.key)}
+                    >
+                        <span className="inline-flex">
+                            {column.header}
+                            {sortBy === column.key && <SortArrowIcon sortDirection={sortDirection} />}
+                        </span>
                     </th>
                 ))}
             </tr>
