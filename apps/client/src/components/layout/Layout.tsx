@@ -12,8 +12,8 @@ export function Layout(props: LayoutPropsType) {
     return (
         <>
             <div className="min-h-[calc(100vh-30px)] w-screen">
-                <div className="sticky top-0">{menuRender()}</div>
-                <div>{contentRender()}</div>
+                <div className="sticky top-0 z-50">{menuRender()}</div>
+                <div className="z-0">{contentRender()}</div>
             </div>
             <div className="text-center mt-2">{footerRender()}</div>
         </>

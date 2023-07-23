@@ -5,7 +5,7 @@ import { useOnClickOutside } from '../../../hooks';
 
 export function Menu() {
     return (
-        <nav className="z-10 bg-white border-gray-200 dark:bg-gray-900">
+        <nav className="bg-white border-gray-200 dark:bg-gray-900">
             <div className="flex flex-wrap items-center justify-between p-4">
                 <div className="text-center md:order-1 w-10 h-8" />
                 <div className="text-center md:order-2">
@@ -42,19 +42,17 @@ export function UserButton() {
 
     return (
         <div ref={ref}>
-            <div>
-                <button
-                    type="button"
-                    className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                    id="menu-button"
-                    aria-expanded="true"
-                    aria-haspopup="true"
-                    onClick={toggleMenu}
-                >
-                    <span className="sr-only">Open user menu</span>
-                    <img className="w-8 h-8 rounded-full" src={user.picture} alt="user photo" />
-                </button>
-            </div>
+            <button
+                type="button"
+                className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                id="menu-button"
+                aria-expanded="true"
+                aria-haspopup="true"
+                onClick={toggleMenu}
+            >
+                <span className="sr-only">Open user menu</span>
+                <img className="w-8 h-8 rounded-full" src={user.picture} alt="user photo" />
+            </button>
 
             <div
                 className={classNames(
