@@ -41,7 +41,7 @@ export function TagsContainer() {
                             size={Size.xs}
                             handleClick={handleScrollLeft}
                             left={true}
-                            className="bg-gray-200 hover:bg-gray-300 active:bg-gray-100"
+                            className="bg-white hover:bg-gray-200 active:bg-gray-50"
                         />
                     </div>
                     <div className="absolute top-0 -right-7 py-1">
@@ -49,7 +49,7 @@ export function TagsContainer() {
                             size={Size.xs}
                             handleClick={handleScrollRight}
                             right={true}
-                            className="bg-gray-200 hover:bg-gray-300 active:bg-gray-100"
+                            className="bg-white hover:bg-gray-200 active:bg-gray-50"
                         />
                     </div>
                 </div>
