@@ -19,7 +19,7 @@ export function TagButton({ id, name, title, handleCheck, handleDelete, checked,
         <div className="inline-flex mr-1" title={title}>
             <button
                 className={className(
-                    'flex justify-between border border-gray-300 font-bold pl-2 pr-2 py-1.5 rounded h-[36px]',
+                    'flex justify-between whitespace-nowrap border border-gray-300 font-bold pl-2 pr-2 py-1.5 rounded h-[36px]',
                     checked ? 'bg-gray-100 hover:bg-gray-50 text-gray-500 ' : 'bg-white hover:bg-gray-100 text-gray-500'
                 )}
                 onClick={() => handleCheck(id)}

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { RefObject, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { TagButton } from './TagButton';
 import { ITag } from '../../../models';
@@ -7,9 +7,10 @@ import { TagsDispatchContext, TagsContext } from '../../../context';
 
 type TagsListType = {
     tags: ITag[] | undefined;
+    tagsListRef: RefObject<any>;
 };
 
-export function TagsList({ tags }: TagsListType) {
+export function TagsList({ tags, tagsListRef }: TagsListType) {
     const dispatch = useContext(TagsDispatchContext);
     const selected = useContext(TagsContext);
     const { delTag, isLoading } = useDelTags();
@@ -17,7 +18,7 @@ export function TagsList({ tags }: TagsListType) {
 
     if (!tags) return null;
     return (
-        <>
+        <div className="w-full inline-flex overflow-x-scroll" ref={tagsListRef}>
             {tags.map((tag: any) => (
                 <TagButton
                     key={tag.id}
@@ -42,14 +43,16 @@ export function TagsList({ tags }: TagsListType) {
                     }}
                 />
             ))}
-        </>
+        </div>
     );
 }
 
 TagsList.propTypes = {
     tags: PropTypes.arrayOf(PropTypes.object),
+    tagsListRef: PropTypes.object,
 };
 
 TagsList.defaultProps = {
     tags: [],
+    tagsListRef: null,
 };

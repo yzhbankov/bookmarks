@@ -22,7 +22,7 @@ export function SortArrowIcon({ sortDirection }: SpinnerIconType) {
     }
 }
 
-SortArrowIcon.propTypes = { sortDirection: PropTypes.string };
+SortArrowIcon.propTypes = { sortDirection: PropTypes.number };
 
 SortArrowIcon.defaultProps = { sortDirection: SortDirection.ASC };
 
