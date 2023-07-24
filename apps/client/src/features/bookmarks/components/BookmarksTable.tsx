@@ -1,40 +1,18 @@
-import React, { ChangeEvent, useContext, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useFetchBookmarks, useUpdateBookmark, useDelBookmark } from '../hooks';
+import { useUpdateBookmark, useDelBookmark } from '../hooks';
 import { Table, ColumnType, TrashIcon, SpinnerIcon } from '../../../components';
 import { Size } from '../../../utils';
-import { IBookmarkTable, ITag } from '../../../models';
+import { IBookmark, ITag } from '../../../models';
 import { useFetchTags } from '../../tags/hooks';
-import { TagsContext } from '../../../context';
-
-function getSearched(data: IBookmarkTable[], searchText: string): IBookmarkTable[] {
-    if (!searchText) return data;
-    return data
-        ? data.reduce((memo: IBookmarkTable[], bookmark: IBookmarkTable) => {
-              const includesInUrl: boolean = bookmark.url.toLowerCase().includes(searchText);
-              const includesInDescription: boolean = bookmark.description.toLowerCase().includes(searchText);
-              const includesInTitle: boolean = bookmark.title.toLowerCase().includes(searchText);
-
-              if (includesInUrl || includesInDescription || includesInTitle) {
-                  memo.push(bookmark);
-              }
-              return memo;
-          }, [])
-        : [];
-}
 
 type BookmarksTableType = {
-    searchText: string;
+    bookmarks: IBookmark[];
 };
 
-export function BookmarksTable({ searchText }: BookmarksTableType) {
-    const { getFiltered } = useFetchBookmarks();
-    const selected = useContext(TagsContext);
+export function BookmarksTable({ bookmarks }: BookmarksTableType) {
     const { tags } = useFetchTags();
     const { updateBookmark } = useUpdateBookmark();
-
-    const filteredBookmarks = getFiltered(selected);
-    const searchedBookmarks = getSearched(filteredBookmarks, searchText);
 
     const columns: ColumnType[] = [
         {
@@ -86,7 +64,7 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
             ),
         },
     ];
-    return <Table data={searchedBookmarks} columns={columns} className="w-full" rowClassName="hover:bg-gray-100" />;
+    return <Table data={bookmarks} columns={columns} className="w-full" rowClassName="hover:bg-gray-100" />;
 }
 
 BookmarksTable.propTypes = {
