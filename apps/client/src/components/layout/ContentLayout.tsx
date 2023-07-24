@@ -10,7 +10,7 @@ export function ContentLayout(props: ContentLayoutType) {
     const { tagsRender, bookmarksRender } = props;
     return (
         <>
-            <div className="ml-52 mr-52">
+            <div className="ml-4 mr-4 md:ml-52 md:mr-52">
                 <div>{tagsRender()}</div>
                 <div>{bookmarksRender()}</div>
             </div>

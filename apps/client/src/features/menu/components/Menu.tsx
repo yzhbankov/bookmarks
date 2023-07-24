@@ -44,7 +44,7 @@ export function UserButton() {
         <div ref={ref}>
             <button
                 type="button"
-                className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                className="flex text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                 id="menu-button"
                 aria-expanded="true"
                 aria-haspopup="true"

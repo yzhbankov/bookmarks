@@ -35,7 +35,7 @@ export function TagsListMobile({ tags }: TagsListType) {
                 </button>
                 <div
                     className={classNames(
-                        'absolute mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none',
+                        'absolute mt-2 w-44 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none',
                         opened ? '' : 'hidden'
                     )}
                     role="menu"
