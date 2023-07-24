@@ -13,8 +13,9 @@ function getSearched(data: IBookmarkTable[], searchText: string): IBookmarkTable
         ? data.reduce((memo: IBookmarkTable[], bookmark: IBookmarkTable) => {
               const includesInUrl: boolean = bookmark.url.toLowerCase().includes(searchText);
               const includesInDescription: boolean = bookmark.description.toLowerCase().includes(searchText);
+              const includesInTitle: boolean = bookmark.title.toLowerCase().includes(searchText);
 
-              if (includesInUrl || includesInDescription) {
+              if (includesInUrl || includesInDescription || includesInTitle) {
                   memo.push(bookmark);
               }
               return memo;
@@ -41,7 +42,7 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
             header: 'Title',
             className: 'w-auto',
             renderCell: (row: any, cell: string) => (
-                <div title={cell} className="w-72">
+                <div title={cell} className="w-48">
                     <a href={row.url} target="_blank" className="flex">
                         <div className="flex mr-2 justify-center items-center">
                             <img src={`https://www.google.com/s2/favicons?domain=${row.url}`} />
@@ -56,7 +57,7 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
             header: 'Description',
             className: 'w-auto truncate hidden lg:table-cell',
             renderCell: (row: any, cell: string) => (
-                <div title={cell} className="w-48 truncate cursor-default">
+                <div title={cell} className="w-72 truncate cursor-default">
                     {cell}
                 </div>
             ),
@@ -66,7 +67,7 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
             className: 'w-24',
             header: 'Tag',
             renderCell: (row: any) => (
-                <div className="w-24">
+                <div className="w-32">
                     <TagSelect
                         handleChange={(e: ChangeEvent<any>) => updateBookmark({ ...row, tag: e.target.value })}
                         tags={tags}
@@ -79,7 +80,7 @@ export function BookmarksTable({ searchText }: BookmarksTableType) {
             key: 'action',
             header: '',
             renderCell: (row: any) => (
-                <div className="w-8">
+                <div>
                     <BookmarksDelButton id={row.id} />
                 </div>
             ),
