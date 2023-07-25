@@ -26,7 +26,7 @@ export interface IBookmarkCreate {
     description: string;
     title: string;
     tag?: string;
-    space: string;
+    space?: string;
 }
 
 export interface IBookmarkUpdate extends IBookmarkCreate {
