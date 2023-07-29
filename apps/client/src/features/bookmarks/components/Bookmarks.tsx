@@ -1,10 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { BookmarkCreateDialog } from './BookmarkCreateDialog';
 import { BookmarksTable } from './BookmarksTable';
-import { CommonButton } from '../../../components';
 import { Search } from './Search';
-import { ExportBookmarksButton } from './ExportBookmarksButton';
-import { ImportBookmarksButton } from './ImportBookmarksButton';
+import { ButtonsContainer } from './ButtonsContainer';
 import { useFetchBookmarks } from '../hooks';
 import { TagsContext } from '../../../context';
 import { IBookmarkTable } from '../../../models';
@@ -38,13 +36,7 @@ export function Bookmarks() {
         <>
             <div className="flex my-2">
                 <div className="basis-1/2">
-                    <CommonButton
-                        className="w-[146px]"
-                        title="Add bookmark"
-                        handleClick={() => setOpenCreateModal(true)}
-                    />
-                    <ExportBookmarksButton bookmarks={bookmarks} />
-                    <ImportBookmarksButton />
+                    <ButtonsContainer handleClickAddButton={() => setOpenCreateModal(true)} bookmarks={bookmarks} />
                 </div>
                 <div className="basis-1/2">
                     <Search handleChange={(val) => setSearchText(val)} />

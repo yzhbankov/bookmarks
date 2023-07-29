@@ -1,8 +1,12 @@
 import React, { ChangeEvent, RefObject, useRef } from 'react';
-import { CommonButton } from '../../../components';
+import { CommonButton, ImportIcon } from '../../../components';
 import { useExportImportBookmarks } from '../hooks';
 
-export function ImportBookmarksButton() {
+type ButtonType = {
+    isMobile?: boolean;
+};
+
+export function ImportBookmarksButton({ isMobile }: ButtonType) {
     const { importFile } = useExportImportBookmarks();
     const fileInputRef: RefObject<any> = useRef(null);
 
@@ -28,11 +32,23 @@ export function ImportBookmarksButton() {
                 style={{ display: 'none' }}
                 onChange={handleFileChange}
             />
-            <CommonButton
-                className="ml-1 bg-white text-blue-500 hover:bg-blue-500 hover:text-white border border-blue-500"
-                title="Import"
-                handleClick={() => fileInputRef.current.click()}
-            />
+            {!isMobile && (
+                <CommonButton
+                    className="ml-1 bg-white text-blue-500 hover:bg-blue-500 hover:text-white border border-blue-500"
+                    title={
+                        <div className="inline-flex items-center">
+                            Import <ImportIcon />
+                        </div>
+                    }
+                    handleClick={() => fileInputRef.current.click()}
+                />
+            )}
+            {isMobile && (
+                <div className="text-gray-700 block px-4 py-2 text-sm flex justify-between cursor-pointer">
+                    Import
+                    <ImportIcon />
+                </div>
+            )}
         </>
     );
 }

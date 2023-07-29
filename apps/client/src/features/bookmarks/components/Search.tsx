@@ -22,7 +22,7 @@ export function Search({ handleChange }: SearchType) {
             className="shadow appearance-none border rounded w-full py-2 h-[36px] px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="username"
             type="text"
-            placeholder="Bookmark"
+            placeholder="Search"
             ref={inputRef}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 if (timer) clearTimeout(timer);

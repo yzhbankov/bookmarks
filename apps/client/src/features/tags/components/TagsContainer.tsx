@@ -8,7 +8,7 @@ import { Size } from '../../../utils';
 
 export function TagsContainer() {
     const { tags }: ITagsFetch = useFetchTags();
-    const isDesktop = useMediaQuery('(min-width: 800px)');
+    const isDesktop = useMediaQuery('(min-width: 1100px)');
     const [isScrollable, setIsScrollable] = useState(false);
     const tagsListRef = useRef(null);
 

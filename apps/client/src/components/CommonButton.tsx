@@ -1,19 +1,16 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 type CommonButtonType = {
     className?: string;
-    title: string;
+    title: ReactNode | string;
     handleClick: () => void;
 };
 
 export function CommonButton({ handleClick, title, className }: CommonButtonType) {
     return (
-        <button
-            className={classNames('bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-4 rounded', className)}
-            onClick={() => handleClick()}
-        >
+        <button className={classNames('font-bold py-1.5 px-3 rounded', className)} onClick={() => handleClick()}>
             {title}
         </button>
     );

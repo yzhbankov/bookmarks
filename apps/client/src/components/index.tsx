@@ -11,3 +11,5 @@ export * from './TrashIcon';
 export * from './ChevronUpIcon';
 export * from './SortArrorIcon';
 export * from './ChevronBtn';
+export * from './ExportIcon';
+export * from './ImportIcon';

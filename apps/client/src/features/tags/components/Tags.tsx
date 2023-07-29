@@ -9,7 +9,11 @@ export function Tags() {
     return (
         <div className="flex">
             <div className="w-1/2 my-2">
-                <CommonButton title="Create Tag" handleClick={() => setOpenCreateModal(true)} className="w-[146px]" />
+                <CommonButton
+                    title="Create Tag"
+                    handleClick={() => setOpenCreateModal(true)}
+                    className="w-[146px] bg-blue-500 hover:bg-blue-700 text-white"
+                />
             </div>
             <div className="w-1/2 my-2">
                 <TagsContainer />
