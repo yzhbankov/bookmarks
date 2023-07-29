@@ -1,4 +1,4 @@
-import { Controller, Post, Put, Delete, Get, Body, Param, UseGuards, Req } from '@nestjs/common';
+import { Controller, Post, Put, Delete, Get, Body, Param, UseGuards, UnprocessableEntityException, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags, } from '@nestjs/swagger';
 import { BookmarksService } from './bookmarks.service';
 import { CreateBookmarkDto, UpdateBookmarkDto } from './dto';
@@ -26,6 +26,10 @@ export class BookmarksController {
   })
   @UseGuards(JwtAuthGuard)
   async saveBookmark(@Req() req, @Body() createBookmarkDto: CreateBookmarkDto): Promise<Bookmark> {
+    const existed: Bookmark[] = await this.appService.findByUrl(req.user.email, createBookmarkDto.url);
+    if (existed.length > 0) {
+      throw new UnprocessableEntityException(`Bookmark with url ${createBookmarkDto.url} already exist`);
+    }
     return this.appService.create(req.user.email, createBookmarkDto);
   }
 

@@ -78,4 +78,8 @@ export class BookmarksService {
   async findAll(owner: string): Promise<Bookmark[]> {
     return this.bookmarkModel.find({ owner }).exec();
   }
+
+  async findByUrl(owner: string, url: string): Promise<Bookmark[]> {
+    return this.bookmarkModel.find({ owner, url }).exec();
+  }
 }
