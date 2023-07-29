@@ -30,7 +30,6 @@ export function Bookmarks() {
     const selected = useContext(TagsContext);
     const filteredBookmarks = getFiltered(selected);
     const searchedBookmarks = getSearched(filteredBookmarks, searchText);
-    // todo: mobile layout for buttons
     // todo: handle bookmarks duplicates
     return (
         <>

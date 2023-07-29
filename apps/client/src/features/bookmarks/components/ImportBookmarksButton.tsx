@@ -44,7 +44,10 @@ export function ImportBookmarksButton({ isMobile }: ButtonType) {
                 />
             )}
             {isMobile && (
-                <div className="text-gray-700 block px-4 py-2 text-sm flex justify-between cursor-pointer">
+                <div
+                    className="text-gray-700 block px-4 py-2 text-sm flex justify-between cursor-pointer"
+                    onClick={() => fileInputRef.current.click()}
+                >
                     Import
                     <ImportIcon />
                 </div>

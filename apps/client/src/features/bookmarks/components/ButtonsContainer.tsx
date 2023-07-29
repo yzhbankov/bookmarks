@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { ImportIcon, CommonButton } from '../../../components';
+import { CommonButton } from '../../../components';
 import { ExportBookmarksButton } from './ExportBookmarksButton';
 import { ImportBookmarksButton } from './ImportBookmarksButton';
 import { IBookmark } from '../../../models';
@@ -73,8 +73,8 @@ function MobileButtons({ handleClickAddButton, bookmarks }: ButtonsType) {
                     <div onClick={handleClickAddButton} className="text-gray-700 block px-4 py-2 text-sm">
                         Add
                     </div>
-                    <ExportBookmarksButton bookmarks={bookmarks} isMobile={true} />
                     <ImportBookmarksButton isMobile={true} />
+                    <ExportBookmarksButton bookmarks={bookmarks} isMobile={true} />
                 </div>
             </div>
         </div>
