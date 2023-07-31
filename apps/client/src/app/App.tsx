@@ -5,6 +5,7 @@ import { Bookmarks } from '../features/bookmarks/components';
 import { Menu } from '../features/menu/components';
 import { Footer } from '../features/footer/components';
 import { TagsProvider } from '../context';
+import { UserResponseButton } from '../features/menu/components';
 
 export function App() {
     return (
@@ -18,6 +19,7 @@ export function App() {
                     footerRender={() => <Footer />}
                 />
             </TagsProvider>
+            <UserResponseButton />
         </div>
     );
 }
