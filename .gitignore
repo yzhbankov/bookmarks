@@ -12,3 +12,10 @@ lerna-debug.log
 /shared/build/*
 .DS_Store
 assets/
+terraform.tfvars
+.terraform
+*.zip
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+*.terraform.lock.hcl
