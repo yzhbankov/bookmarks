@@ -1,9 +1,9 @@
 locals {
-  tags-lambda    = "${path.module}/../../apps/lambdas/tags"
-  auth-lambda    = "${path.module}/../../apps/lambdas/auth"
+  tags-lambda      = "${path.module}/../../apps/lambdas/tags"
+  auth-lambda      = "${path.module}/../../apps/lambdas/auth"
   spaces-lambda    = "${path.module}/../../apps/lambdas/spaces"
-  bookmarks-lambda    = "${path.module}/../../apps/lambdas/bookmarks"
-  lambda_timeout = 60
+  bookmarks-lambda = "${path.module}/../../apps/lambdas/bookmarks"
+  lambda_timeout   = 60
 }
 
 data "aws_iam_policy_document" "assume_role" {
