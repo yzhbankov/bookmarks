@@ -84,4 +84,4 @@ jobs:
             $LABEL/labels \
             -H "Content-Type: application/json" \
             -H "Authorization: token $GITHUB_TOKEN" \
-            -d '["master_planned"]'
+            -d '["prod_planned"]'
