@@ -108,3 +108,4 @@ Navigate to `Client ID for Web application` in google API, specify application n
 
 ### Client
  - to build and deploy client just create branch `deploy-client` and push it with force update flag;
+
