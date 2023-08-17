@@ -1,4 +1,4 @@
-name: 'Terraform Plan'
+name: 'Terraform Plan PROD'
 
 on:
   issue_comment:
@@ -8,7 +8,7 @@ jobs:
     name: 'Plan Terraform'
 
     # Only execute if this is a pull request issue and a comment /plan master has been made
-    if: ${{ github.event.issue.pull_request && (github.event.comment.body == '/plan master') }}
+    if: ${{ github.event.issue.pull_request && (github.event.comment.body == '/plan prod') }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write

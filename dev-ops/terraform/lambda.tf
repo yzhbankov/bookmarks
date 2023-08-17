@@ -1,5 +1,5 @@
 locals {
-  tags-lambda  = "${path.module}/../../apps/lambdas/tags"
+  tags-lambda    = "${path.module}/../../apps/lambdas/tags"
   lambda_timeout = 60
 }
 
