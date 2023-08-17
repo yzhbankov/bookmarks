@@ -1,6 +1,6 @@
 # bookmarks
 ## URL
-* http://bookmarks.lat
+ * http://bookmarks.lat
 
 
 ## High-level requirements
