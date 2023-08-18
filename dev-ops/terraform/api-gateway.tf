@@ -3,7 +3,7 @@ resource "aws_apigatewayv2_api" "bookmarks-api" {
   protocol_type = "HTTP"
   body = templatefile("${path.module}/../../apps/api-gateway/api.yaml",
     {
-      aws_region           = data.aws_region
+      aws_region           = var.AWS_REGION
       tags_lambda_arn      = aws_lambda_function.tags-lambda.arn
       spaces_lambda_arn    = aws_lambda_function.spaces-lambda.arn
       bookmarks_lambda_arn = aws_lambda_function.bookmarks-lambda.arn
