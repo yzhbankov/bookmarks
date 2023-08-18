@@ -1,0 +1,457 @@
+openapi: 3.0.0
+paths:
+  "/api/v1/bookmarks":
+    post:
+      operationId: BookmarksController_saveBookmark
+      summary: Create bookmark
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateBookmarkDto"
+      responses:
+        '200':
+          description: Created bookmark
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BookmarkEntity"
+        '403':
+          description: Forbidden.
+        '422':
+          description: Validation error.
+      tags:
+        - bookmarks
+      security:
+        - bearer: []
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub:
+            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+    get:
+      operationId: BookmarksController_readBookmarks
+      summary: Read bookmarks
+      parameters: []
+      responses:
+        '200':
+          description: The found bookmarks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/BookmarkEntity"
+      tags:
+        - bookmarks
+      security:
+        - bearer: []
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub:
+            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+  "/api/v1/bookmarks/{id}":
+    put:
+      operationId: BookmarksController_editBookmark
+      summary: Edit bookmark
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateBookmarkDto"
+      responses:
+        '200':
+          description: Created bookmark
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BookmarkEntity"
+        '403':
+          description: Forbidden.
+        '422':
+          description: Validation error.
+      tags:
+        - bookmarks
+      security:
+        - bearer: []
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub:
+            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+    delete:
+      operationId: BookmarksController_deleteBookmark
+      summary: Delete bookmark
+      parameters: []
+      responses:
+        '204':
+          description: Delete bookmark
+        '403':
+          description: Forbidden.
+        '422':
+          description: Validation error.
+      tags:
+        - bookmarks
+      security:
+        - bearer: []
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub:
+            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+  "/api/v1/tags":
+    post:
+      operationId: TagsController_saveTag
+      summary: Create tag
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateTagDto"
+      responses:
+        '200':
+          description: Created tag
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TagEntity"
+        '403':
+          description: Forbidden.
+        '422':
+          description: Validation error.
+      tags:
+        - tags
+      security:
+        - bearer: []
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub:
+            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${tags_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+    get:
+      operationId: TagsController_readTags
+      summary: Read tags
+      parameters: []
+      responses:
+        '200':
+          description: The found tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/TagEntity"
+      tags:
+        - tags
+      security:
+        - bearer: []
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub:
+            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${tags_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+  "/api/v1/tags/{id}":
+    delete:
+      operationId: TagsController_deleteTag
+      summary: Delete tag
+      parameters: []
+      responses:
+        '204':
+          description: Delete tag
+        '403':
+          description: Forbidden.
+        '422':
+          description: Validation error.
+      tags:
+        - tags
+      security:
+        - bearer: []
+    x-amazon-apigateway-integration:
+      uri:
+        Fn::Sub:
+          arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${tags_lambda_arn}/invocations
+      httpMethod: POST
+      type: aws_proxy
+  "/api/v1/spaces":
+    post:
+      operationId: SpacesController_saveSpace
+      summary: Create space
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateSpaceDto"
+      responses:
+        '200':
+          description: Created space
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/SpaceEntity"
+        '403':
+          description: Forbidden.
+        '422':
+          description: Validation error.
+      tags:
+        - spaces
+      security:
+        - bearer: []
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub:
+            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${spaces_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+    get:
+      operationId: SpacesController_readSpaces
+      summary: Read spaces
+      parameters: []
+      responses:
+        '200':
+          description: The found spaces
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/SpaceEntity"
+      tags:
+        - spaces
+      security:
+        - bearer: []
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub:
+            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${spaces_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+  "/api/v1/spaces/{id}":
+    delete:
+      operationId: SpacesController_deleteSpace
+      summary: Delete space
+      parameters: []
+      responses:
+        '204':
+          description: Delete space
+        '403':
+          description: Forbidden.
+        '422':
+          description: Validation error.
+      tags:
+        - spaces
+      security:
+        - bearer: []
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub:
+            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${spaces_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+  "/api/v1/auth/login":
+    post:
+      operationId: AuthController_googleExchangeCodeForToken
+      summary: Login with google auth code
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+        - auth
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub:
+            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${auth_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+  "/api/v1/auth/validate":
+    get:
+      operationId: AuthController_validateCookie
+      summary: Validate cookie
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - auth
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub:
+            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${auth_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+info:
+  title: Bookmarks
+  description: The bookmarks API
+  version: '1.0'
+  contact: {}
+tags:
+  - name: bookmarks
+    description: ''
+servers: []
+components:
+  schemas:
+    CreateBookmarkDto:
+      type: object
+      properties:
+        url:
+          type: string
+        space:
+          type: string
+        description:
+          type: string
+        title:
+          type: string
+        tag:
+          type: string
+      required:
+        - url
+        - space
+    BookmarkEntity:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 642ff272f68f2b39a4a6f7df
+          description: Bookmark unique identifier
+        url:
+          type: string
+          example: https://example.com
+          description: Bookmark url
+        description:
+          type: string
+          example: Bookmark description
+          description: Bookmark description
+        title:
+          type: string
+          example: My bookmark page title
+          description: Bookmark title
+        tag:
+          type: string
+          example: 64318df552f93af0cc9f4779
+          description: Bookmark tag unique identifier
+        space:
+          type: string
+          example: 64318df552f93af0cc9f4779
+          description: Space unique identifier
+        owner:
+          type: string
+          example: yzhbankov@gmail.com
+          description: Email of bookmark owner
+        createdAt:
+          type: string
+          example: '2023-01-02T12:00:00Z'
+          description: Date of bookmark creation
+        updatedAt:
+          type: string
+          example: '2023-01-02T12:00:00Z'
+          description: Date of bookmark update
+      required:
+        - _id
+        - url
+        - description
+        - title
+        - tag
+        - space
+        - owner
+        - createdAt
+        - updatedAt
+    UpdateBookmarkDto:
+      type: object
+      properties:
+        description:
+          type: string
+        tag:
+          type: string
+    CreateTagDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      required:
+        - name
+        - description
+    TagEntity:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 642ff272f68f2b39a4a6f7df
+          description: Tag unique identifier
+        name:
+          type: string
+          example: Work
+          description: Tag name
+        description:
+          type: string
+          example: Tag description
+          description: Tag description
+        owner:
+          type: string
+          example: yzhbankov@gmail.com
+          description: Tag owner email
+        createdAt:
+          type: string
+          example: '2023-01-02T12:00:00Z'
+          description: Date of tag creation
+      required:
+        - _id
+        - name
+        - description
+        - owner
+        - createdAt
+    CreateSpaceDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      required:
+        - name
+        - description
+    SpaceEntity:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 642ff272f68f2b39a4a6f7df
+          description: Space unique identifier
+        name:
+          type: string
+          example: Work
+          description: Space name
+        description:
+          type: string
+          example: Space description
+          description: Space description
+        owner:
+          type: string
+          example: yzhbankov@gmail.com
+          description: Space owner email
+        createdAt:
+          type: string
+          example: '2023-01-02T12:00:00Z'
+          description: Date of space creation
+      required:
+        - _id
+        - name
+        - description
+        - owner
+        - createdAt
