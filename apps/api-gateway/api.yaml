@@ -27,9 +27,7 @@ paths:
       security:
         - bearer: []
       x-amazon-apigateway-integration:
-        uri:
-          Fn::Sub:
-            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
     get:
@@ -50,9 +48,7 @@ paths:
       security:
         - bearer: []
       x-amazon-apigateway-integration:
-        uri:
-          Fn::Sub:
-            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
   "/api/v1/bookmarks/{id}":
@@ -82,9 +78,7 @@ paths:
       security:
         - bearer: []
       x-amazon-apigateway-integration:
-        uri:
-          Fn::Sub:
-            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
     delete:
@@ -103,9 +97,7 @@ paths:
       security:
         - bearer: []
       x-amazon-apigateway-integration:
-        uri:
-          Fn::Sub:
-            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
   "/api/v1/tags":
@@ -135,9 +127,7 @@ paths:
       security:
         - bearer: []
       x-amazon-apigateway-integration:
-        uri:
-          Fn::Sub:
-            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${tags_lambda_arn}/invocations
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${tags_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
     get:
@@ -158,9 +148,7 @@ paths:
       security:
         - bearer: []
       x-amazon-apigateway-integration:
-        uri:
-          Fn::Sub:
-            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${tags_lambda_arn}/invocations
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${tags_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
   "/api/v1/tags/{id}":
@@ -179,12 +167,10 @@ paths:
         - tags
       security:
         - bearer: []
-    x-amazon-apigateway-integration:
-      uri:
-        Fn::Sub:
-          arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${tags_lambda_arn}/invocations
-      httpMethod: POST
-      type: aws_proxy
+      x-amazon-apigateway-integration:
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${tags_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
   "/api/v1/spaces":
     post:
       operationId: SpacesController_saveSpace
@@ -212,9 +198,7 @@ paths:
       security:
         - bearer: []
       x-amazon-apigateway-integration:
-        uri:
-          Fn::Sub:
-            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${spaces_lambda_arn}/invocations
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${spaces_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
     get:
@@ -235,9 +219,7 @@ paths:
       security:
         - bearer: []
       x-amazon-apigateway-integration:
-        uri:
-          Fn::Sub:
-            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${spaces_lambda_arn}/invocations
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${spaces_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
   "/api/v1/spaces/{id}":
@@ -257,9 +239,7 @@ paths:
       security:
         - bearer: []
       x-amazon-apigateway-integration:
-        uri:
-          Fn::Sub:
-            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${spaces_lambda_arn}/invocations
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${spaces_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
   "/api/v1/auth/login":
@@ -273,9 +253,7 @@ paths:
       tags:
         - auth
       x-amazon-apigateway-integration:
-        uri:
-          Fn::Sub:
-            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${auth_lambda_arn}/invocations
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${auth_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
   "/api/v1/auth/validate":
@@ -289,9 +267,7 @@ paths:
       tags:
         - auth
       x-amazon-apigateway-integration:
-        uri:
-          Fn::Sub:
-            arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${auth_lambda_arn}/invocations
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${auth_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
 info:
