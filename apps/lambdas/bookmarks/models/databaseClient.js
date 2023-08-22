@@ -1,4 +1,4 @@
-const AWS = require('aws-sdk');
+import AWS from '/var/runtime/node_modules/aws-sdk/lib/aws.js';
 
 export class DatabaseClient {
     #table = null;

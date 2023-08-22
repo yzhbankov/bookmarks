@@ -1,12 +1,12 @@
-import { BookmarksRepo, DatabaseClient } from './models';
-import Controller from './controller';
+import { BookmarksRepo, DatabaseClient } from './models/index.js';
+import Controller from './controller/index.js';
 
 const db = new BookmarksRepo(new DatabaseClient('prod_bookmarks_table'));
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     try {
         const method = event.httpMethod;
-        Controller(method, event);
+        return Controller(method, event);
     } catch (error) {
         return {
             statusCode: 500,

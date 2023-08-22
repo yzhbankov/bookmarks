@@ -1,13 +1,13 @@
-const AWS = require('aws-sdk');
+import AWS from '/var/runtime/node_modules/aws-sdk/lib/aws.js';
 
 export class Bookmark {
     /**
      * class Bookmark
-    * */
+     * */
 
     /**
      * @property {String|null}
-    * */
+     * */
     _id = null;
     /**
      * @property {String|null}
