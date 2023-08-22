@@ -27,16 +27,16 @@ export default async function controller(method, event) {
 }
 
 class Controller {
-    async static get(event) {
+    static async get(event) {
         return makeRequestHandler(ReadBookmark, event)
     }
-    async static post(event) {
+    static async post(event) {
         return makeRequestHandler(CreateBookmark, event)
     }
-    async static put(event) {
+    static async put(event) {
         return makeRequestHandler(UpdateBookmark, event)
     }
-    async static del(event) {
+    static async del(event) {
         return makeRequestHandler(DeleteBookmark, event)
     }
 }
