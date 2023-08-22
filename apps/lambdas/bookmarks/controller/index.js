@@ -1,4 +1,4 @@
-import { ReadBookmark, CreateBookmark, DeleteBookmark, UpdateBookmark } from '../usecases';
+import { ReadBookmark, CreateBookmark, DeleteBookmark, UpdateBookmark } from '../usecases/index.js';
 
 export default async function controller(method, event) {
     switch (method) {
