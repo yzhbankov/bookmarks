@@ -1,3 +1,3 @@
-export * from './databaseClient.js';
-export * from './repository.js';
-export * from './model.js';
+export * from './DatabaseClient.js';
+export * from './BookmarksRepo.js';
+export * from './BookmarkDto.js';

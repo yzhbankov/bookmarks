@@ -1,6 +1,6 @@
 /**
  * @function
- * @param {Bookmark} bookmark - bookmark data
+ * @param {BookmarkDto} bookmark - bookmark data
  * @return {Object<pkValue: String, skValue: String>}
 * */
 export function getPkSkForBookmark(bookmark) {
