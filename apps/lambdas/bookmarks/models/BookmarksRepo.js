@@ -1,5 +1,5 @@
 import { getPkSkForBookmark, getPkForOwner, getSkForUrl } from '../utils.js';
-import { BookmarkDto } from './model.js';
+import { BookmarkDto } from './BookmarkDto.js';
 
 export class BookmarksRepo {
 

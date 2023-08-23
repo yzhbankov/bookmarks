@@ -1,18 +1,22 @@
 import { ReadBookmark, CreateBookmark, DeleteBookmark, UpdateBookmark } from '../usecases/index.js';
 
 export default async function controller(method, event) {
+    const body = event.body && JSON.parse(event.body);
+    const idStartIndex = event.path.lastIndexOf('/') + 1;
+    const id = event.path.substring(idStartIndex);
+
     switch (method) {
         case 'GET': {
-            return Controller.get(event);
+            return Controller.get({});
         }
         case 'POST': {
-            return Controller.post(event);
+            return Controller.post(body);
         }
         case 'PUT': {
-            return Controller.put(event);
+            return Controller.put({ body, id });
         }
         case 'DELETE': {
-            return Controller.del(event);
+            return Controller.del({ id });
         }
         default: {
             return {

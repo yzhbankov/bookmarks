@@ -1,7 +1,7 @@
 import { BookmarksRepo, DatabaseClient } from './models/index.js';
 import Controller from './controller/index.js';
 
-const db = new BookmarksRepo(new DatabaseClient('prod_bookmarks_table'));
+BookmarksRepo.setRepository(new DatabaseClient('prod_bookmarks_table'));
 
 export const handler = async (event) => {
     try {
