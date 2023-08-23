@@ -12,11 +12,7 @@ export class DatabaseClient {
     async save({ pkValue, skValue, data }) {
         try {
             await this.#table.put({
-                Item: data,
-                Key: {
-                    PK: pkValue,
-                    SK: skValue
-                }
+                Item: { PK: pkValue, SK: skValue, data },
             }).promise();
         } catch (e) {
             console.error('[DatabaseClient] save: ', e);
