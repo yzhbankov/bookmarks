@@ -2,18 +2,20 @@ import { ReadBookmark, CreateBookmark, DeleteBookmark, UpdateBookmark } from '..
 
 export default async function controller(method, event) {
     const body = event.body && JSON.parse(event.body);
+    const headers = event.headers;
+    const owner = headers['Authorization'];
     const idStartIndex = event.path.lastIndexOf('/') + 1;
     const id = event.path.substring(idStartIndex);
 
     switch (method) {
         case 'GET': {
-            return Controller.get({});
+            return Controller.get({ owner });
         }
         case 'POST': {
             return Controller.post(body);
         }
         case 'PUT': {
-            return Controller.put({ body, id });
+            return Controller.put({ ...body, _id: id, owner });
         }
         case 'DELETE': {
             return Controller.del({ id });
@@ -31,17 +33,17 @@ export default async function controller(method, event) {
 }
 
 class Controller {
-    static async get(event) {
-        return makeRequestHandler(ReadBookmark, event)
+    static async get(params) {
+        return makeRequestHandler(ReadBookmark, params)
     }
-    static async post(event) {
-        return makeRequestHandler(CreateBookmark, event)
+    static async post(params) {
+        return makeRequestHandler(CreateBookmark, params)
     }
-    static async put(event) {
-        return makeRequestHandler(UpdateBookmark, event)
+    static async put(params) {
+        return makeRequestHandler(UpdateBookmark, params)
     }
-    static async del(event) {
-        return makeRequestHandler(DeleteBookmark, event)
+    static async del(params) {
+        return makeRequestHandler(DeleteBookmark, params)
     }
 }
 
@@ -73,8 +75,13 @@ async function makeRequestHandler(UseCase, params) {
             }
         };
     } catch (err) {
-        // todo: handle http errors
-        console.error(`[ErrorHandler] ${err}`);
-        return err;
+        console.error(`[ErrorHandler] ${JSON.stringify(err)}`);
+        return {
+            statusCode: err.statusCode,
+            body: JSON.stringify({ message: err.message }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
     }
 }

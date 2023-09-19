@@ -1,5 +1,4 @@
 import { getPkSkForBookmark, getPkForOwner, getSkForUrl } from '../utils.js';
-import { BookmarkDto } from './BookmarkDto.js';
 
 export class BookmarksRepo {
 
@@ -16,19 +15,30 @@ export class BookmarksRepo {
     }
 
     async save(data) {
-        const bookmark = new BookmarkDto(data);
-        const { pkValue, skValue } = getPkSkForBookmark(bookmark);
-        return this.repository.save({ pkValue, skValue, data: bookmark });
+        const { pkValue, skValue } = getPkSkForBookmark(data);
+        return this.repository.save({ pkValue, skValue, data });
     }
 
     async update(data) {
-        const bookmark = new BookmarkDto(data);
-        const { pkValue, skValue } = getPkSkForBookmark(bookmark);
-        return this.repository.save({ pkValue, skValue, data: bookmark });
+        console.log('data ', data)
+        const { pkValue, skValue } = getPkSkForBookmark(data);
+        const  record = await this.repository.update({ pkValue, skValue, data });
+        return record && record['data'];
     }
 
-    async read(owner) {
-        return this.repository.read(getPkForOwner(owner));
+    async readByOwner(owner) {
+        const records = await this.repository.readByPk(getPkForOwner(owner));
+        return records.map(record => record['data']);
+    }
+
+    async readByUrl(owner, url) {
+        const record = await this.repository.readByPkSk(getPkForOwner(owner), getSkForUrl(url));
+        return record && record['Item'] && record['Item']['data'];
+    }
+
+    async readById(owner, id) {
+        const records = await this.repository.readByPk(getPkForOwner(owner));
+        return records.map(record => record['data']).filter(bookmark => bookmark._id === id);
     }
 
     async remove(owner, url) {

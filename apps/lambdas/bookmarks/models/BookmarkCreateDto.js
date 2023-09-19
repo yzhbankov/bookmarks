@@ -1,8 +1,8 @@
 import AWS from '/var/runtime/node_modules/aws-sdk/lib/aws.js';
 
-export class BookmarkDto {
+export class BookmarkCreateDto {
     /**
-     * class BookmarkDto
+     * class BookmarkCreateDto
      * */
 
     /**
