@@ -1,6 +1,7 @@
 import { SpacesRepo, DatabaseClient } from './models/index.js';
 import Controller from './controller/index.js';
 
+
 SpacesRepo.setRepository(new DatabaseClient('prod_bookmarks_table'));
 
 export const handler = async (event) => {
