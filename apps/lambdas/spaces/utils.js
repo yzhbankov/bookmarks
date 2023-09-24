@@ -1,12 +1,12 @@
 /**
  * @function
- * @param {SpaceCreateDto} tag - tag data
+ * @param {SpaceCreateDto} space - space data
  * @return {Object<pkValue: String, skValue: String>}
 * */
-export function getPkSkForTag(tag) {
+export function getPkSkForSpace(space) {
     return {
-        pkValue: `TAG_${tag.owner}`,
-        skValue: `TAG_${tag.name}`
+        pkValue: `SPACE_${space.owner}`,
+        skValue: `SPACE_${space.name}`
     }
 }
 
@@ -16,7 +16,7 @@ export function getPkSkForTag(tag) {
  * @return {String}
  * */
 export function getPkForOwner(owner) {
-    return `TAG_${owner}`
+    return `SPACE_${owner}`
 }
 
 /**
@@ -25,5 +25,5 @@ export function getPkForOwner(owner) {
  * @return {String}
  * */
 export function getSkForName(name) {
-    return `TAG_${name}`
+    return `SPACE_${name}`
 }
