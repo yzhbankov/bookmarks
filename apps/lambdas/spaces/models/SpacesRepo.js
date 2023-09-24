@@ -1,4 +1,5 @@
-import { getPkSkForSpace, getPkForOwner, getSkForName } from '../utils.js';
+import { getTableKey } from '../shared/utils/index.js';
+import { SPACES } from '../constants.js';
 
 export class SpacesRepo {
 
@@ -15,34 +16,38 @@ export class SpacesRepo {
     }
 
     async save(data) {
-        const { pkValue, skValue } = getPkSkForSpace(data);
+        const pkValue = getTableKey(SPACES, data.owner);
+        const skValue = data.name;
         return this.repository.save({ pkValue, skValue, data });
     }
 
     async update(data) {
-        const { pkValue, skValue } = getPkSkForTag(data);
+        const pkValue = getTableKey(SPACES, data.owner);
+        const skValue = data.name;
         await this.repository.update({ pkValue, skValue, data });
         return data;
     }
 
     async readByOwner(owner) {
-        const records = await this.repository.readByPk(getPkForOwner(owner));
+        const pkValue = getTableKey(SPACES, owner);
+        const records = await this.repository.readByPk(pkValue);
         return records.map(record => record['data']);
     }
 
     async readByName(owner, name) {
-        const record = await this.repository.readByPkSk(getPkForOwner(owner), getSkForName(name));
+        const pkValue = getTableKey(SPACES, owner);
+        const record = await this.repository.readByPkSk(pkValue, name);
         return record && record['Item'] && record['Item']['data'];
     }
 
     async readById(owner, id) {
-        const records = await this.repository.readByPk(getPkForOwner(owner));
+        const pkValue = getTableKey(SPACES, owner);
+        const records = await this.repository.readByPk(pkValue);
         return records.map(record => record['data']).filter(tag => tag._id === id);
     }
 
-    async remove(owner, name) {
-        const pkValue = getPkForOwner(owner);
-        const skValue = getSkForName(name);
+    async remove(owner, skValue) {
+        const pkValue = getTableKey(SPACES, owner);
         return this.repository.remove(pkValue, skValue);
     }
 }
