@@ -1,4 +1,5 @@
-import {BookmarksRepo, NotFoundError, BookmarkUpdateDto} from "../models/index.js";
+import { BookmarksRepo, BookmarkUpdateDto } from '../models/index.js';
+import { NotFoundError } from '../shared/index.js';
 
 export class UpdateBookmark {
     async execute(params) {
