@@ -1,5 +1,5 @@
 import { BookmarksRepo, BookmarkCreateDto } from '../models/index.js';
-import { UnprocessableEntityError } from '../shared/index.js';
+import { UnprocessableEntityError } from '../shared/models/index.js';
 
 export class CreateBookmark {
     async execute(params) {

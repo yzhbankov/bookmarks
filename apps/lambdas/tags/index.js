@@ -1,5 +1,6 @@
-import { TagsRepo, DatabaseClient } from './models/index.js';
+import { TagsRepo } from './models/index.js';
 import Controller from './controller/index.js';
+import { DatabaseClient } from '../shared/models/index.js';
 
 TagsRepo.setRepository(new DatabaseClient('prod_bookmarks_table'));
 

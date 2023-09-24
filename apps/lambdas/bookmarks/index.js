@@ -1,4 +1,5 @@
-import { BookmarksRepo, DatabaseClient } from './models/index.js';
+import { BookmarksRepo } from './models/index.js';
+import { DatabaseClient } from '../shared/models/index.js';
 import Controller from './controller/index.js';
 
 BookmarksRepo.setRepository(new DatabaseClient('prod_bookmarks_table'));

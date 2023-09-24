@@ -1,5 +1,5 @@
 import { TagsRepo, TagCreateDto } from '../models/index.js';
-import { UnprocessableEntityError } from '../shared/index.js';
+import { UnprocessableEntityError } from '../shared/models/index.js';
 
 export class CreateTag {
     async execute(params) {

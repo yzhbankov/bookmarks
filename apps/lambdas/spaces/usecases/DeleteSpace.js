@@ -1,5 +1,5 @@
 import { SpacesRepo } from '../models/index.js';
-import { NotFoundError } from '../shared/index.js';
+import { NotFoundError } from '../shared/models/index.js';
 
 export class DeleteSpace {
     async execute(params) {

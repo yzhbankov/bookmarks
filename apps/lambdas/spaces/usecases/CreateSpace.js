@@ -1,5 +1,5 @@
 import { SpacesRepo, SpaceCreateDto } from '../models/index.js';
-import { UnprocessableEntityError } from '../shared/index.js';
+import { UnprocessableEntityError } from '../shared/models/index.js';
 
 export class CreateSpace {
     async execute(params) {

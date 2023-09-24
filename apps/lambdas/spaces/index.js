@@ -1,6 +1,6 @@
-import { SpacesRepo, DatabaseClient } from './models/index.js';
+import { SpacesRepo } from './models/index.js';
 import Controller from './controller/index.js';
-
+import { DatabaseClient } from '../shared/models/index.js';
 
 SpacesRepo.setRepository(new DatabaseClient('prod_bookmarks_table'));
 
