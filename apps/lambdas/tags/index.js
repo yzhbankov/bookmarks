@@ -1,8 +1,18 @@
-exports.handler = async (event) => {
-    console.log("Hello from tags lambda!");
+import { TagsRepo, DatabaseClient } from './models/index.js';
+import Controller from './controller/index.js';
 
-    return {
-        statusCode: 200,
-        body: "Hello from tags lambda!"
-    };
+TagsRepo.setRepository(new DatabaseClient('prod_bookmarks_table'));
+
+export const handler = async (event) => {
+    try {
+        return Controller(event['httpMethod'], event);
+    } catch (error) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: error.message }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+    }
 };
