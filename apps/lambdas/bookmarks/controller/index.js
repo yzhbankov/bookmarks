@@ -3,9 +3,10 @@ import { ReadBookmark, CreateBookmark, DeleteBookmark, UpdateBookmark } from '..
 export default async function controller(method, event) {
     const body = event.body && JSON.parse(event.body);
     const headers = event.headers;
+    // todo: replace header with cookie
     const owner = headers['Authorization'];
     const idStartIndex = event.path.lastIndexOf('/') + 1;
-    const id = event.path.substring(idStartIndex);
+    const _id = event.path.substring(idStartIndex);
 
     switch (method) {
         case 'GET': {
@@ -15,10 +16,10 @@ export default async function controller(method, event) {
             return Controller.post(body);
         }
         case 'PUT': {
-            return Controller.put({ ...body, _id: id, owner });
+            return Controller.put({ ...body, _id, owner });
         }
         case 'DELETE': {
-            return Controller.del({ id });
+            return Controller.del({ _id, owner });
         }
         default: {
             return {

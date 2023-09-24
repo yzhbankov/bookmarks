@@ -8,9 +8,6 @@ export class UpdateBookmark {
         }
         const data = new BookmarkUpdateDto(params);
 
-        console.log('dataaaa ', data);
-        console.log('bookmarks[0] ', bookmarks[0]);
-
         return new BookmarksRepo().update({ ...bookmarks[0], ...data });
     }
 }

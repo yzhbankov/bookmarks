@@ -1,9 +1,12 @@
+import {BookmarksRepo, NotFoundError} from '../models/index.js';
+
 export class DeleteBookmark {
     async execute(params) {
-        console.log("Hello from DeleteBookmark use case");
-        console.log("params ", params);
-        return {
-            data: []
+        const bookmarks = await new BookmarksRepo().readById(params.owner, params._id);
+        if (!bookmarks.length) {
+            throw new NotFoundError(`Bookmark with id ${params._id} not found`)
         }
+
+        return new BookmarksRepo().remove(params.owner, bookmarks[0].url);
     }
 }

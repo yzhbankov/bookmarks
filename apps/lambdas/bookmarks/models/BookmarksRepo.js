@@ -20,10 +20,9 @@ export class BookmarksRepo {
     }
 
     async update(data) {
-        console.log('data ', data)
         const { pkValue, skValue } = getPkSkForBookmark(data);
-        const  record = await this.repository.update({ pkValue, skValue, data });
-        return record && record['data'];
+        await this.repository.update({ pkValue, skValue, data });
+        return data;
     }
 
     async readByOwner(owner) {
