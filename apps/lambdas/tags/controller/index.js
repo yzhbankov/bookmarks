@@ -1,5 +1,6 @@
 import { ReadTag, CreateTag, DeleteTag } from '../usecases/index.js';
 
+
 export default async function controller(method, event) {
     const body = event.body && JSON.parse(event.body);
     const headers = event.headers;
@@ -8,12 +9,22 @@ export default async function controller(method, event) {
     const idStartIndex = event.path.lastIndexOf('/') + 1;
     const _id = event.path.substring(idStartIndex);
 
+    if (!owner) {
+        return {
+            statusCode: 401,
+            body: JSON.stringify({}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+    }
+
     switch (method) {
         case 'GET': {
             return Controller.get({ owner });
         }
         case 'POST': {
-            return Controller.post(body);
+            return Controller.post({ ...body, owner });
         }
         case 'DELETE': {
             return Controller.del({ _id, owner });

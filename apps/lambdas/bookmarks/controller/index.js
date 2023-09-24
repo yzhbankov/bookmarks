@@ -8,6 +8,16 @@ export default async function controller(method, event) {
     const idStartIndex = event.path.lastIndexOf('/') + 1;
     const _id = event.path.substring(idStartIndex);
 
+    if (!owner) {
+        return {
+            statusCode: 401,
+            body: JSON.stringify({}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+    }
+
     switch (method) {
         case 'GET': {
             return Controller.get({ owner });
