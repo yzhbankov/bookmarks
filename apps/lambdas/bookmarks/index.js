@@ -1,6 +1,6 @@
 import { BookmarksRepo } from './models/index.js';
-import { DatabaseClient } from '../shared/models/index.js';
-import { controller } from '../shared/system/index.js';
+import { DatabaseClient } from './shared/models/index.js';
+import { controller } from './shared/system/index.js';
 import { Routers } from './routers/index.js';
 
 BookmarksRepo.setRepository(new DatabaseClient('prod_bookmarks_table'));
