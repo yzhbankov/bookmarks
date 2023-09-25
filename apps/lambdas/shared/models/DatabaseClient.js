@@ -35,7 +35,7 @@ export class DatabaseClient {
                 ExpressionAttributeValues: {
                     ':dataValue': data,
                 },
-                ReturnValues: 'ALL',
+                ReturnValues: 'ALL_NEW',
             }).promise();
         } catch (e) {
             console.error('[DatabaseClient] save: ', e);
