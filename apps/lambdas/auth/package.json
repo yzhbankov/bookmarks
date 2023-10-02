@@ -1,0 +1,13 @@
+{
+  "name": "auth-lambda",
+  "type": "module",
+  "description": "This package will be treated as an ES module.",
+  "version": "1.0",
+  "main": "index.js",
+  "author": "yzhbankov",
+  "license": "MIT",
+  "dependencies": {
+    "google-auth-library": "^9.0.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

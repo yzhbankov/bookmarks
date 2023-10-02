@@ -3,6 +3,7 @@ import { DatabaseClient } from './shared/models/index.js';
 import { controller } from './shared/system/index.js';
 import { Routers } from './routers/index.js';
 
+// todo: table name to env variable
 BookmarksRepo.setRepository(new DatabaseClient('prod_bookmarks_table'));
 
 export const handler = async (event) => {
