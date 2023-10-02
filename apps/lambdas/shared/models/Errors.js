@@ -17,3 +17,15 @@ export class NotFoundError extends BaseError {
         super(message, 404);
     }
 }
+
+export class BadRequestError extends BaseError {
+    constructor(message = 'Bad Request Error') {
+        super(message, 400);
+    }
+}
+
+export class UnauthorizedError extends BaseError {
+    constructor(message = 'Unauthorized Error') {
+        super(message, 401);
+    }
+}

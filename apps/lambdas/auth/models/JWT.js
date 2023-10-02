@@ -35,4 +35,12 @@ export class JWT {
     sign() {
         return jwt.sign(this.payload, this.secret);
     }
+
+    /** @method
+     * @param {String}  token
+     * @return {Object}
+    * */
+    verify(token) {
+        return jwt.verify(token, this.secret);
+    }
 }

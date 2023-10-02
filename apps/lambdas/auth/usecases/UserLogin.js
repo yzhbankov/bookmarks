@@ -1,4 +1,5 @@
 import { UsersRepo, UserCreateDto, JWT, OAuth } from '../models/index.js';
+import { BadRequestError } from '../shared/models/index.js';
 
 async function registerUser(user) {
     try {
@@ -49,19 +50,14 @@ export class UserLogin {
 
             // Return the response with the cookie set.
             return {
-                statusCode: 200,
                 headers: {
                     'Set-Cookie': `${cookieName}=${encodeURIComponent(cookieValue)}; ${Object.entries(cookieOptions).map(([key, value]) => `${key}=${value}`).join('; ')}`,
                 },
-                body: JSON.stringify({ message: 'Authentication successful' }),
+                body: { message: 'Authentication successfull' },
             };
         } catch (error) {
-            // Handle token exchange failure
             console.error(error);
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ message: 'Code exchange error' }),
-            };
+            throw new BadRequestError('Code exchange error');
         }
     }
 }

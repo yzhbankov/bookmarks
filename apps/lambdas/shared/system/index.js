@@ -39,7 +39,7 @@ async function runUseCase(UseCase, { params }) {
     return new UseCase().execute(params);
 }
 
-export async function makeRequestHandler(UseCase, params) {
+export async function makeRequestHandler(UseCase, params, mapToResponse) {
     function logRequest(params, result, startTime) {
         console.log({
             useCase: UseCase.name,
@@ -53,6 +53,10 @@ export async function makeRequestHandler(UseCase, params) {
         const startTime = Date.now();
         const result = await runUseCase(UseCase, { params });
         logRequest(params, result, startTime);
+
+        if (mapToResponse) {
+            return mapToResponse(result);
+        }
 
         return {
             statusCode: 200,
