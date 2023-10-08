@@ -64,14 +64,23 @@ resource "aws_lambda_function" "tags-lambda" {
 }
 
 # AUTH LAMBDA
+resource "null_resource" "install_auth_dependencies" {
+  provisioner "local-exec" {
+    command = "npm install"
+    working_dir = local.auth-lambda
+  }
+
+  triggers = {
+    always_run = timestamp()
+  }
+}
+
 data "archive_file" "auth-lambda" {
   type        = "zip"
   source_dir  = local.auth-lambda
   output_path = "/tmp/auth-lambda.zip"
 
-  excludes = [
-    "node_modules"
-  ]
+  excludes = []
 }
 
 resource "aws_lambda_function" "auth-lambda" {
