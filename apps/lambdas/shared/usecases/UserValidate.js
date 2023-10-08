@@ -1,5 +1,4 @@
-import { JWT } from '../models/index.js';
-import { UnauthorizedError } from '../shared/models/index.js';
+import { JWT, UnauthorizedError } from '../models/index.js';
 
 export class UserValidate {
     async execute(cookie) {

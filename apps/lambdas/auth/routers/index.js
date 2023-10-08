@@ -1,4 +1,5 @@
-import { UserLogin, UserValidate } from '../usecases/index.js';
+import { UserLogin } from '../usecases/index.js';
+import { UserValidate } from '../shared/usecases/index.js';
 import { makeRequestHandler } from '../shared/system/index.js';
 
 function mapToLoginResponse(result) {

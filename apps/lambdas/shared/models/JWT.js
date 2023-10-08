@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 export class JWT {
     /**
      * @class JWT
-    * */
+     * */
 
     static secret = null;
 
@@ -14,7 +14,7 @@ export class JWT {
     /**
      * @method
      * @param {UserCreateDto} payload
-    * */
+     * */
     constructor(payload) {
         this.secret = JWT.secret;
         this.payload = {
@@ -31,7 +31,7 @@ export class JWT {
     /**
      * @method
      * @return {String}
-    * */
+     * */
     sign() {
         return jwt.sign(this.payload, this.secret);
     }
@@ -39,7 +39,7 @@ export class JWT {
     /** @method
      * @param {String}  token
      * @return {Object}
-    * */
+     * */
     verify(token) {
         return jwt.verify(token, this.secret);
     }
