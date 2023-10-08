@@ -1,12 +1,13 @@
 import { HTTP_METHOD } from '../constants/index.js';
+import { getCookie } from '../utils/index.js';
 
 export function controller(Routers) {
     return async function (method, event) {
         const body = event.body && JSON.parse(event.body);
-        const headers = event.headers;
+        const cookie = getCookie(event.headers);
         const idStartIndex = event.path.lastIndexOf('/') + 1;
         const param = event.path.substring(idStartIndex);
-        const data = { body, headers, param };
+        const data = { body, cookie, param };
 
         switch (method) {
             case HTTP_METHOD.GET: {

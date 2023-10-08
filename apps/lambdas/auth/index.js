@@ -1,7 +1,7 @@
 import { Routers } from './routers/index.js';
 import { DatabaseClient, JWT } from './shared/models/index.js';
 import { UsersRepo, OAuth } from './models/index.js';
-import { getCookie } from './utils/index.js';
+import { getCookie } from './shared/utils/index.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'JWT_SECRET';
 const GOOGLE_API_CLIENT_ID = process.env.GOOGLE_API_CLIENT_ID || 'CLIENT_ID';
