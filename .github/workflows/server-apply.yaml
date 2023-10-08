@@ -72,7 +72,7 @@ jobs:
         id: applystep
         working-directory: ./dev-ops/terraform/
         continue-on-error: true
-        run: terraform apply -auto-approve -var-file="./env/${environment}.tfvars" -var="CLIENT_ID=${{ secrets.CLIENT_ID }}" -var="CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" -var="JWT_SECRET=${{ secrets.JWT_SECRET }}" -input=false -no-color
+        run: terraform apply -auto-approve -var-file="./env/${environment}.tfvars" -var="GOOGLE_API_CLIENT_ID=${{ secrets.GOOGLE_API_CLIENT_ID }}" -var="GOOGLE_API_CLIENT_SECRET=${{ secrets.GOOGLE_API_CLIENT_SECRET }}" -var="JWT_SECRET=${{ secrets.JWT_SECRET }}" -input=false -no-color
 
       # If the apply was successful, post a comment with the applied output
       - name: Post RPP Plan and Apply to GitHub PR

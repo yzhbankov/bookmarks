@@ -85,10 +85,10 @@ resource "aws_lambda_function" "auth-lambda" {
 
   environment {
     variables = {
-      ENVIRONMENT   = terraform.workspace
-      CLIENT_ID     = var.CLIENT_ID,
-      CLIENT_SECRET = var.CLIENT_SECRET,
-      JWT_SECRET    = var.JWT_SECRET,
+      ENVIRONMENT              = terraform.workspace
+      GOOGLE_API_CLIENT_ID     = var.GOOGLE_API_CLIENT_ID,
+      GOOGLE_API_CLIENT_SECRET = var.GOOGLE_API_CLIENT_SECRET,
+      JWT_SECRET               = var.JWT_SECRET,
     }
   }
 }

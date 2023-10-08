@@ -15,10 +15,6 @@ OAuth.setClientCredentials({ clientId: CLIENT_ID, clientSecret: CLIENT_SECRET })
 
 // todo: add controller
 export const handler = async (event) => {
-    console.log('JWT_SECRET ', JWT_SECRET);
-    console.log('CLIENT_ID ', CLIENT_ID);
-    console.log('CLIENT_SECRET ', CLIENT_SECRET);
-
     const { path, httpMethod } = event;
     if (httpMethod === 'POST' && path.includes('/auth/login')) {
         return Routers.login({ body: JSON.parse(event.body) });
