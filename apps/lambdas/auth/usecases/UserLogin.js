@@ -1,5 +1,5 @@
-import { UsersRepo, UserCreateDto, JWT, OAuth } from '../models/index.js';
-import { BadRequestError } from '../shared/models/index.js';
+import { UsersRepo, UserCreateDto, OAuth } from '../models/index.js';
+import { BadRequestError, JWT } from '../shared/models/index.js';
 
 async function registerUser(user) {
     try {
