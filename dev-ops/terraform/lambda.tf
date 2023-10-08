@@ -37,14 +37,22 @@ resource "aws_iam_role_policy_attachment" "lambda_logs_role_policy" {
 }
 
 # TAGS LAMBDA
+resource "null_resource" "install_tags_dependencies" {
+  provisioner "local-exec" {
+    command = "cd ${local.tags-lambda} && npm install"
+  }
+
+  triggers = {
+    always_run = timestamp()
+  }
+}
+
 data "archive_file" "tags-lambda" {
   type        = "zip"
   source_dir  = local.tags-lambda
   output_path = "/tmp/tags-lambda.zip"
 
-  excludes = [
-    "node_modules"
-  ]
+  depends_on = [null_resource.install_tags_dependencies]
 }
 
 resource "aws_lambda_function" "tags-lambda" {
@@ -70,7 +78,7 @@ resource "null_resource" "install_auth_dependencies" {
   }
 
   triggers = {
-    always_run = "${timestamp()}"
+    always_run = timestamp()
   }
 }
 
@@ -102,14 +110,22 @@ resource "aws_lambda_function" "auth-lambda" {
 }
 
 # SPACES LAMBDA
+resource "null_resource" "install_spaces_dependencies" {
+  provisioner "local-exec" {
+    command = "cd ${local.spaces-lambda} && npm install"
+  }
+
+  triggers = {
+    always_run = timestamp()
+  }
+}
+
 data "archive_file" "spaces-lambda" {
   type        = "zip"
   source_dir  = local.spaces-lambda
   output_path = "/tmp/spaces-lambda.zip"
 
-  excludes = [
-    "node_modules"
-  ]
+  depends_on = [null_resource.install_spaces_dependencies]
 }
 
 resource "aws_lambda_function" "spaces-lambda" {
@@ -129,14 +145,22 @@ resource "aws_lambda_function" "spaces-lambda" {
 }
 
 # BOOKMARKS LAMBDA
+resource "null_resource" "install_bookmarks_dependencies" {
+  provisioner "local-exec" {
+    command = "cd ${local.bookmarks-lambda} && npm install"
+  }
+
+  triggers = {
+    always_run = timestamp()
+  }
+}
+
 data "archive_file" "bookmarks-lambda" {
   type        = "zip"
   source_dir  = local.bookmarks-lambda
   output_path = "/tmp/bookmarks-lambda.zip"
 
-  excludes = [
-    "node_modules"
-  ]
+  depends_on = [null_resource.install_bookmarks_dependencies]
 }
 
 resource "aws_lambda_function" "bookmarks-lambda" {
