@@ -3,15 +3,13 @@ import { DatabaseClient } from './shared/models/index.js';
 import { UsersRepo, JWT, OAuth } from './models/index.js';
 import { getCookie } from './utils/index.js';
 
-// todo: read from environment variables
-// todo: terraform build with env
 const JWT_SECRET = process.env.JWT_SECRET || 'JWT_SECRET';
-const CLIENT_ID = process.env.CLIENT_ID || 'CLIENT_ID';
-const CLIENT_SECRET = process.env.CLIENT_SECRET || 'CLIENT_SECRET';
+const GOOGLE_API_CLIENT_ID = process.env.GOOGLE_API_CLIENT_ID || 'CLIENT_ID';
+const GOOGLE_API_CLIENT_SECRET = process.env.GOOGLE_API_CLIENT_SECRET || 'CLIENT_SECRET';
 
 UsersRepo.setRepository(new DatabaseClient('prod_bookmarks_table'));
 JWT.setSecret(JWT_SECRET);
-OAuth.setClientCredentials({ clientId: CLIENT_ID, clientSecret: CLIENT_SECRET });
+OAuth.setClientCredentials({ clientId: GOOGLE_API_CLIENT_ID, clientSecret: GOOGLE_API_CLIENT_SECRET });
 
 // todo: add controller
 export const handler = async (event) => {
