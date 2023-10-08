@@ -5,9 +5,9 @@ import { getCookie } from './utils/index.js';
 
 // todo: read from environment variables
 // todo: terraform build with env
-const JWT_SECRET = 'put some-SecretHere';
-const CLIENT_ID = 'CLIENT_ID';
-const CLIENT_SECRET = 'CLIENT_SECRET';
+const JWT_SECRET = process.env.JWT_SECRET || 'JWT_SECRET';
+const CLIENT_ID = process.env.CLIENT_ID || 'CLIENT_ID';
+const CLIENT_SECRET = process.env.CLIENT_SECRET || 'CLIENT_SECRET';
 
 UsersRepo.setRepository(new DatabaseClient('prod_bookmarks_table'));
 JWT.setSecret(JWT_SECRET);
@@ -15,6 +15,10 @@ OAuth.setClientCredentials({ clientId: CLIENT_ID, clientSecret: CLIENT_SECRET })
 
 // todo: add controller
 export const handler = async (event) => {
+    console.log('JWT_SECRET ', JWT_SECRET);
+    console.log('CLIENT_ID ', CLIENT_ID);
+    console.log('CLIENT_SECRET ', CLIENT_SECRET);
+
     const { path, httpMethod } = event;
     if (httpMethod === 'POST' && path.includes('/auth/login')) {
         return Routers.login({ body: JSON.parse(event.body) });
