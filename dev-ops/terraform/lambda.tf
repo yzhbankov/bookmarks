@@ -70,7 +70,7 @@ resource "null_resource" "install_auth_dependencies" {
   }
 
   triggers = {
-    always_run = timestamp()
+    always_run = "${timestamp()}"
   }
 }
 
@@ -78,6 +78,8 @@ data "archive_file" "auth-lambda" {
   type        = "zip"
   source_dir  = local.auth-lambda
   output_path = "/tmp/auth-lambda.zip"
+
+  depends_on = [null_resource.install_auth_dependencies]
 }
 
 resource "aws_lambda_function" "auth-lambda" {
