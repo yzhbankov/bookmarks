@@ -66,7 +66,7 @@ resource "aws_lambda_function" "tags-lambda" {
 # AUTH LAMBDA
 resource "null_resource" "install_auth_dependencies" {
   provisioner "local-exec" {
-    command = "npm install"
+    command     = "npm install"
     working_dir = local.auth-lambda
   }
 
