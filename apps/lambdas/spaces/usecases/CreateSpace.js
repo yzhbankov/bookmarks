@@ -1,13 +1,14 @@
 import { SpacesRepo, SpaceCreateDto } from '../models/index.js';
 import { UnprocessableEntityError } from '../shared/models/index.js';
+import { UserValidate } from '../shared/usecases/index.js';
 
 export class CreateSpace {
-    async execute(params) {
-        const tag = await new SpacesRepo().readByName(params.owner, params.name);
+    async execute({ data, cookie }) {
+        const jwtContent = await new UserValidate().execute(cookie);
+        const tag = await new SpacesRepo().readByName(jwtContent.email, data.name);
         if (tag) {
-            throw new UnprocessableEntityError(`Space with name ${params.name} already exist`)
+            throw new UnprocessableEntityError(`Space with name ${data.name} already exist`)
         }
-        const data = new SpaceCreateDto(params);
-        return new SpacesRepo().save(data);
+        return new SpacesRepo().save(new SpaceCreateDto(data));
     }
 }

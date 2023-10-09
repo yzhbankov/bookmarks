@@ -2,19 +2,16 @@ import { ReadSpace, CreateSpace, DeleteSpace, UpdateSpace } from '../usecases/in
 import { makeRequestHandler } from '../shared/system/index.js';
 
 export class Routers {
-    static async get({ body, headers, param }) {
-        const owner = headers['Authorization'];
-        return makeRequestHandler(ReadSpace, { owner });
+    static async get({ body, cookie, param }) {
+        return makeRequestHandler(ReadSpace, { cookie });
     }
-    static async post({ body, headers, param }) {
-        const owner = headers['Authorization'];
-        return makeRequestHandler(CreateSpace, { ...body, owner });
+    static async post({ body, cookie, param }) {
+        return makeRequestHandler(CreateSpace, { data: body, cookie });
     }
-    static async put({ body, headers, param }) {
+    static async put({ body, cookie, param }) {
         return makeRequestHandler(UpdateSpace, null);
     }
-    static async del({ body, headers, param }) {
-        const owner = headers['Authorization'];
-        return makeRequestHandler(DeleteSpace, { _id: param, owner });
+    static async del({ body, cookie, param }) {
+        return makeRequestHandler(DeleteSpace, { _id: param, cookie });
     }
 }

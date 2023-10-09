@@ -1,13 +1,15 @@
 import { TagsRepo, TagCreateDto } from '../models/index.js';
 import { UnprocessableEntityError } from '../shared/models/index.js';
+import { UserValidate } from '../shared/usecases/index.js';
 
 export class CreateTag {
-    async execute(params) {
-        const tag = await new TagsRepo().readByName(params.owner, params.name);
+    async execute({ data, cookie }) {
+        const jwtContent = await new UserValidate().execute(cookie);
+
+        const tag = await new TagsRepo().readByName(jwtContent.email, data.name);
         if (tag) {
-            throw new UnprocessableEntityError(`Tag with name ${params.name} already exist`)
+            throw new UnprocessableEntityError(`Tag with name ${data.name} already exist`)
         }
-        const data = new TagCreateDto(params);
-        return new TagsRepo().save(data);
+        return new TagsRepo().save(new TagCreateDto({ ...data, owner: jwtContent.email }));
     }
 }
