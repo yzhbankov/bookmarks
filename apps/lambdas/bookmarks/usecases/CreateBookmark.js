@@ -1,13 +1,19 @@
 import { BookmarksRepo, BookmarkCreateDto } from '../models/index.js';
 import { UnprocessableEntityError } from '../shared/models/index.js';
+import { UserValidate } from '../shared/usecases/index.js';
 
 export class CreateBookmark {
-    async execute(params) {
-        const bookmark = await new BookmarksRepo().readByUrl(params.owner, params.url);
-        if (bookmark) {
-            throw new UnprocessableEntityError(`Bookmark with url ${params.url} already exist`)
+    async execute({ data, cookie }) {
+        const jwtContent = await new UserValidate().execute(cookie);
+
+        if (jwtContent.email !== data.owner) {
+            throw new UnprocessableEntityError('User email should be the same as owner')
         }
-        const data = new BookmarkCreateDto(params);
-        return new BookmarksRepo().save(data);
+
+        const bookmark = await new BookmarksRepo().readByUrl(data.owner, data.url);
+        if (bookmark) {
+            throw new UnprocessableEntityError(`Bookmark with url ${data.url} already exist`)
+        }
+        return new BookmarksRepo().save(new BookmarkCreateDto(data));
     }
 }
