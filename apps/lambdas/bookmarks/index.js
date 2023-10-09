@@ -1,9 +1,11 @@
 import { BookmarksRepo } from './models/index.js';
-import { DatabaseClient } from './shared/models/index.js';
+import { DatabaseClient, JWT } from './shared/models/index.js';
 import { controller } from './shared/system/index.js';
 import { Routers } from './routers/index.js';
 
-// todo: table name to env variable
+const JWT_SECRET = process.env.JWT_SECRET || 'JWT_SECRET';
+
+JWT.setSecret(JWT_SECRET);
 BookmarksRepo.setRepository(new DatabaseClient('prod_bookmarks_table'));
 
 export const handler = async (event) => {

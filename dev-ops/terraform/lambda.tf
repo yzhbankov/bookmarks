@@ -67,6 +67,7 @@ resource "aws_lambda_function" "tags-lambda" {
   environment {
     variables = {
       ENVIRONMENT = terraform.workspace
+      JWT_SECRET  = var.JWT_SECRET,
     }
   }
 }
@@ -140,6 +141,7 @@ resource "aws_lambda_function" "spaces-lambda" {
   environment {
     variables = {
       ENVIRONMENT = terraform.workspace
+      JWT_SECRET  = var.JWT_SECRET,
     }
   }
 }
@@ -175,6 +177,7 @@ resource "aws_lambda_function" "bookmarks-lambda" {
   environment {
     variables = {
       ENVIRONMENT = terraform.workspace
+      JWT_SECRET  = var.JWT_SECRET,
     }
   }
 }
