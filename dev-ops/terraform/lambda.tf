@@ -66,8 +66,9 @@ resource "aws_lambda_function" "tags-lambda" {
 
   environment {
     variables = {
-      ENVIRONMENT = terraform.workspace
-      JWT_SECRET  = var.JWT_SECRET,
+      ENVIRONMENT      = terraform.workspace
+      JWT_SECRET       = var.JWT_SECRET,
+      BOOKMARKS_DOMAIN = var.BOOKMARKS_DOMAIN,
     }
   }
 }
@@ -106,6 +107,7 @@ resource "aws_lambda_function" "auth-lambda" {
       GOOGLE_API_CLIENT_ID     = var.GOOGLE_API_CLIENT_ID,
       GOOGLE_API_CLIENT_SECRET = var.GOOGLE_API_CLIENT_SECRET,
       JWT_SECRET               = var.JWT_SECRET,
+      BOOKMARKS_DOMAIN         = var.BOOKMARKS_DOMAIN,
     }
   }
 }
@@ -140,8 +142,9 @@ resource "aws_lambda_function" "spaces-lambda" {
 
   environment {
     variables = {
-      ENVIRONMENT = terraform.workspace
-      JWT_SECRET  = var.JWT_SECRET,
+      ENVIRONMENT      = terraform.workspace
+      JWT_SECRET       = var.JWT_SECRET,
+      BOOKMARKS_DOMAIN = var.BOOKMARKS_DOMAIN,
     }
   }
 }
@@ -176,8 +179,9 @@ resource "aws_lambda_function" "bookmarks-lambda" {
 
   environment {
     variables = {
-      ENVIRONMENT = terraform.workspace
-      JWT_SECRET  = var.JWT_SECRET,
+      ENVIRONMENT      = terraform.workspace
+      JWT_SECRET       = var.JWT_SECRET,
+      BOOKMARKS_DOMAIN = var.BOOKMARKS_DOMAIN,
     }
   }
 }

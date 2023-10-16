@@ -1,6 +1,15 @@
 import { HTTP_METHOD } from '../constants/index.js';
 import { getCookie } from '../utils/index.js';
 
+
+const defaultHeaders = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin' : process.env.BOOKMARKS_DOMAIN || 'bookmarks.lat',
+    'Access-Control-Allow-Methods' : 'GET, OPTIONS, POST, PUT, DELETE',
+    'Access-Control-Allow-Headers' : 'Content-Type',
+    'Access-Control-Allow-Credentials': 'true',
+}
+
 export function controller(Routers) {
     return async function (method, event) {
         const body = event.body && JSON.parse(event.body);
@@ -27,7 +36,7 @@ export function controller(Routers) {
                     statusCode: 404,
                     body: JSON.stringify({}),
                     headers: {
-                        'Content-Type': 'application/json'
+                        ...defaultHeaders
                     }
                 };
             }
@@ -63,7 +72,8 @@ export async function makeRequestHandler(UseCase, params, mapToResponse) {
             statusCode: 200,
             body: JSON.stringify(result),
             headers: {
-                'Content-Type': 'application/json'
+                ...defaultHeaders
+
             }
         };
     } catch (err) {
@@ -72,7 +82,7 @@ export async function makeRequestHandler(UseCase, params, mapToResponse) {
             statusCode: err.statusCode,
             body: JSON.stringify({ message: err.message }),
             headers: {
-                'Content-Type': 'application/json'
+                ...defaultHeaders
             }
         }
     }

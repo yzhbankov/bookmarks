@@ -13,3 +13,7 @@ variable "GOOGLE_API_CLIENT_SECRET" {
 variable "JWT_SECRET" {
   default = "jwt_secret"
 }
+
+variable "BOOKMARKS_DOMAIN" {
+  default = "bookmarks.lat"
+}

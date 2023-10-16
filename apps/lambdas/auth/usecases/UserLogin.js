@@ -45,7 +45,7 @@ export class UserLogin {
             const cookieOptions = {
                 maxAge: 30 * 24 * 60 * 60 * 1000, // 1 day in milliseconds
                 secure: true, // Set to true if your application is served over HTTPS
-                domain: 'bookmarks.lat'
+                domain: process.env.BOOKMARKS_DOMAIN || 'bookmarks.lat'
             };
 
             // Return the response with the cookie set.

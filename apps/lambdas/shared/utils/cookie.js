@@ -9,6 +9,7 @@ export function getCookie(headers) {
             if (cookie.startsWith('access_token=')) {
                 // Extract the access_token value from the cookie
                 accessToken = cookie.substring('access_token='.length);
+                accessToken = accessToken.replace(/%22/g, '');
                 break;
             }
         }
