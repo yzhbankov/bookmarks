@@ -36,6 +36,7 @@ export function useAuth(): IUseAuth {
             }
         },
         onError: async (errorResponse) => {
+            console.error('errorResponse ', errorResponse);
             setError(errorResponse);
         },
         flow: 'auth-code',
