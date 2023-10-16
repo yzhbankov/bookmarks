@@ -26,7 +26,7 @@ export class AxiosClientApi implements IAxiosClientApi {
         const instance = axios.create({
             withCredentials: true, // send/receive cookie
             baseURL: options.baseURL,
-            timeout: 1000,
+            timeout: 10000,
         });
         this._bookmarks = new AxiosBookmarksApi(instance);
         this._tags = new AxiosTagsApi(instance);
