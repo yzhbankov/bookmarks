@@ -2,7 +2,6 @@
 ## URL
 * http://bookmarks.lat
 
-
 ## High-level requirements
 ### Functional requirements:
 * Users should be able to create an account using Google authentication.
