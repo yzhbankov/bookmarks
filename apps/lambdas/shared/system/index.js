@@ -2,7 +2,7 @@ import { HTTP_METHOD } from '../constants/index.js';
 import { getCookie } from '../utils/index.js';
 
 
-const defaultHeaders = {
+export const defaultHeaders = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin' : process.env.BOOKMARKS_DOMAIN || 'bookmarks.lat',
     'Access-Control-Allow-Methods' : 'GET, OPTIONS, POST, PUT, DELETE',
