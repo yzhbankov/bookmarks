@@ -6,14 +6,10 @@ export class CreateBookmark {
     async execute({ data, cookie }) {
         const jwtContent = await new UserValidate().execute(cookie);
 
-        if (jwtContent.email !== data.owner) {
-            throw new UnprocessableEntityError('User email should be the same as owner')
-        }
-
-        const bookmark = await new BookmarksRepo().readByUrl(data.owner, data.url);
+        const bookmark = await new BookmarksRepo().readByUrl(jwtContent.email, data.url);
         if (bookmark) {
             throw new UnprocessableEntityError(`Bookmark with url ${data.url} already exist`)
         }
-        return new BookmarksRepo().save(new BookmarkCreateDto(data));
+        return new BookmarksRepo().save(new BookmarkCreateDto({ ...data, owner: jwtContent.email }));
     }
 }
