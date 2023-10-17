@@ -18,8 +18,8 @@ export function useCreateBookmark(): IBookmarkAdd {
     }
 
     const { isLoading, isError, mutate: addBookmark } = useMutation(postBookmark, {
-        onSuccess: () => {
-            queryClient.invalidateQueries(['bookmarks']);
+        onSuccess: async () => {
+            await queryClient.invalidateQueries(['bookmarks']);
         },
     });
 
