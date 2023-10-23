@@ -25,8 +25,8 @@ const initialState: IBookmarkCreate = { url: '', description: '', tag: '', space
 export function BookmarkCreateDialog({ isOpen, handleOpen }: BookmarkCreateDialogType) {
     const [bookmark, setBookmark] = useState<IBookmarkCreate>(initialState);
     const { spaces } = useFetchSpaces();
-    if (!bookmark.space && spaces && spaces[0].id) {
-        setBookmark({ ...bookmark, space: spaces && spaces[0].id });
+    if (!bookmark.space && spaces && spaces[0] && spaces[0].id) {
+        setBookmark({ ...bookmark, space: spaces && spaces[0] && spaces[0].id });
     }
     const { addBookmark, isLoading } = useCreateBookmark();
     const { tags } = useFetchTags();
