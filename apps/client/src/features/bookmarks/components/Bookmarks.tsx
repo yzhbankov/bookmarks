@@ -11,9 +11,9 @@ function getSearched(data: IBookmarkTable[], searchText: string): IBookmarkTable
     if (!searchText) return data;
     return data
         ? data.reduce((memo: IBookmarkTable[], bookmark: IBookmarkTable) => {
-              const includesInUrl: boolean = bookmark.url.toLowerCase().includes(searchText);
-              const includesInDescription: boolean = bookmark.description.toLowerCase().includes(searchText);
-              const includesInTitle: boolean = bookmark.title.toLowerCase().includes(searchText);
+              const includesInUrl: boolean = (bookmark.url || '').toLowerCase().includes(searchText);
+              const includesInDescription: boolean = (bookmark.description || '').toLowerCase().includes(searchText);
+              const includesInTitle: boolean = (bookmark.title || '').toLowerCase().includes(searchText);
 
               if (includesInUrl || includesInDescription || includesInTitle) {
                   memo.push(bookmark);

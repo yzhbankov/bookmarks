@@ -27,7 +27,7 @@ export function Search({ handleChange }: SearchType) {
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 if (timer) clearTimeout(timer);
                 timer = setTimeout(() => {
-                    handleChange(e.target.value.toLowerCase());
+                    handleChange((e.target.value || '').toLowerCase());
                 }, 300);
             }}
             autoFocus={true}
