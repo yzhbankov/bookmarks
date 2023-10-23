@@ -20,6 +20,8 @@ function validate(state: IBookmarkCreate): boolean {
 
 const initialState: IBookmarkCreate = { url: '', description: '', tag: '', space: '', title: '' };
 
+// todo: handle errors during the entity creation
+// todo: add async validation on entity creation
 export function BookmarkCreateDialog({ isOpen, handleOpen }: BookmarkCreateDialogType) {
     const [bookmark, setBookmark] = useState<IBookmarkCreate>(initialState);
     const { spaces } = useFetchSpaces();

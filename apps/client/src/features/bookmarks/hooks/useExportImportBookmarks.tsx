@@ -9,6 +9,7 @@ export interface IBookmarkExportImport {
     importFile: (data: { bookmarks: IBookmarkCreate[] }) => void;
 }
 
+// todo: implement logging
 export function useExportImportBookmarks(): IBookmarkExportImport {
     const { addBookmark } = useCreateBookmark();
     const { spaces } = useFetchSpaces();
@@ -26,7 +27,11 @@ export function useExportImportBookmarks(): IBookmarkExportImport {
         if (!data.bookmarks || !Array.isArray(data.bookmarks)) alert('Wrong file format');
 
         for (const bookmark of data.bookmarks) {
-            await addBookmark({ ...bookmark, space: spaces[0] && spaces[0].id });
+            try {
+                await addBookmark({ ...bookmark, space: spaces[0] && spaces[0].id });
+            } catch (err) {
+                console.error('Error adding bookmark: ', err);
+            }
         }
     }
     return {
