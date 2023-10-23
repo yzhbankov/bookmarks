@@ -6,7 +6,7 @@ import { IBookmarkCreate } from '../../../models';
 export interface IBookmarkAdd {
     isLoading: boolean;
     isError: boolean;
-    addBookmark: (bookmark: IBookmarkCreate) => any;
+    addBookmark: (bookmark: IBookmarkCreate) => Promise<any>;
 }
 
 export function useCreateBookmark(): IBookmarkAdd {
@@ -17,7 +17,7 @@ export function useCreateBookmark(): IBookmarkAdd {
         return api?.bookmarks.create(data);
     }
 
-    const { isLoading, isError, mutate: addBookmark } = useMutation(postBookmark, {
+    const { isLoading, isError, mutateAsync: addBookmark } = useMutation(postBookmark, {
         onSuccess: async () => {
             await queryClient.invalidateQueries(['bookmarks']);
         },
