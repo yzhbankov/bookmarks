@@ -8,9 +8,10 @@ import { useFetchTags } from '../../tags/hooks';
 
 type BookmarksTableType = {
     bookmarks: IBookmark[];
+    isLoading: boolean;
 };
 
-export function BookmarksTable({ bookmarks }: BookmarksTableType) {
+export function BookmarksTable({ bookmarks, isLoading }: BookmarksTableType) {
     const { tags } = useFetchTags();
     const { updateBookmark } = useUpdateBookmark();
 
@@ -21,7 +22,7 @@ export function BookmarksTable({ bookmarks }: BookmarksTableType) {
             className: 'w-auto',
             renderCell: (row: any, cell: string) => (
                 <div title={cell} className="w-48">
-                    <a href={row.url} target="_blank" className="flex">
+                    <a href={row.url} target="_blank" className="flex" rel="noreferrer">
                         <div className="flex mr-2 justify-center items-center">
                             <img src={`https://www.google.com/s2/favicons?domain=${row.url}`} />
                         </div>
@@ -64,15 +65,25 @@ export function BookmarksTable({ bookmarks }: BookmarksTableType) {
             ),
         },
     ];
-    return <Table data={bookmarks} columns={columns} className="w-full" rowClassName="hover:bg-gray-100" />;
+    return (
+        <Table
+            data={bookmarks}
+            isLoading={isLoading}
+            columns={columns}
+            className="w-full"
+            rowClassName="hover:bg-gray-100"
+        />
+    );
 }
 
 BookmarksTable.propTypes = {
     searchText: PropTypes.string,
+    isLoading: PropTypes.bool,
 };
 
 BookmarksTable.defaultProps = {
     searchText: '',
+    isLoading: false,
 };
 
 type TagSelectPropType = {

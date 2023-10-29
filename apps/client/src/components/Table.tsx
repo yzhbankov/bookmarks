@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { SortArrowIcon } from '../components';
-import { useSortTable, SortDirection } from '../hooks';
+import { SortArrowIcon, SpinnerIcon } from '../components';
+import { Color, Size } from '../utils';
+import { SortDirection, useSortTable } from '../hooks';
 
 type RowType = { [key: string]: any };
 
@@ -18,22 +19,16 @@ type TablePropsType = {
     columns: ColumnType[];
     className?: string;
     rowClassName?: string;
+    isLoading: boolean;
 };
 
-export function Table({ data, columns, className, rowClassName }: TablePropsType) {
+export function Table({ data, columns, className, rowClassName, isLoading }: TablePropsType) {
     const { sortedData, handleSort, sortBy, sortDirection } = useSortTable(data);
     return (
         <table className={classNames(className)}>
             <Header columns={columns} handleClick={handleSort} sortBy={sortBy} sortDirection={sortDirection} />
-            <tbody>
-                {sortedData.map((rowData, index) => (
-                    <tr key={index} className={rowClassName}>
-                        {columns.map((column) => (
-                            <Column key={column.key} rowData={rowData} column={column} />
-                        ))}
-                    </tr>
-                ))}
-            </tbody>
+            <TableLoading visible={isLoading} columnsNum={columns.length} />
+            <TableBody data={sortedData} rowClassName={rowClassName} columns={columns} visible={!isLoading} />
         </table>
     );
 }
@@ -49,7 +44,7 @@ Table.defaultProps = {
     columns: [],
 };
 
-type HeaderPropType = {
+type HeaderProps = {
     columns: {
         key: string;
         header: string;
@@ -60,7 +55,7 @@ type HeaderPropType = {
     sortDirection: SortDirection;
 };
 
-function Header({ columns, handleClick, sortBy, sortDirection }: HeaderPropType) {
+function Header({ columns, handleClick, sortBy, sortDirection }: HeaderProps) {
     return (
         <thead>
             <tr>
@@ -88,10 +83,48 @@ Header.defaultProps = {
     columns: [],
 };
 
+type TableBodyProps = {
+    data: RowType[];
+    columns: ColumnType[];
+    rowClassName: string;
+    visible: boolean;
+};
+
+function TableBody({ data, columns, rowClassName, visible }: TableBodyProps) {
+    if (!visible) return null;
+
+    return (
+        <tbody>
+            {data.map((rowData, index) => (
+                <tr key={index} className={rowClassName}>
+                    {columns.map((column) => (
+                        <Column key={column.key} rowData={rowData} column={column} />
+                    ))}
+                </tr>
+            ))}
+        </tbody>
+    );
+}
+
+TableBody.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.object),
+    columns: PropTypes.arrayOf(PropTypes.object),
+    rowClassName: PropTypes.string,
+    visible: PropTypes.bool,
+};
+
+TableBody.defaultProps = {
+    data: [],
+    columns: [],
+    rowClassName: '',
+    visible: true,
+};
+
 type ColumnPropsType = {
     rowData: { [key: string]: any };
     column: ColumnType;
 };
+
 function Column({ rowData, column }: ColumnPropsType) {
     const className = classNames(column.className);
     if (column.renderCell) {
@@ -107,4 +140,29 @@ Column.propTypes = {
 Column.defaultProps = {
     rowData: {},
     column: {},
+};
+
+type TableLoadingProps = {
+    visible: boolean;
+    columnsNum: number;
+};
+
+function TableLoading({ visible, columnsNum }: TableLoadingProps) {
+    if (!visible) return null;
+    return (
+        <tbody>
+            <td className="text-center pt-14" colSpan={columnsNum}>
+                <SpinnerIcon size={Size.xl} color={Color.blue} />
+            </td>
+        </tbody>
+    );
+}
+
+TableLoading.propTypes = {
+    visible: PropTypes.bool,
+    columnsNum: PropTypes.number,
+};
+TableLoading.defaultProps = {
+    visible: false,
+    columnsNum: 1,
 };

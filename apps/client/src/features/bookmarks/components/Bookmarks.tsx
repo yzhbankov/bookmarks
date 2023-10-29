@@ -26,7 +26,7 @@ function getSearched(data: IBookmarkTable[], searchText: string): IBookmarkTable
 export function Bookmarks() {
     const [openCreateModal, setOpenCreateModal] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>('');
-    const { bookmarks, getFiltered } = useFetchBookmarks();
+    const { bookmarks, isLoading, getFiltered } = useFetchBookmarks();
     const selected = useContext(TagsContext);
     const filteredBookmarks = getFiltered(selected);
     const searchedBookmarks = getSearched(filteredBookmarks, searchText);
@@ -41,7 +41,7 @@ export function Bookmarks() {
                     <Search handleChange={(val) => setSearchText(val)} />
                 </div>
             </div>
-            <BookmarksTable bookmarks={searchedBookmarks} />
+            <BookmarksTable bookmarks={searchedBookmarks} isLoading={isLoading} />
             <BookmarkCreateDialog isOpen={openCreateModal} handleOpen={(val: boolean) => setOpenCreateModal(val)} />
         </>
     );
