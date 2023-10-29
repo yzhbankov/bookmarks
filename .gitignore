@@ -8,6 +8,7 @@ temp/
 coverage
 lerna-debug.log
 #**/build
+/apps/server/dist/*
 /apps/build/*
 /shared/build/*
 .DS_Store

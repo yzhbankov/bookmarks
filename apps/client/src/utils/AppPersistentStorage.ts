@@ -9,7 +9,7 @@ export const BrowserKeys = {
 export interface IAppPersistentStorage {
     lastRoutePath: string;
     token: string | undefined;
-    clear: () => void;
+    clearCookie: () => void;
     setItem: (key: string, val: string) => void;
     getItem: (key: string) => string | null;
 }
@@ -37,8 +37,8 @@ class AppPersistentStorage implements IAppPersistentStorage {
         return Cookies.get(BrowserKeys.Cookie);
     }
 
-    clear() {
-        return Cookies.remove(BrowserKeys.Cookie);
+    clearCookie() {
+        return Cookies.remove(BrowserKeys.Cookie, { domain: '.bookmarks.lat', path: '/' });
     }
 
     setItem(key: string, value: string) {

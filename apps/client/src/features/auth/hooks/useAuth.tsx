@@ -44,7 +44,7 @@ export function useAuth(): IUseAuth {
 
     const logout = useCallback(() => {
         queryClient.clear();
-        appPersistentStorage.clear();
+        appPersistentStorage.clearCookie();
         navigate(AUTH_PATH);
     }, []);
 
