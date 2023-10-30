@@ -3,26 +3,27 @@ import PropTypes from 'prop-types';
 import { useCreateBookmark } from '../hooks';
 import { useFetchTags } from '../../tags/hooks';
 import { useFetchSpaces } from '../../spaces/hooks';
-import { IBookmarkCreate, ITag } from '../../../models';
+import { IBookmarkCreate, ITag, IBookmark } from '../../../models';
 import { CommonDialog, DialogButton } from '../../../components';
-import { validateHttpUrl } from '../../../utils';
+import { validateHttpUrl, urlsEqual } from '../../../utils';
 
-type BookmarkCreateDialogType = {
+type BookmarkCreateDialogProps = {
     isOpen: boolean;
     handleOpen: (state: boolean) => void;
+    handleError: () => void;
+    bookmarks: IBookmark[];
 };
 
-function validate(state: IBookmarkCreate): boolean {
+function validate(state: IBookmarkCreate, bookmarks: IBookmark[]): boolean {
     if (state.url.length < 1) return false;
     if (state.title.length < 1) return false;
+    if (bookmarks.find((bookmark) => urlsEqual(bookmark.url, state.url))) return false;
     return true;
 }
 
 const initialState: IBookmarkCreate = { url: '', description: '', tag: '', space: '', title: '' };
 
-// todo: handle errors during the entity creation
-// todo: add async validation on entity creation
-export function BookmarkCreateDialog({ isOpen, handleOpen }: BookmarkCreateDialogType) {
+export function BookmarkCreateDialog({ isOpen, handleOpen, handleError, bookmarks }: BookmarkCreateDialogProps) {
     const [bookmark, setBookmark] = useState<IBookmarkCreate>(initialState);
     const { spaces } = useFetchSpaces();
     if (!bookmark.space && spaces && spaces[0] && spaces[0].id) {
@@ -32,7 +33,11 @@ export function BookmarkCreateDialog({ isOpen, handleOpen }: BookmarkCreateDialo
     const { tags } = useFetchTags();
 
     const handeOk = async () => {
-        await addBookmark(bookmark);
+        try {
+            await addBookmark(bookmark);
+        } catch (err) {
+            handleError();
+        }
         setBookmark(initialState);
         handleOpen(false);
     };
@@ -52,12 +57,26 @@ export function BookmarkCreateDialog({ isOpen, handleOpen }: BookmarkCreateDialo
                     handleBookmark={(val: any) => setBookmark(val)}
                     handleOk={handeOk}
                     isLoading={isLoading}
-                    valid={validate(bookmark)}
+                    valid={validate(bookmark, bookmarks)}
                 />
             }
         />
     );
 }
+
+BookmarkCreateDialog.propTypes = {
+    isOpen: PropTypes.bool,
+    handleOpen: PropTypes.func,
+    handleError: PropTypes.func,
+    bookmarks: PropTypes.arrayOf(PropTypes.object),
+};
+
+BookmarkCreateDialog.defaultProps = {
+    isOpen: false,
+    handleOpen: () => {},
+    handleError: () => {},
+    bookmarks: [],
+};
 
 type BookmarkCreateFormType = {
     bookmark: { url: string; description: string; tag?: string; title: string };
@@ -164,14 +183,4 @@ BookmarkCreateForm.defaultProps = {
     handleOk: () => {},
     isLoading: false,
     valid: false,
-};
-
-BookmarkCreateDialog.propTypes = {
-    isOpen: PropTypes.bool,
-    handleOpen: PropTypes.func,
-};
-
-BookmarkCreateDialog.defaultProps = {
-    isOpen: false,
-    handleOpen: () => {},
 };

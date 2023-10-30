@@ -13,3 +13,4 @@ export * from './SortArrorIcon';
 export * from './ChevronBtn';
 export * from './ExportIcon';
 export * from './ImportIcon';
+export * from './FaceFrownIcon';

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { BookmarkCreateDialog } from './BookmarkCreateDialog';
+import { BookmarkErrorDialog } from './BookmarkErrorDialog';
 import { BookmarksTable } from './BookmarksTable';
 import { Search } from './Search';
 import { ButtonsContainer } from './ButtonsContainer';
@@ -25,12 +26,13 @@ function getSearched(data: IBookmarkTable[], searchText: string): IBookmarkTable
 
 export function Bookmarks() {
     const [openCreateModal, setOpenCreateModal] = useState<boolean>(false);
+    const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>('');
     const { bookmarks, isLoading, getFiltered } = useFetchBookmarks();
     const selected = useContext(TagsContext);
     const filteredBookmarks = getFiltered(selected);
     const searchedBookmarks = getSearched(filteredBookmarks, searchText);
-    // todo: handle bookmarks duplicates
+
     return (
         <>
             <div className="flex my-2">
@@ -42,7 +44,13 @@ export function Bookmarks() {
                 </div>
             </div>
             <BookmarksTable bookmarks={searchedBookmarks} isLoading={isLoading} />
-            <BookmarkCreateDialog isOpen={openCreateModal} handleOpen={(val: boolean) => setOpenCreateModal(val)} />
+            <BookmarkCreateDialog
+                isOpen={openCreateModal}
+                handleOpen={(val: boolean) => setOpenCreateModal(val)}
+                handleError={() => setOpenErrorModal(true)}
+                bookmarks={bookmarks}
+            />
+            <BookmarkErrorDialog isOpen={openErrorModal} handleOpen={(val: boolean) => setOpenErrorModal(val)} />
         </>
     );
 }
