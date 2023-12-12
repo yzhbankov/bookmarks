@@ -16,3 +16,16 @@ export function getCookie(headers) {
     }
     return accessToken;
 }
+
+export function parseRequest(event) {
+    const body = event.body && JSON.parse(event.body);
+    const cookie = getCookie(event.headers);
+    const idStartIndex = event.path.lastIndexOf('/') + 1;
+    const param = event.path.substring(idStartIndex);
+
+    return {
+        body,
+        cookie,
+        param,
+    }
+}

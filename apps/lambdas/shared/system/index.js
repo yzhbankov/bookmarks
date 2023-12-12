@@ -1,5 +1,5 @@
 import { HTTP_METHOD } from '../constants/index.js';
-import { getCookie } from '../utils/index.js';
+import { parseRequest } from '../utils/index.js';
 
 
 export const defaultHeaders = {
@@ -10,26 +10,22 @@ export const defaultHeaders = {
     'Access-Control-Allow-Credentials': 'true',
 }
 
-export function controller(Routers) {
+export function router(Controller) {
     return async function (method, event) {
-        const body = event.body && JSON.parse(event.body);
-        const cookie = getCookie(event.headers);
-        const idStartIndex = event.path.lastIndexOf('/') + 1;
-        const param = event.path.substring(idStartIndex);
-        const data = { body, cookie, param };
+        const data = parseRequest(event);
 
         switch (method) {
             case HTTP_METHOD.GET: {
-                return Routers.get(data);
+                return Controller.get(data);
             }
             case HTTP_METHOD.POST: {
-                return Routers.post(data);
+                return Controller.post(data);
             }
             case HTTP_METHOD.PUT: {
-                return Routers.put(data);
+                return Controller.put(data);
             }
             case HTTP_METHOD.DELETE: {
-                return Routers.del(data);
+                return Controller.del(data);
             }
             default: {
                 return {
@@ -49,7 +45,7 @@ async function runUseCase(UseCase, { params }) {
     return new UseCase().execute(params);
 }
 
-export async function makeRequestHandler(UseCase, params, mapToResponse) {
+export async function requestHandler(UseCase, params, mapToResponse) {
     function logRequest(params, result, startTime) {
         console.log({
             useCase: UseCase.name,

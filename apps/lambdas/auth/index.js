@@ -1,4 +1,4 @@
-import { Routers } from './routers/index.js';
+import { Controller } from './controller/index.js';
 import { DatabaseClient, JWT } from './shared/models/index.js';
 import { UsersRepo, OAuth } from './models/index.js';
 import { getCookie } from './shared/utils/index.js';
@@ -14,10 +14,10 @@ OAuth.setClientCredentials({ clientId: GOOGLE_API_CLIENT_ID, clientSecret: GOOGL
 export const handler = async (event) => {
     const { path, httpMethod } = event;
     if (httpMethod === 'POST' && path.includes('/auth/login')) {
-        return Routers.login({ body: JSON.parse(event.body) });
+        return Controller.login({ body: JSON.parse(event.body) });
     } else if (httpMethod === 'GET' && path.includes('/auth/validate')) {
         // todo: make validate shared middleware
-        return Routers.validate({ cookie: getCookie(event.headers) });
+        return Controller.validate({ cookie: getCookie(event.headers) });
     }
 
     return {

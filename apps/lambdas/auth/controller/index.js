@@ -1,6 +1,6 @@
 import { UserLogin } from '../usecases/index.js';
 import { UserValidate } from '../shared/usecases/index.js';
-import { makeRequestHandler, defaultHeaders } from '../shared/system/index.js';
+import { requestHandler, defaultHeaders } from '../shared/system/index.js';
 
 function mapToLoginResponse(result) {
     return {
@@ -15,11 +15,11 @@ function mapToLoginResponse(result) {
     }
 }
 
-export class Routers {
+export class Controller {
     static async login({ body }) {
-        return makeRequestHandler(UserLogin, body, mapToLoginResponse)
+        return requestHandler(UserLogin, body, mapToLoginResponse)
     }
     static async validate({ cookie }) {
-        return makeRequestHandler(UserValidate, cookie)
+        return requestHandler(UserValidate, cookie)
     }
 }
