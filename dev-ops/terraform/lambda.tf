@@ -61,7 +61,7 @@ resource "aws_lambda_function" "tags-lambda" {
   filename         = data.archive_file.tags-lambda.output_path
   handler          = "index.handler"
   source_code_hash = data.archive_file.tags-lambda.output_base64sha256
-  runtime          = "nodejs14.x"
+  runtime          = "nodejs20.x"
   timeout          = local.lambda_timeout
 
   environment {
@@ -98,7 +98,7 @@ resource "aws_lambda_function" "auth-lambda" {
   filename         = data.archive_file.auth-lambda.output_path
   handler          = "index.handler"
   source_code_hash = data.archive_file.auth-lambda.output_base64sha256
-  runtime          = "nodejs14.x"
+  runtime          = "nodejs20.x"
   timeout          = local.lambda_timeout
 
   environment {
@@ -137,7 +137,7 @@ resource "aws_lambda_function" "spaces-lambda" {
   filename         = data.archive_file.spaces-lambda.output_path
   handler          = "index.handler"
   source_code_hash = data.archive_file.spaces-lambda.output_base64sha256
-  runtime          = "nodejs14.x"
+  runtime          = "nodejs20.x"
   timeout          = local.lambda_timeout
 
   environment {
@@ -174,7 +174,7 @@ resource "aws_lambda_function" "bookmarks-lambda" {
   filename         = data.archive_file.bookmarks-lambda.output_path
   handler          = "index.handler"
   source_code_hash = data.archive_file.bookmarks-lambda.output_base64sha256
-  runtime          = "nodejs14.x"
+  runtime          = "nodejs20.x"
   timeout          = local.lambda_timeout
 
   environment {
