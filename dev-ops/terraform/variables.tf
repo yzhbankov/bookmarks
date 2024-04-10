@@ -15,5 +15,5 @@ variable "JWT_SECRET" {
 }
 
 variable "BOOKMARKS_DOMAIN" {
-  default = "bookmarks.lat"
+  default = "bookmarks.ink"
 }

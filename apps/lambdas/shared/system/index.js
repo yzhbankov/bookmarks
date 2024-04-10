@@ -4,7 +4,7 @@ import { getCookie } from '../utils/index.js';
 
 export const defaultHeaders = {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin' : process.env.BOOKMARKS_DOMAIN ? `https://${process.env.BOOKMARKS_DOMAIN}` : 'https://bookmarks.lat',
+    'Access-Control-Allow-Origin' : process.env.BOOKMARKS_DOMAIN ? `https://${process.env.BOOKMARKS_DOMAIN}` : 'https://bookmarks.ink',
     'Access-Control-Allow-Methods' : 'GET, OPTIONS, POST, PUT, DELETE',
     'Access-Control-Allow-Headers' : 'Content-Type',
     'Access-Control-Allow-Credentials': 'true',

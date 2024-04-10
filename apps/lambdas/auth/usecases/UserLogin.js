@@ -46,7 +46,7 @@ export class UserLogin {
                 maxAge: 30 * 24 * 60 * 60 * 1000, // 1 day in milliseconds
                 secure: true, // Set to true if your application is served over HTTPS
                 Path: '/',
-                domain: process.env.BOOKMARKS_DOMAIN || 'bookmarks.lat'
+                domain: process.env.BOOKMARKS_DOMAIN || 'bookmarks.ink'
             };
 
             // Return the response with the cookie set.
