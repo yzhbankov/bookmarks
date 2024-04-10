@@ -38,7 +38,7 @@ class AppPersistentStorage implements IAppPersistentStorage {
     }
 
     clearCookie() {
-        return Cookies.remove(BrowserKeys.Cookie, { domain: '.bookmarks.lat', path: '/' });
+        return Cookies.remove(BrowserKeys.Cookie, { domain: '.bookmarks.ink', path: '/' });
     }
 
     setItem(key: string, value: string) {
