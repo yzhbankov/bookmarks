@@ -9,8 +9,13 @@ const swagger_1 = require("@nestjs/swagger");
 const app_module_1 = require("./app.module");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
-    app.enableCors({ credentials: true, origin: true });
     const configService = app.get(config_1.ConfigService);
+    app.enableCors({
+        origin: ['http://localhost:3001', 'http://localhost:3000'],
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    });
     app.setGlobalPrefix('api');
     app.useGlobalPipes(new common_1.ValidationPipe());
     app.enableVersioning({
@@ -23,7 +28,6 @@ async function bootstrap() {
         .addTag('bookmarks')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
-    console.log(JSON.stringify(document));
     swagger_1.SwaggerModule.setup('api/docs', app, document);
     app.use(cookieParser());
     await app.listen(configService.get('server.port'));

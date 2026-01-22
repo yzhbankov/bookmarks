@@ -32,7 +32,7 @@ export function TagCreateDialog({ isOpen, handleOpen }: TagCreateModalType) {
         <CommonDialog
             onClose={handleCancel}
             isOpen={isOpen}
-            title="Add a tag"
+            title="Add a category"
             content={
                 <TagCreateForm
                     tag={tag}
@@ -60,36 +60,36 @@ function TagCreateForm({ tag, handleTag, handleOk, isLoading, valid }: TagCreate
     return (
         <form className="bg-white px-8 pt-6 pb-8 mb-4">
             <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="tagName">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="categoryName">
                     Name:
                 </label>
                 <input
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="tagName"
+                    id="categoryName"
                     type="text"
                     value={tag.name}
                     onChange={(e) => handleTag({ ...tag, name: e.target.value })}
-                    placeholder="Tag"
+                    placeholder="Category name"
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="categoryDescription">
                     Description:
                 </label>
                 <input
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="description"
+                    id="categoryDescription"
                     type="text"
                     value={tag.description}
                     onChange={(e) => handleTag({ ...tag, description: e.target.value })}
-                    placeholder="Description"
+                    placeholder="Description (optional)"
                 />
             </div>
             <div>
                 <DialogButton
                     handleClick={handleOk}
-                    text="Submit"
-                    className="bg-blue-500 hover:bg-blue-700 text-white mt-6 py-2.5"
+                    text="Add Category"
+                    className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white mt-6 py-2.5 shadow-sm hover:shadow-md transition-all"
                     disabled={isLoading || !valid}
                 />
             </div>

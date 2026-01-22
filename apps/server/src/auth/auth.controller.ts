@@ -24,10 +24,14 @@ export class AuthController {
     @Body() body: { code: string },
   ) {
     const token = await this.authService.exchangeCodeForToken(body.code);
+    const domain = this.configService.get('domain');
+    const isLocalhost = domain === 'localhost';
     res.cookie('access_token', token, {
-      domain: this.configService.get('domain'),
+      domain: isLocalhost ? undefined : domain,
       maxAge: 2592000000,
-      secure: true,
+      secure: !isLocalhost,
+      sameSite: isLocalhost ? 'lax' : 'none',
+      httpOnly: false,
     });
     res.status(HttpStatus.OK).send();
   }

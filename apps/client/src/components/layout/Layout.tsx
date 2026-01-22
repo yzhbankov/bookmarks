@@ -10,13 +10,17 @@ type LayoutPropsType = {
 export function Layout(props: LayoutPropsType) {
     const { menuRender, contentRender, footerRender } = props;
     return (
-        <>
-            <div className="min-h-[calc(100vh-30px)] w-screen">
-                <div className="sticky top-0 z-50">{menuRender()}</div>
-                <div className="z-0">{contentRender()}</div>
-            </div>
-            <div className="text-center mt-2">{footerRender()}</div>
-        </>
+        <div className="min-h-screen flex flex-col bg-gray-50">
+            <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+                {menuRender()}
+            </header>
+            <main className="flex-1">
+                {contentRender()}
+            </main>
+            <footer className="py-4 text-center text-gray-500 text-sm border-t border-gray-100 bg-white">
+                {footerRender()}
+            </footer>
+        </div>
     );
 }
 

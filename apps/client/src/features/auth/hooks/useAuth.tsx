@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback, useMemo } from 'react';
+import { useContext, useState, useCallback, useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
@@ -29,10 +29,13 @@ export function useAuth(): IUseAuth {
 
     const login = useGoogleLogin({
         onSuccess: async (codeResponse) => {
-            await api?.auth.login(codeResponse);
-            const token = appPersistentStorage.token;
-            if (token) {
+            try {
+                await api?.auth.login(codeResponse);
+                // Navigate after login - cookie should be set by the response
                 navigate(lastPath);
+            } catch (err) {
+                console.error('Login error:', err);
+                setError(err);
             }
         },
         onError: async (errorResponse) => {

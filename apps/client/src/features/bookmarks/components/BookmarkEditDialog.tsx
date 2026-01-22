@@ -1,122 +1,104 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useCreateBookmark } from '../hooks';
+import { useUpdateBookmark } from '../hooks';
 import { useFetchTags } from '../../tags/hooks';
-import { useFetchSpaces } from '../../spaces/hooks';
-import { IBookmarkCreate, ITag, IBookmark } from '../../../models';
+import { IBookmarkTable, ITag } from '../../../models';
 import { CommonDialog, DialogButton } from '../../../components';
-import { validateHttpUrl, urlsEqual } from '../../../utils';
 
-type BookmarkCreateDialogProps = {
+type BookmarkEditDialogProps = {
     isOpen: boolean;
+    bookmark: IBookmarkTable;
     handleOpen: (state: boolean) => void;
-    handleError: () => void;
-    bookmarks: IBookmark[];
 };
 
-function validate(state: IBookmarkCreate, bookmarks: IBookmark[]): boolean {
+function validate(state: IBookmarkTable): boolean {
     if (state.url.length < 1) return false;
     if (state.title.length < 1) return false;
-    if (bookmarks.find((bookmark) => urlsEqual(bookmark.url, state.url))) return false;
     return true;
 }
 
-const initialState: IBookmarkCreate = { url: '', description: '', tag: '', space: '', title: '' };
-
-export function BookmarkCreateDialog({ isOpen, handleOpen, handleError, bookmarks }: BookmarkCreateDialogProps) {
-    const [bookmark, setBookmark] = useState<IBookmarkCreate>(initialState);
-    const { spaces } = useFetchSpaces();
-    if (!bookmark.space && spaces && spaces[0] && spaces[0].id) {
-        setBookmark({ ...bookmark, space: spaces && spaces[0] && spaces[0].id });
-    }
-    const { addBookmark, isLoading } = useCreateBookmark();
+export function BookmarkEditDialog({ isOpen, bookmark, handleOpen }: BookmarkEditDialogProps) {
+    const [editedBookmark, setEditedBookmark] = useState<IBookmarkTable>(bookmark);
+    const { updateBookmark, isLoading } = useUpdateBookmark();
     const { tags } = useFetchTags();
 
-    const handeOk = async () => {
-        try {
-            await addBookmark(bookmark);
-        } catch (err) {
-            handleError();
-        }
-        setBookmark(initialState);
+    useEffect(() => {
+        setEditedBookmark(bookmark);
+    }, [bookmark]);
+
+    const handleOk = async () => {
+        await updateBookmark(editedBookmark);
         handleOpen(false);
     };
+
     const handleCancel = () => {
         handleOpen(false);
-        setBookmark(initialState);
+        setEditedBookmark(bookmark);
     };
+
     return (
         <CommonDialog
             onClose={handleCancel}
             isOpen={isOpen}
-            title="Add a bookmark"
+            title="Edit bookmark"
             content={
-                <BookmarkCreateForm
-                    bookmark={bookmark}
+                <BookmarkEditForm
+                    bookmark={editedBookmark}
                     tags={tags}
-                    handleBookmark={(val: any) => setBookmark(val)}
-                    handleOk={handeOk}
+                    handleBookmark={(val: IBookmarkTable) => setEditedBookmark(val)}
+                    handleOk={handleOk}
                     isLoading={isLoading}
-                    valid={validate(bookmark, bookmarks)}
+                    valid={validate(editedBookmark)}
                 />
             }
         />
     );
 }
 
-BookmarkCreateDialog.propTypes = {
+BookmarkEditDialog.propTypes = {
     isOpen: PropTypes.bool,
+    bookmark: PropTypes.object,
     handleOpen: PropTypes.func,
-    handleError: PropTypes.func,
-    bookmarks: PropTypes.arrayOf(PropTypes.object),
 };
 
-BookmarkCreateDialog.defaultProps = {
+BookmarkEditDialog.defaultProps = {
     isOpen: false,
+    bookmark: {},
     handleOpen: () => {},
-    handleError: () => {},
-    bookmarks: [],
 };
 
-type BookmarkCreateFormType = {
-    bookmark: { url: string; description: string; tag?: string; title: string };
+type BookmarkEditFormType = {
+    bookmark: IBookmarkTable;
     tags: ITag[] | undefined;
-    handleBookmark: (val: any) => void;
+    handleBookmark: (val: IBookmarkTable) => void;
     handleOk: () => void;
     isLoading: boolean;
     valid: boolean;
 };
 
-function BookmarkCreateForm({ bookmark, tags, handleBookmark, handleOk, isLoading, valid }: BookmarkCreateFormType) {
+function BookmarkEditForm({ bookmark, tags, handleBookmark, handleOk, isLoading, valid }: BookmarkEditFormType) {
     return (
         <form className="w-auto bg-white px-8 pt-6 pb-4 mb-4">
             <div className="mb-4 align-bottom">
-                <label className="text-gray-600 text-sm font-bold mb-3 ml-0.5" htmlFor="bookmarkUrl">
+                <label className="text-gray-600 text-sm font-bold mb-3 ml-0.5" htmlFor="editBookmarkUrl">
                     URL:
                 </label>
                 <input
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="bookmarkUrl"
+                    id="editBookmarkUrl"
                     type="text"
                     value={bookmark.url}
-                    onChange={(e) => {
-                        const res = validateHttpUrl(e.target.value);
-                        if (res.valid) {
-                            handleBookmark({ ...bookmark, url: e.target.value, title: res.title });
-                        } else {
-                            handleBookmark({ ...bookmark, url: e.target.value });
-                        }
-                    }}
+                    onChange={(e) => handleBookmark({ ...bookmark, url: e.target.value })}
                     placeholder="URL"
                 />
             </div>
             <div className="mb-4">
-                <label className="text-gray-600 text-sm font-bold mb-3 ml-0.5" htmlFor="bookmarkTitle">
+                <label className="text-gray-600 text-sm font-bold mb-3 ml-0.5" htmlFor="editBookmarkTitle">
                     Title:
                 </label>
                 <input
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="bookmarkTitle"
+                    id="editBookmarkTitle"
                     type="text"
                     value={bookmark.title}
                     onChange={(e) => handleBookmark({ ...bookmark, title: e.target.value })}
@@ -124,29 +106,29 @@ function BookmarkCreateForm({ bookmark, tags, handleBookmark, handleOk, isLoadin
                 />
             </div>
             <div className="mb-4">
-                <label className="text-gray-600 text-sm font-bold mb-3 ml-0.5" htmlFor="bookmarkDescription">
+                <label className="text-gray-600 text-sm font-bold mb-3 ml-0.5" htmlFor="editBookmarkDescription">
                     Description:
                 </label>
                 <input
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="bookmarkDescription"
+                    id="editBookmarkDescription"
                     type="text"
-                    value={bookmark.description}
+                    value={bookmark.description || ''}
                     onChange={(e) => handleBookmark({ ...bookmark, description: e.target.value })}
                     placeholder="Description"
                 />
             </div>
             <div className="mb-4">
-                <label className="text-gray-600 text-sm font-bold mb-3 ml-0.5" htmlFor="bookmarkCategory">
+                <label className="text-gray-600 text-sm font-bold mb-3 ml-0.5" htmlFor="editBookmarkCategory">
                     Category:
                 </label>
                 <select
-                    id="bookmarkCategory"
+                    id="editBookmarkCategory"
                     className="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                    value={bookmark.tag || ''}
                     onChange={(e) => handleBookmark({ ...bookmark, tag: e.target.value })}
-                    defaultValue=""
                 >
-                    <option value="">Choose a category</option>
+                    <option value="">No category</option>
                     {tags &&
                         tags.map((tag) => (
                             <option key={tag.id} value={tag.id}>
@@ -158,8 +140,8 @@ function BookmarkCreateForm({ bookmark, tags, handleBookmark, handleOk, isLoadin
             <div>
                 <DialogButton
                     handleClick={handleOk}
-                    text="Add Bookmark"
-                    className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white mt-6 py-2.5 shadow-sm hover:shadow-md transition-all"
+                    text="Save Changes"
+                    className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white mt-6 py-2.5 shadow-sm hover:shadow-md transition-all"
                     disabled={isLoading || !valid}
                 />
             </div>
@@ -167,7 +149,7 @@ function BookmarkCreateForm({ bookmark, tags, handleBookmark, handleOk, isLoadin
     );
 }
 
-BookmarkCreateForm.propTypes = {
+BookmarkEditForm.propTypes = {
     bookmark: PropTypes.object,
     tags: PropTypes.arrayOf(PropTypes.object),
     handleBookmark: PropTypes.func,
@@ -176,7 +158,7 @@ BookmarkCreateForm.propTypes = {
     valid: PropTypes.bool,
 };
 
-BookmarkCreateForm.defaultProps = {
+BookmarkEditForm.defaultProps = {
     bookmark: {},
     tags: [],
     handleBookmark: () => {},

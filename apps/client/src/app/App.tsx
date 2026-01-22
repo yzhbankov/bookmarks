@@ -14,7 +14,7 @@ export function App() {
                 <Layout
                     menuRender={() => <Menu />}
                     contentRender={() => (
-                        <ContentLayout tagsRender={() => <Tags />} bookmarksRender={() => <Bookmarks />} />
+                        <ContentLayout categoriesRender={() => <Tags />} bookmarksRender={() => <Bookmarks />} />
                     )}
                     footerRender={() => <Footer />}
                 />
