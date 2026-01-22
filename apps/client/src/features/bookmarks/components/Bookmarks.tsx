@@ -162,33 +162,86 @@ export function Bookmarks() {
                 </div>
             </div>
 
-            {/* Loading State */}
+            {/* Loading State - Skeleton */}
             {isLoading && (
-                <div className="flex items-center justify-center py-16">
-                    <SpinnerIcon size={Size.xl} color={Color.blue} />
+                <div className="animate-fade-in">
+                    {/* Desktop skeleton */}
+                    <div className="hidden sm:block">
+                        <div className="border-b border-gray-200 bg-gray-50 px-3 py-2">
+                            <div className="flex gap-4">
+                                <div className="skeleton h-4 w-20" />
+                                <div className="skeleton h-4 w-16 hidden lg:block" />
+                                <div className="skeleton h-4 w-24" />
+                            </div>
+                        </div>
+                        {[1, 2, 3, 4, 5].map((i) => (
+                            <div key={i} className={`flex items-center gap-3 px-3 py-3 border-b border-gray-100 stagger-${i}`} style={{ opacity: 0, animation: 'fadeIn 0.3s ease-out forwards', animationDelay: `${i * 0.05}s` }}>
+                                <div className="skeleton w-5 h-5 rounded" />
+                                <div className="flex-1">
+                                    <div className="skeleton h-4 w-48 mb-1" />
+                                </div>
+                                <div className="skeleton h-4 w-24 hidden lg:block" />
+                                <div className="skeleton h-6 w-16 rounded-full" />
+                                <div className="flex gap-1">
+                                    <div className="skeleton w-6 h-6 rounded" />
+                                    <div className="skeleton w-6 h-6 rounded" />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    {/* Mobile skeleton */}
+                    <div className="sm:hidden">
+                        {[1, 2, 3, 4].map((i) => (
+                            <div key={i} className={`flex items-center gap-3 px-3 py-3 border-b border-gray-100`} style={{ opacity: 0, animation: 'fadeIn 0.3s ease-out forwards', animationDelay: `${i * 0.05}s` }}>
+                                <div className="skeleton w-10 h-10 rounded-lg" />
+                                <div className="flex-1">
+                                    <div className="skeleton h-4 w-32 mb-1.5" />
+                                    <div className="skeleton h-3 w-24" />
+                                </div>
+                                <div className="skeleton w-6 h-6 rounded" />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
 
             {/* Empty State */}
             {!isLoading && searchedBookmarks.length === 0 && (
-                <div className="text-center py-16">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                        <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                        </svg>
-                    </div>
+                <div className="text-center py-12 sm:py-16 px-4 animate-fade-in-up">
                     {searchText ? (
                         <>
-                            <h3 className="text-lg font-medium text-gray-900 mb-1">No results found</h3>
-                            <p className="text-gray-500">Try adjusting your search or filters</p>
+                            <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center">
+                                <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-semibold text-gray-900 mb-2">No results found</h3>
+                            <p className="text-gray-500 mb-4">We couldn't find any bookmarks matching "{searchText}"</p>
+                            <button
+                                onClick={() => setSearchText('')}
+                                className="text-blue-600 hover:text-blue-700 font-medium text-sm inline-flex items-center gap-1 transition-colors"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Clear search
+                            </button>
                         </>
                     ) : bookmarks.length === 0 ? (
                         <>
-                            <h3 className="text-lg font-medium text-gray-900 mb-1">No bookmarks yet</h3>
-                            <p className="text-gray-500 mb-4">Start by adding your first bookmark</p>
+                            <div className="relative inline-block mb-6">
+                                <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-2xl blur-xl opacity-30 animate-pulse-soft" />
+                                <div className="relative w-24 h-24 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg">
+                                    <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 className="text-xl font-semibold text-gray-900 mb-2">Start your collection</h3>
+                            <p className="text-gray-500 mb-6 max-w-sm mx-auto">Save your favorite websites and organize them with categories for quick access</p>
                             <button
                                 onClick={() => setOpenCreateModal(true)}
-                                className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-lg hover:from-blue-600 hover:to-cyan-600 transition-all shadow-sm hover:shadow-md font-medium"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl hover:from-blue-600 hover:to-cyan-600 transition-all shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] font-medium btn-press"
                             >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -198,7 +251,12 @@ export function Bookmarks() {
                         </>
                     ) : (
                         <>
-                            <h3 className="text-lg font-medium text-gray-900 mb-1">No bookmarks in this category</h3>
+                            <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-amber-100 to-orange-200 rounded-2xl flex items-center justify-center">
+                                <svg className="w-10 h-10 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-semibold text-gray-900 mb-2">No bookmarks in this category</h3>
                             <p className="text-gray-500">Try selecting different categories or clear the filter</p>
                         </>
                     )}
