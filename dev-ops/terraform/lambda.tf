@@ -3,6 +3,7 @@ locals {
   auth-lambda      = "${path.module}/../../apps/lambdas/auth"
   spaces-lambda    = "${path.module}/../../apps/lambdas/spaces"
   bookmarks-lambda = "${path.module}/../../apps/lambdas/bookmarks"
+  feedback-lambda  = "${path.module}/../../apps/lambdas/feedback"
   lambda_timeout   = 60
 }
 
@@ -175,6 +176,43 @@ resource "aws_lambda_function" "bookmarks-lambda" {
   filename         = data.archive_file.bookmarks-lambda.output_path
   handler          = "index.handler"
   source_code_hash = data.archive_file.bookmarks-lambda.output_base64sha256
+  runtime          = "nodejs20.x"
+  timeout          = local.lambda_timeout
+
+  environment {
+    variables = {
+      ENVIRONMENT      = terraform.workspace
+      JWT_SECRET       = var.JWT_SECRET,
+      BOOKMARKS_DOMAIN = var.BOOKMARKS_DOMAIN,
+    }
+  }
+}
+
+# FEEDBACK LAMBDA
+resource "null_resource" "install_feedback_dependencies" {
+  provisioner "local-exec" {
+    command = "cd ${local.feedback-lambda} && npm install"
+  }
+
+  triggers = {
+    always_run = timestamp()
+  }
+}
+
+data "archive_file" "feedback-lambda" {
+  type        = "zip"
+  source_dir  = local.feedback-lambda
+  output_path = "/tmp/feedback-lambda.zip"
+
+  depends_on = [null_resource.install_feedback_dependencies]
+}
+
+resource "aws_lambda_function" "feedback-lambda" {
+  function_name    = "${terraform.workspace}-feedback-lambda"
+  role             = aws_iam_role.iam_for_lambda.arn
+  filename         = data.archive_file.feedback-lambda.output_path
+  handler          = "index.handler"
+  source_code_hash = data.archive_file.feedback-lambda.output_base64sha256
   runtime          = "nodejs20.x"
   timeout          = local.lambda_timeout
 

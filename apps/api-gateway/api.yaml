@@ -270,6 +270,57 @@ paths:
         uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${auth_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
+  "/api/v1/feedback":
+    post:
+      operationId: FeedbackController_submitFeedback
+      summary: Submit user feedback
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateFeedbackDto"
+      responses:
+        '201':
+          description: Feedback submitted successfully
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/FeedbackEntity"
+        '403':
+          description: Forbidden.
+        '422':
+          description: Validation error.
+      tags:
+        - feedback
+      security:
+        - bearer: []
+      x-amazon-apigateway-integration:
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${feedback_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+    get:
+      operationId: FeedbackController_getUserFeedback
+      summary: Get user feedback history
+      parameters: []
+      responses:
+        '200':
+          description: User feedback history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/FeedbackEntity"
+      tags:
+        - feedback
+      security:
+        - bearer: []
+      x-amazon-apigateway-integration:
+        uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${feedback_lambda_arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
 info:
   title: Bookmarks
   description: The bookmarks API
@@ -429,5 +480,54 @@ components:
         - _id
         - name
         - description
+        - owner
+        - createdAt
+    CreateFeedbackDto:
+      type: object
+      properties:
+        rating:
+          type: string
+          enum:
+            - great
+            - good
+            - okay
+            - bad
+          description: User rating
+        comment:
+          type: string
+          description: Optional feedback comment
+      required:
+        - rating
+    FeedbackEntity:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 642ff272f68f2b39a4a6f7df
+          description: Feedback unique identifier
+        rating:
+          type: string
+          enum:
+            - great
+            - good
+            - okay
+            - bad
+          example: great
+          description: User rating
+        comment:
+          type: string
+          example: Love the app!
+          description: Optional comment from user
+        owner:
+          type: string
+          example: yzhbankov@gmail.com
+          description: Email of the user who submitted feedback
+        createdAt:
+          type: string
+          example: '2023-01-02T12:00:00Z'
+          description: Timestamp when feedback was created
+      required:
+        - _id
+        - rating
         - owner
         - createdAt

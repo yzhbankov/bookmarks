@@ -3,6 +3,7 @@ import { AxiosBookmarksApi, IAxiosBookmarksApi } from './AxiosBookmarksApi';
 import { AxiosTagsApi, IAxiosTagsApi } from './AxiosTagsApi';
 import { AxiosSpacesApi, IAxiosSpacesApi } from './AxiosSpacesApi';
 import { AxiosAuthApi, IAxiosAuthApi } from './AxiosAuthApi';
+import { AxiosFeedbackApi, IAxiosFeedbackApi } from './AxiosFeedbackApi';
 
 type ClientOptions = { baseURL: string };
 
@@ -11,6 +12,7 @@ export interface IAxiosClientApi {
     readonly tags: IAxiosTagsApi;
     readonly spaces: IAxiosSpacesApi;
     readonly auth: IAxiosAuthApi;
+    readonly feedback: IAxiosFeedbackApi;
 }
 
 export class AxiosClientApi implements IAxiosClientApi {
@@ -22,6 +24,8 @@ export class AxiosClientApi implements IAxiosClientApi {
 
     readonly _auth: IAxiosAuthApi;
 
+    readonly _feedback: IAxiosFeedbackApi;
+
     constructor(options: ClientOptions) {
         const instance = axios.create({
             withCredentials: true, // send/receive cookie
@@ -32,6 +36,7 @@ export class AxiosClientApi implements IAxiosClientApi {
         this._tags = new AxiosTagsApi(instance);
         this._spaces = new AxiosSpacesApi(instance);
         this._auth = new AxiosAuthApi(instance);
+        this._feedback = new AxiosFeedbackApi(instance);
     }
 
     get bookmarks(): IAxiosBookmarksApi {
@@ -48,5 +53,9 @@ export class AxiosClientApi implements IAxiosClientApi {
 
     get auth(): IAxiosAuthApi {
         return this._auth;
+    }
+
+    get feedback(): IAxiosFeedbackApi {
+        return this._feedback;
     }
 }
