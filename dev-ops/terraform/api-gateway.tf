@@ -24,7 +24,20 @@ resource "aws_api_gateway_rest_api" "bookmarks-api" {
 
 resource "aws_api_gateway_deployment" "deployment" {
   rest_api_id = aws_api_gateway_rest_api.bookmarks-api.id
-  stage_name  = "prod"
+
+  triggers = {
+    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.bookmarks-api.body))
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_api_gateway_stage" "prod" {
+  deployment_id = aws_api_gateway_deployment.deployment.id
+  rest_api_id   = aws_api_gateway_rest_api.bookmarks-api.id
+  stage_name    = "prod"
 }
 
 resource "aws_lambda_permission" "api-gateway-invoke-bookmarks-lambda" {
