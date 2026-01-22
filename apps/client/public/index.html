@@ -3,15 +3,69 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <title>Bookmarks</title>
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+
+    <!-- Primary Meta Tags -->
+    <title>Bookmarks - Save, Organize & Access Your Bookmarks Anywhere</title>
+    <meta name="title" content="Bookmarks - Save, Organize & Access Your Bookmarks Anywhere" />
+    <meta name="description" content="A modern bookmark manager to save, organize, and access your favorite links from anywhere. Categorize bookmarks, search instantly, and sync across devices with Google sign-in." />
+    <meta name="keywords" content="bookmarks, bookmark manager, save links, organize bookmarks, bookmark organizer, link manager, favorites, web bookmarks, cloud bookmarks" />
+    <meta name="author" content="Bookmarks App" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+
+    <!-- Theme and App -->
+    <meta name="theme-color" content="#3b82f6" />
+    <meta name="application-name" content="Bookmarks" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Bookmarks" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Bookmarks - Save, Organize & Access Your Bookmarks Anywhere" />
+    <meta property="og:description" content="A modern bookmark manager to save, organize, and access your favorite links from anywhere. Categorize bookmarks, search instantly, and sync across devices." />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
+    <meta property="og:site_name" content="Bookmarks" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Bookmarks - Save, Organize & Access Your Bookmarks Anywhere" />
+    <meta name="twitter:description" content="A modern bookmark manager to save, organize, and access your favorite links from anywhere. Categorize bookmarks, search instantly, and sync across devices." />
+    <meta name="twitter:image" content="%PUBLIC_URL%/og-image.png" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Bookmarks",
+      "description": "A modern bookmark manager to save, organize, and access your favorite links from anywhere.",
+      "applicationCategory": "Productivity",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Save and organize bookmarks",
+        "Categorize with custom categories",
+        "Instant search",
+        "Import and export bookmarks",
+        "Google sign-in",
+        "Cross-device sync"
+      ]
+    }
+    </script>
+
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   </head>
   <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>
 </html>

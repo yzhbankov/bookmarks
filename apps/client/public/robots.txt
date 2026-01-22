@@ -1,3 +1,11 @@
-# https://www.robotstxt.org/robotstxt.html
+# Robots.txt for Bookmarks App
+# https://www.robotstxt.org/
+
 User-agent: *
-Disallow:
+Allow: /
+
+# Disallow access to API endpoints if proxied
+Disallow: /api/
+
+# Sitemap location (update with your actual domain)
+# Sitemap: https://yourdomain.com/sitemap.xml
