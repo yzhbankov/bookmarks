@@ -1,110 +1,451 @@
-# bookmarks
-## URL
-* http://bookmarks.lat
+# Bookmarks
 
+A cloud-native bookmark management application with Google authentication, tags, spaces, and sharing capabilities.
 
-## High-level requirements
-### Functional requirements:
-* Users should be able to create an account using Google authentication.
-* Users should be able to add bookmarks to their account, and categorize them based on tags or folders.
-* Users should be able to search for bookmarks by keyword or tag.
-* Users should be able to share their bookmarks with other users, either publicly or privately.
-* Users should be able to import bookmarks from other users, either partially or fully.
-* Users should be able to create bookmark spaces that can be shared with other users.
-* Bookmark spaces should be able to be imported partially or fully into another user's space.
-* Users should be able to view their bookmarks in a visually appealing and organized manner.
-* Users should be able to delete bookmarks from their account.
-* The application should have an intuitive and easy-to-use interface.
+**Production URL:** https://bookmarks.ink
 
-### Non-functional requirements:
-* The application should be scalable to handle up to 1000 users initially, and potentially more in the future.
-* The application should be secure and protect user data from unauthorized access or theft.
-* The application should be reliable and available 24/7 with minimal downtime.
-* The application should be responsive and fast, with minimal lag time when loading bookmarks or performing searches.
-* The application should be compatible with modern web browsers and devices.
-* The application should be designed with accessibility in mind, and conform to accessibility guidelines.
-* The application should be easily maintainable and upgradable.
-* The application should have a good user experience, with user feedback and suggestions taken into account for future updates.
-* The application should be hosted on a stable and secure server with regular backups and monitoring.
-* The application should be compliant with relevant data protection and privacy regulations.
+---
 
-## High-level design
-https://miro.com/app/board/uXjVPogokTU=/
+## Table of Contents
 
-## Technologies stack
-### Cloud
-* AWS EC2
-* AWS S3
-* AWS Application load balancer
+- [Quick Start](#quick-start)
+- [Architecture Overview](#architecture-overview)
+- [Project Structure](#project-structure)
+- [Local Development](#local-development)
+- [Deployment Guide](#deployment-guide)
+  - [Deploy Frontend](#deploy-frontend)
+  - [Deploy Backend](#deploy-backend)
+  - [GitHub Plan/Apply Workflow](#github-planapply-workflow)
+- [Configuration Reference](#configuration-reference)
+- [API Reference](#api-reference)
+- [Troubleshooting](#troubleshooting)
 
-### Server
-* NestJs
-* MongoDb
-* Mongoose
+---
 
-### Client
-* React
-* React-query
+## Quick Start
 
-## Local project setup
+### I want to... run locally
 
-
-## Project deployment
-### AWS Setup
-#### AWS User and Role
-Create AWS user that will be used for access S3 and EC2. For this user create S3 role with `AmazonS3FullAccess`
-
-#### S3 bucket
-**Note**: bucket name should be the same as website hosting name. If application is hosting in `bookmarks.lat` the bucket name should be the `bookmarks.lat`.
-Create S3 bucket with public access.
-Block public access Off.
-Bucket policy:
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "PublicReadGetObject",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::bookmarks.lat/*"
-        }
-    ]
-}
+```bash
+git clone https://github.com/yzhbankov/bookmarks.git
+cd bookmarks
+yarn install
+yarn start:client
 ```
-In bucket properties setup `Static website hosting`.
-#### EC2
-In EC2 instance should be installed docker and MongoDb. Use ubuntu as OS.
+Then open http://localhost:3001
 
-### Environment variables and GitHub secrets
-#### Google registration
-Navigate to `Client ID for Web application` in google API, specify application name and `Authorized JavaScript origins` put there `http://localhost:3001`, `http://localhost`, `http://bookmarks.lat`(application public hostname).
+### I want to... deploy frontend changes
 
-#### GutHub Actions Secrets
- - `DOCKER_HUB_USERNAME` - specify docker hub username for your user;
- - `DOCKER_HUB_ACCESS_TOKEN` - specify docker hub secret token for your user;
- - `DOCKER_HUB_PASSWORD` - docker hub user password
- - `BOOKMARKS_GOOGLE_CALLBACK_URL` - register application in google api and specify callback url as `http://localhost:3000/api/v1/auth/login`;
- - `BOOKMARKS_GOOGLE_CLIENT_ID` - get google client ID from google API;
- - `BOOKMARKS_GOOGLE_CLIENT_SECRET` - get google client ID from google API;
- - `AWS_ACCESS_KEY_ID` - register AWS user and generate access key, put in this secret key ID;
- - `AWS_SECRET_ACCESS_KEY` - register AWS user and generate access secret;
- - `AWS_HOST` - AWS EC2 host name;
- - `AWS_USERNAME` - AWS EC2 username;
- - `AWS_PRIVATE_KEY` - AWS private ssh key for EC2 instance (generate ssh keay pair, put public key to ~/.ssh/authorized_keys and public to this secret);
+```bash
+git checkout -b deploy-client
+git push origin deploy-client --force
+```
 
-#### GutHub Actions Variables
- - `BOOKMARKS_DB_HOST` - put database host, in case database hosted i the same server just `http://localhost`
- - `BOOKMARKS_DOMAIN` - put domain name `bookmarks.lat` required for Cookie
- - `BOOKMARKS_BASE_URL` - put here application base url `http://server.bookmarks.lat`
- - `S3_BUCKET` - S3 bucket name, should be the same as domain name `bookmarks.lat`
- - `AWS_REGION` - AWS region name `us-east-1`
+### I want to... deploy backend changes
 
-## Deployment instructions
-### Server
- - to build docker image just generate new tag(`svx.x.x`) and push, it trigger docker image generation and publish in docker hub: `yhbankov/bookmarks:latest`, `yhbankov/bookmarks:x.x.x` 
- - deploy server just create branch `deploy-server` and push it with force update flag;
+1. Create PR to `master`
+2. Comment `/plan prod` on the PR
+3. Review the plan, then comment `/apply prod`
 
-### Client
- - to build and deploy client just create branch `deploy-client` and push it with force update flag;
+---
+
+## Architecture Overview
+
+```
+                                    ┌─────────────────────────────────────────┐
+                                    │               AWS Cloud                  │
+                                    │                                          │
+                                    │  ┌───────────────────────────────────┐  │
+                                    │  │        S3 (Static Assets)          │  │
+                                    │  │          bookmarks.ink             │  │
+                                    │  └─────────────────┬─────────────────┘  │
+                                    │                    │                     │
+                                    │                    ▼                     │
+                                    │  ┌───────────────────────────────────┐  │
+┌─────────────┐   static assets     │  │           CloudFront               │  │
+│             │◄────────────────────┼──│             (CDN)                  │  │
+│   Browser   │                     │  └───────────────────────────────────┘  │
+│   (React)   │                     │                                          │
+│             │                     │  ┌───────────────────────────────────┐  │
+└──────┬──────┘                     │  │      API Gateway (REST API)        │  │
+       │                            │  │    api-gw-server.bookmarks.ink     │  │
+       │    REST API requests       │  └─────────────────┬─────────────────┘  │
+       └───────────────────────────►│                    │                     │
+                                    │                    ▼                     │
+                                    │  ┌───────────────────────────────────┐  │
+                                    │  │       AWS Lambda Functions         │  │
+                                    │  │                                    │  │
+                                    │  │  ┌──────┐ ┌─────────┐ ┌────────┐  │  │
+                                    │  │  │ Auth │ │Bookmarks│ │ Spaces │  │  │
+                                    │  │  └──────┘ └─────────┘ └────────┘  │  │
+                                    │  │  ┌──────┐ ┌─────────┐             │  │
+                                    │  │  │ Tags │ │Feedback │             │  │
+                                    │  │  └──────┘ └─────────┘             │  │
+                                    │  └─────────────────┬─────────────────┘  │
+                                    │                    │                     │
+                                    │                    ▼                     │
+                                    │  ┌───────────────────────────────────┐  │
+                                    │  │            DynamoDB                │  │
+                                    │  │      (Single-table design)         │  │
+                                    │  └───────────────────────────────────┘  │
+                                    └─────────────────────────────────────────┘
+```
+
+### How It Works
+
+1. **User visits bookmarks.ink** - CloudFront serves the React app from S3
+2. **User logs in** - Browser calls API Gateway, which invokes the Auth Lambda
+3. **User manages bookmarks** - API Gateway routes requests to the appropriate Lambda
+4. **Lambdas read/write data** - All Lambdas interact with a single DynamoDB table
+
+### Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Frontend | React 18, TailwindCSS, React Query |
+| CDN | AWS CloudFront |
+| API | AWS API Gateway (REST) |
+| Backend | AWS Lambda (Node.js 20.x) |
+| Database | AWS DynamoDB |
+| Infrastructure | Terraform |
+| CI/CD | GitHub Actions |
+
+---
+
+## Project Structure
+
+```
+bookmarks/
+├── apps/
+│   ├── api-gateway/          # OpenAPI spec (api.yaml)
+│   ├── client/               # React frontend
+│   └── lambdas/              # Backend functions
+│       ├── auth/             #   - Google OAuth, JWT
+│       ├── bookmarks/        #   - CRUD for bookmarks
+│       ├── spaces/           #   - Bookmark collections
+│       ├── tags/             #   - Categorization
+│       ├── feedback/         #   - User feedback
+│       └── shared/           #   - Common utilities
+├── dev-ops/
+│   └── terraform/            # Infrastructure as Code
+└── .github/
+    └── workflows/            # CI/CD pipelines
+```
+
+---
+
+## Local Development
+
+### Prerequisites
+
+- Node.js >= 14.15.4
+- Yarn
+
+### Step 1: Install Dependencies
+
+```bash
+git clone https://github.com/yzhbankov/bookmarks.git
+cd bookmarks
+yarn install
+```
+
+### Step 2: Configure Environment
+
+Create the environment file:
+
+```bash
+touch shared/env/.env
+```
+
+Add your configuration:
+
+```env
+REACT_APP_BOOKMARKS_GOOGLE_CLIENT_ID=<your-google-client-id>
+REACT_APP_BOOKMARKS_BASE_URL=http://localhost:3000
+```
+
+### Step 3: Run the App
+
+```bash
+yarn start:client
+```
+
+Open http://localhost:3001 in your browser.
+
+### Setting Up Google OAuth (First Time Only)
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select existing
+3. Navigate to **APIs & Services > Credentials**
+4. Create **OAuth 2.0 Client ID** (Web application)
+5. Add authorized JavaScript origins:
+   - `http://localhost:3001`
+   - `http://localhost`
+6. Copy the Client ID to your `.env` file
+
+---
+
+## Deployment Guide
+
+### Deploy Frontend
+
+The frontend deploys automatically when you push to the `deploy-client` branch.
+
+```bash
+# From any branch with your changes
+git checkout -b deploy-client
+git push origin deploy-client --force
+```
+
+**What happens:**
+1. GitHub Actions builds the React app
+2. Build artifacts sync to S3
+3. CloudFront serves the updated site
+
+---
+
+### Deploy Backend
+
+The backend (Lambdas + API Gateway) deploys via Terraform using a PR-based workflow.
+
+**Quick Version:**
+```bash
+# 1. Create PR to master with your changes
+# 2. Comment on PR: /plan prod
+# 3. Review plan output
+# 4. Comment on PR: /apply prod
+# 5. PR auto-merges on success
+```
+
+---
+
+### GitHub Plan/Apply Workflow
+
+This project uses GitOps for infrastructure changes. All changes go through Pull Requests with manual approval.
+
+#### The Process
+
+```
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│   Create PR  │────►│ /plan prod   │────►│ /apply prod  │────►│  Auto-merge  │
+│  to master   │     │              │     │              │     │  to master   │
+└──────────────┘     └──────┬───────┘     └──────┬───────┘     └──────────────┘
+                            │                    │
+                            ▼                    ▼
+                     terraform plan       terraform apply
+                     + adds label         + merges PR
+                     "prod_planned"       + adds "applied"
+```
+
+#### Step-by-Step
+
+**1. Create your branch and make changes**
+
+```bash
+git checkout -b feature/my-changes
+# Edit files in apps/lambdas/, apps/api-gateway/, or dev-ops/terraform/
+git add .
+git commit -m "Description of changes"
+git push origin feature/my-changes
+```
+
+**2. Open a Pull Request to `master`**
+
+**3. Plan the changes**
+
+Comment on your PR:
+```
+/plan prod
+```
+
+This runs `terraform plan` and shows what will change. The PR gets labeled `prod_planned`.
+
+**4. Review the plan**
+
+Check the GitHub Actions output to see exactly what Terraform will create, modify, or destroy.
+
+**5. Apply the changes**
+
+When you're satisfied with the plan, comment:
+```
+/apply prod
+```
+
+This runs `terraform apply`. On success, the PR auto-merges to master.
+
+#### Command Reference
+
+| Command | What it does | Requirements |
+|---------|--------------|--------------|
+| `/plan prod` | Preview infrastructure changes | PR targets `master` |
+| `/apply prod` | Deploy to production | PR has `prod_planned` label |
+
+#### Example: Fixing a CORS Issue
+
+```bash
+# 1. Create branch
+git checkout -b fix/cors-headers
+
+# 2. Edit the API spec
+#    File: apps/api-gateway/api.yaml
+
+# 3. Commit and push
+git add .
+git commit -m "Add CORS headers to auth endpoints"
+git push origin fix/cors-headers
+
+# 4. Create PR to master on GitHub
+
+# 5. Comment: /plan prod
+#    Wait for plan, review output
+
+# 6. Comment: /apply prod
+#    Wait for deployment
+#    PR merges automatically
+```
+
+---
+
+### Manual Deployment (Alternative)
+
+If you need to deploy without GitHub Actions:
+
+```bash
+cd dev-ops/terraform
+
+terraform init
+terraform workspace select -or-create prod
+
+terraform plan -var-file="./env/prod.tfvars" \
+  -var="GOOGLE_API_CLIENT_ID=<client-id>" \
+  -var="GOOGLE_API_CLIENT_SECRET=<client-secret>" \
+  -var="JWT_SECRET=<jwt-secret>" \
+  -var="BOOKMARKS_DOMAIN=bookmarks.ink"
+
+terraform apply -var-file="./env/prod.tfvars" \
+  -var="GOOGLE_API_CLIENT_ID=<client-id>" \
+  -var="GOOGLE_API_CLIENT_SECRET=<client-secret>" \
+  -var="JWT_SECRET=<jwt-secret>" \
+  -var="BOOKMARKS_DOMAIN=bookmarks.ink"
+```
+
+---
+
+## Configuration Reference
+
+### GitHub Secrets
+
+Configure these in your repository settings under **Settings > Secrets and variables > Actions**.
+
+| Secret | Description |
+|--------|-------------|
+| `AWS_ACCESS_KEY_ID` | AWS access key for deployments |
+| `AWS_SECRET_ACCESS_KEY` | AWS secret key |
+| `GOOGLE_API_CLIENT_ID` | Google OAuth client ID (backend) |
+| `GOOGLE_API_CLIENT_SECRET` | Google OAuth client secret |
+| `JWT_SECRET` | Secret for signing JWT tokens |
+| `BOOKMARKS_GOOGLE_CLIENT_ID` | Google client ID (frontend) |
+
+### GitHub Variables
+
+| Variable | Example | Description |
+|----------|---------|-------------|
+| `AWS_REGION` | `us-east-1` | AWS region for resources |
+| `S3_BUCKET` | `bookmarks.ink` | S3 bucket (same as domain) |
+| `BOOKMARKS_BASE_URL` | `https://api-gw-server.bookmarks.ink` | API base URL |
+| `BOOKMARKS_DOMAIN` | `bookmarks.ink` | Domain for cookies |
+
+### AWS IAM Permissions
+
+The CI/CD user needs these policies:
+- `AmazonS3FullAccess`
+- `AmazonDynamoDBFullAccess`
+- `AWSLambda_FullAccess`
+- `AmazonAPIGatewayAdministrator`
+- `IAMFullAccess`
+
+---
+
+## API Reference
+
+Base URL: `https://api-gw-server.bookmarks.ink`
+
+### Authentication
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/v1/auth/login` | Exchange Google auth code for session |
+| GET | `/api/v1/auth/validate` | Validate current session |
+
+### Bookmarks
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/bookmarks` | List all bookmarks |
+| POST | `/api/v1/bookmarks` | Create a bookmark |
+| PUT | `/api/v1/bookmarks/{id}` | Update a bookmark |
+| DELETE | `/api/v1/bookmarks/{id}` | Delete a bookmark |
+
+### Tags
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/tags` | List all tags |
+| POST | `/api/v1/tags` | Create a tag |
+| DELETE | `/api/v1/tags/{id}` | Delete a tag |
+
+### Spaces
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/spaces` | List all spaces |
+| POST | `/api/v1/spaces` | Create a space |
+| DELETE | `/api/v1/spaces/{id}` | Delete a space |
+
+### Feedback
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/feedback` | Get feedback history |
+| POST | `/api/v1/feedback` | Submit feedback |
+
+---
+
+## Troubleshooting
+
+### CORS Errors
+
+**Symptom:** Browser console shows `Access-Control-Allow-Origin` errors.
+
+**Solution:**
+1. Check that `api.yaml` has `OPTIONS` methods for affected endpoints
+2. Verify the `Access-Control-Allow-Origin` header matches your domain
+3. Redeploy: create a PR and run `/plan prod` then `/apply prod`
+
+### Login Not Working
+
+**Symptom:** Google login fails or redirects incorrectly.
+
+**Checklist:**
+- [ ] Google OAuth credentials are correctly configured in GitHub Secrets
+- [ ] `BOOKMARKS_DOMAIN` matches your cookie domain
+- [ ] `JWT_SECRET` is the same across all Lambda functions
+- [ ] Authorized JavaScript origins include your domain in Google Console
+
+### Lambda Timeouts
+
+**Symptom:** API requests take a long time or timeout.
+
+**Info:** Lambdas have a 60-second timeout. First requests after idle periods may be slow due to cold starts. This is normal for infrequently-used functions.
+
+### Deployment Fails
+
+**Symptom:** `/apply prod` shows errors.
+
+**Steps:**
+1. Check the error message in the PR comment
+2. Review GitHub Actions logs for details
+3. Common issues:
+   - Missing secrets/variables
+   - IAM permission errors
+   - Terraform state conflicts (try `/plan prod` again)
