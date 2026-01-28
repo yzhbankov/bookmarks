@@ -51,6 +51,41 @@ paths:
         uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
+    options:
+      operationId: BookmarksController_cors
+      summary: CORS preflight
+      responses:
+        '200':
+          description: CORS preflight response
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+      tags:
+        - bookmarks
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'https://bookmarks.ink'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,Cookie'"
+              method.response.header.Access-Control-Allow-Credentials: "'true'"
+            responseTemplates:
+              application/json: '{}'
   "/api/v1/bookmarks/{id}":
     put:
       operationId: BookmarksController_editBookmark
@@ -100,6 +135,41 @@ paths:
         uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${bookmarks_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
+    options:
+      operationId: BookmarksController_idCors
+      summary: CORS preflight
+      responses:
+        '200':
+          description: CORS preflight response
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+      tags:
+        - bookmarks
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'https://bookmarks.ink'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,Cookie'"
+              method.response.header.Access-Control-Allow-Credentials: "'true'"
+            responseTemplates:
+              application/json: '{}'
   "/api/v1/tags":
     post:
       operationId: TagsController_saveTag
@@ -151,6 +221,41 @@ paths:
         uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${tags_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
+    options:
+      operationId: TagsController_cors
+      summary: CORS preflight
+      responses:
+        '200':
+          description: CORS preflight response
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+      tags:
+        - tags
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'https://bookmarks.ink'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,Cookie'"
+              method.response.header.Access-Control-Allow-Credentials: "'true'"
+            responseTemplates:
+              application/json: '{}'
   "/api/v1/tags/{id}":
     delete:
       operationId: TagsController_deleteTag
@@ -171,6 +276,41 @@ paths:
         uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${tags_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
+    options:
+      operationId: TagsController_idCors
+      summary: CORS preflight
+      responses:
+        '200':
+          description: CORS preflight response
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+      tags:
+        - tags
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'https://bookmarks.ink'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,Cookie'"
+              method.response.header.Access-Control-Allow-Credentials: "'true'"
+            responseTemplates:
+              application/json: '{}'
   "/api/v1/spaces":
     post:
       operationId: SpacesController_saveSpace
@@ -222,6 +362,41 @@ paths:
         uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${spaces_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
+    options:
+      operationId: SpacesController_cors
+      summary: CORS preflight
+      responses:
+        '200':
+          description: CORS preflight response
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+      tags:
+        - spaces
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'https://bookmarks.ink'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,Cookie'"
+              method.response.header.Access-Control-Allow-Credentials: "'true'"
+            responseTemplates:
+              application/json: '{}'
   "/api/v1/spaces/{id}":
     delete:
       operationId: SpacesController_deleteSpace
@@ -242,6 +417,41 @@ paths:
         uri: arn:aws:apigateway:${aws_region}:lambda:path/2015-03-31/functions/${spaces_lambda_arn}/invocations
         httpMethod: POST
         type: aws_proxy
+    options:
+      operationId: SpacesController_idCors
+      summary: CORS preflight
+      responses:
+        '200':
+          description: CORS preflight response
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+      tags:
+        - spaces
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'https://bookmarks.ink'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,Cookie'"
+              method.response.header.Access-Control-Allow-Credentials: "'true'"
+            responseTemplates:
+              application/json: '{}'
   "/api/v1/auth/login":
     options:
       operationId: AuthController_loginCors
